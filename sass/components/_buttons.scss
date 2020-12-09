@@ -1,0 +1,15 @@
+button {
+  color: white;
+  background: $clr-primary;
+  width: 170px;
+  height: 69px;
+  border-radius: 5px;
+  padding: 1em;
+  &:hover,
+  &:focus
+  //active + visited
+  {
+    color: black;
+    background: $clr-primary-lt;
+  }
+}

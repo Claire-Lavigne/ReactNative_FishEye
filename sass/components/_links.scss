@@ -1,0 +1,14 @@
+a {
+  color: $clr-primary;
+  background: white;
+  border: 1px solid $clr-secondary;
+  border-radius: 20px;
+  padding: 0.5em;
+  &:hover,
+  &:focus
+  //active + visited
+  {
+    color: white;
+    background: $clr-primary;
+  }
+}
