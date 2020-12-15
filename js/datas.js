@@ -1,4 +1,4 @@
-{
+let datas = {
   "photographers": [
     {
       "name": "Mimi Keel",
@@ -599,4 +599,6 @@
       "price": 80
     }
   ]
-}
+};
+
+export default datas;
