@@ -4,6 +4,5 @@
 - Responsive
 
 ## Run commands
-- `npm i`
-- `npm run sass`
-- `npm run prefix`
+- `sass --watch ./sass/main.scss:./public/css/style.css --style compressed`
+- `postcss ./public/css/style.css --use autoprefixer -d ./public/css/prefixed/`
