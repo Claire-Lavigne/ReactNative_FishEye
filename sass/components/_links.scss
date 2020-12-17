@@ -1,9 +1,13 @@
-a {
+.tag {
   color: $clr-primary;
   background: white;
   border: 1px solid $clr-secondary;
-  border-radius: 20px;
-  padding: 0.5em;
+  border-radius: 11px;
+  padding: 0 0.5em;
+  margin: 2px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
   &:hover,
   &:focus
   //active + visited

@@ -1,3 +1,31 @@
 html, body, *, *:before, *:after {
   font-family: $ff-base;
 }
+
+body {
+  padding: 1em;
+  font-weight: 400;
+  max-width: 1500px;
+  margin: auto;
+}
+
+section {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+h1 {
+  color: $clr-primary;
+  font-size: 36px;
+  width: 100%;
+  display: block;
+}
+
+h2 {
+  color: $clr-primary-lt;
+  font-size: 36px;
+}
+
+a {
+  text-decoration: none;
+}

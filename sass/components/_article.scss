@@ -1,0 +1,26 @@
+article {
+  text-align: center;
+  margin: 2em auto;
+  //align-self: center;
+  @include tablets {
+    width: calc(100% / 3);
+  }
+  a {
+    cursor: pointer;
+  }
+  p {
+    margin: 0.5em;
+  }
+  p:first-child {
+    color: $clr-primary;
+    font-size: 13px;
+  }
+  p:nth-child(2) {
+    color: black;
+    font-size: 10px;
+  }
+  p:last-child {
+    color: $clr-secondary;
+    font-size: 9px;
+  }
+}
