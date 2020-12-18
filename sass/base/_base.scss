@@ -1,4 +1,8 @@
-html, body, *, *:before, *:after {
+html,
+body,
+*,
+*:before,
+*:after {
   font-family: $ff-base;
 }
 
@@ -7,23 +11,14 @@ body {
   font-weight: 400;
   max-width: 1500px;
   margin: auto;
+  position: relative;
 }
 
 section {
   display: flex;
   flex-flow: row wrap;
-}
-
-h1 {
-  color: $clr-primary;
-  font-size: 36px;
-  width: 100%;
-  display: block;
-}
-
-h2 {
-  color: $clr-primary-lt;
-  font-size: 36px;
+  margin-top: 2em;
+  max-width: 1500px;
 }
 
 a {

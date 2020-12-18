@@ -24,28 +24,29 @@ function createArticle() {
   const container = document.querySelector('#container > section');
 
   photographers.forEach(photographer => {
-    const article = document.createElement('article');
-    const articleLink = document.createElement('a');
-    const text = document.createElement('div');
-    const tags = document.createElement('div');
+
+    let tags = '';
 
     photographer.tags.forEach(tag => {
-      tags.innerHTML += `<a class="tag">#${tag}</a>`
+      tags += `<a href="#" aria-label="tag" class="tag ${tag}">#${tag}</a>`;
     })
 
-    text.innerHTML += `<p>${photographer.city}, ${photographer.country}</p>`
-    text.innerHTML += `<p>${photographer.tagline}</p>`
-    text.innerHTML += `<p>${photographer.price}€/jour</p>`
-
-    articleLink.setAttribute('aria-label', photographer.name);
-    articleLink.innerHTML += `<img src="${photographer.portrait}" alt=""/>`
-    articleLink.innerHTML += `<h2>${photographer.name}</h2>`
-
-    article.appendChild(articleLink);
-    article.appendChild(text);
-    article.appendChild(tags);
-
-    container.appendChild(article);
+    container.innerHTML += `
+    <article>
+      <a href="./photographer.html?id=${photographer.id}" aria-label="${photographer.name}">
+        <img src="./assets/Photographers ID Photos/${photographer.portrait}" alt="">
+        <h2>${photographer.name}</h2>
+      </a>
+      <div>
+        <p>${photographer.city}, ${photographer.country}</p>
+        <p>${photographer.tagline}</p>
+        <p>${photographer.price}€/jour</p>
+      </div>
+      <div id="tags-container">
+        ${tags}
+      </div>
+    </article>
+    `;
   })
 }
 createArticle()
@@ -59,17 +60,9 @@ function createNav() {
     array.push(...photographer.tags);
   });
 
-  // remove duplicate tags and for each tag remaining,
-  // create elements : (a[aria-label] > span)
-  // and append them into the nav
+  // remove duplicate tags and for each tag remaining
   [...new Set(array)].forEach(tag => {
-    const a = document.createElement('a');
-    const span = document.createElement('span');
-    span.innerHTML += `#${tag}`;
-    a.classList.add('tag');
-    a.setAttribute('aria-label', 'tag');
-    a.appendChild(span);
-    nav.appendChild(a);
+    nav.innerHTML += `<a id="${tag}" href="#" aria-label="tag" class="tag">#${tag}</a>`
   })
 }
 createNav()

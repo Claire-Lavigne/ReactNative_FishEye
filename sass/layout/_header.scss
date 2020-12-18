@@ -1,11 +1,15 @@
 header {
   display: flex;
-  width: 60vw;
-  span {
-    text-transform: capitalize;
-  }
+  align-items: center;
+  justify-content: flex-start;
+  //width: calc(100% - 350px); // h1+padding
   div {
     text-align: center;
+    line-height: 2em;
+    margin-left: 2em;
+  }
+  .tag {
+    text-transform: capitalize;
   }
   #anchor-nav {
     color: white;
@@ -23,4 +27,16 @@ header {
       background: $clr-primary-lt;
     }
   }
+}
+
+
+h1 {
+  color: $clr-primary;
+  font-size: 36px;
+  text-align: right;
+  display: inline;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding-top: 16px;
 }
