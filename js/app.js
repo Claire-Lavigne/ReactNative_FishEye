@@ -25,14 +25,16 @@ function createArticle() {
 
   photographers.forEach(photographer => {
 
-    let tags = '';
+    let tagClass = '';
+    let tagLink = '';
 
     photographer.tags.forEach(tag => {
-      tags += `<a href="#" aria-label="tag" class="tag ${tag}">#${tag}</a>`;
+      tagClass += `${tag} `;
+      tagLink += `<a href="#" aria-label="tag" class="tag">#${tag}</a>`;
     })
 
     container.innerHTML += `
-    <article>
+    <article class="${tagClass}">
       <a href="./photographer.html?id=${photographer.id}" aria-label="${photographer.name}">
         <img src="./assets/Photographers ID Photos/${photographer.portrait}" alt="">
         <h2>${photographer.name}</h2>
@@ -42,8 +44,8 @@ function createArticle() {
         <p>${photographer.tagline}</p>
         <p>${photographer.price}€/jour</p>
       </div>
-      <div id="tags-container">
-        ${tags}
+      <div class="tags-container">
+        ${tagLink}
       </div>
     </article>
     `;
@@ -60,13 +62,32 @@ function createNav() {
     array.push(...photographer.tags);
   });
 
-  // remove duplicate tags and for each tag remaining
+  // remove duplicate tags and for each tag remaining add element
   [...new Set(array)].forEach(tag => {
     nav.innerHTML += `<a id="${tag}" href="#" aria-label="tag" class="tag">#${tag}</a>`
   })
 }
 createNav()
 
+// when I click on a tag (nav)
+const tagsNav = document.querySelectorAll('nav > a');
+tagsNav.forEach((tag) => tag.addEventListener('click', filterTag));
+
+function filterTag() {
+  // get id of target tag (nav)
+  const selectedTag = this.id;
+  
+  // if article has same class as the id
+  // keep it, if not hide it
+  const articles = document.querySelectorAll('article');
+  articles.forEach(article => {
+    if (article.classList.contains(selectedTag)) {
+      article.hidden = false;
+    } else {
+      article.hidden = true;
+    }
+  })
+}
 
 /*
    return photographers.map(function(photographer) { // Map through the results and for each run the code below
