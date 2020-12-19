@@ -89,6 +89,21 @@ function filterTag() {
   })
 }
 
+const anchorNav = document.querySelector('#anchor-nav');
+
+anchorNav.hidden = true;
+
+let scrollNav = function() {
+  let y = window.scrollY;
+  if (y > 50) {
+    anchorNav.hidden = false;
+  } else {
+    anchorNav.hidden = true;
+  }
+};
+
+window.addEventListener('scroll', scrollNav);
+
 /*
    return photographers.map(function(photographer) { // Map through the results and for each run the code below
     const li = createNode('li'), //  Create the elements we need
