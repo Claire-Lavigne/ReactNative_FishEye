@@ -21,7 +21,7 @@ fetch('./js/datas.js')
 
 function createArticle() {
 
-  const container = document.querySelector('#container > section');
+  const container = document.querySelector('#introduction > section');
 
   photographers.forEach(photographer => {
 
@@ -33,22 +33,24 @@ function createArticle() {
       tagLink += `<a href="#" aria-label="tag" class="tag">#${tag}</a>`;
     })
 
-    container.innerHTML += `
-    <article class="${tagClass}">
-      <a href="./photographer.html?id=${photographer.id}" aria-label="${photographer.name}">
-        <img src="./assets/Photographers ID Photos/${photographer.portrait}" alt="">
-        <h2>${photographer.name}</h2>
-      </a>
-      <div>
-        <p>${photographer.city}, ${photographer.country}</p>
-        <p>${photographer.tagline}</p>
-        <p>${photographer.price}€/jour</p>
-      </div>
-      <div class="tags-container">
-        ${tagLink}
-      </div>
-    </article>
-    `;
+    if (container) {
+      container.innerHTML += `
+      <article class="${tagClass}">
+        <a href="./photographer.html?id=${photographer.id}" aria-label="${photographer.name}">
+          <img src="./assets/Photographers ID Photos/${photographer.portrait}" alt="">
+          <h2>${photographer.name}</h2>
+        </a>
+        <div>
+          <p>${photographer.city}, ${photographer.country}</p>
+          <p>${photographer.tagline}</p>
+          <p>${photographer.price}€/jour</p>
+        </div>
+        <div class="tags-container">
+          ${tagLink}
+        </div>
+      </article>
+      `;
+    }
   })
 }
 createArticle()
@@ -57,15 +59,17 @@ function createNav() {
   const array = [];
   const nav = document.querySelector('nav');
 
-  // add all tags from photographers object into empty array
-  photographers.forEach(photographer => {
-    array.push(...photographer.tags);
-  });
+  if (nav) {
+    // add all tags from photographers object into empty array
+    photographers.forEach(photographer => {
+      array.push(...photographer.tags);
+    });
 
-  // remove duplicate tags and for each tag remaining add element
-  [...new Set(array)].forEach(tag => {
-    nav.innerHTML += `<a id="${tag}" href="#" aria-label="tag" class="tag">#${tag}</a>`
-  })
+    // remove duplicate tags and for each tag remaining add element
+    [...new Set(array)].forEach(tag => {
+      nav.innerHTML += `<a id="${tag}" href="#${tag}" aria-label="tag" class="tag">#${tag}</a>`
+    })
+  }
 }
 createNav()
 
@@ -76,7 +80,7 @@ tagsNav.forEach((tag) => tag.addEventListener('click', filterTag));
 function filterTag() {
   // get id of target tag (nav)
   const selectedTag = this.id;
-  
+
   // if article has same class as the id
   // keep it, if not hide it
   const articles = document.querySelectorAll('article');
@@ -90,19 +94,75 @@ function filterTag() {
 }
 
 const anchorNav = document.querySelector('#anchor-nav');
+if (anchorNav) {
+  anchorNav.hidden = true;
 
-anchorNav.hidden = true;
+  let scrollNav = function scrollNav() {
+    let y = window.scrollY;
+    if (y > 50) {
+      anchorNav.hidden = false;
+    } else {
+      anchorNav.hidden = true;
+    }
+  };
+  window.addEventListener('scroll', scrollNav);
+}
 
-let scrollNav = function() {
-  let y = window.scrollY;
-  if (y > 50) {
-    anchorNav.hidden = false;
-  } else {
-    anchorNav.hidden = true;
-  }
-};
 
-window.addEventListener('scroll', scrollNav);
+const dropdown = document.querySelector(".dropdown select");
+function removeOption() {
+  let option = document.querySelectorAll(".dropdown option");
+  option.forEach(e => {
+    e.selected
+  })
+  console.log(option)
+}
+dropdown.addEventListener('change', removeOption)
+
+function createPage() {
+
+  let getUrlID = window.location.search.substr(4);
+  let photographersByID = photographers.filter(photographer => {
+    return photographer.id == getUrlID;
+  });
+  console.log(photographersByID[0].name)
+  //const container = document.querySelector('#photographer > section');
+
+
+
+
+
+  /*
+    photographers.forEach(photographer => {
+  
+      let tagClass = '';
+      let tagLink = '';
+  
+      photographer.tags.forEach(tag => {
+        tagClass += `${tag} `;
+        tagLink += `<a href="#" aria-label="tag" class="tag">#${tag}</a>`;
+      })
+  
+      container.innerHTML += `
+      <article class="${tagClass}">
+        <a href="./photographer.html?id=${photographer.id}" aria-label="${photographer.name}">
+          <img src="./assets/Photographers ID Photos/${photographer.portrait}" alt="">
+          <h2>${photographer.name}</h2>
+        </a>
+        <div>
+          <p>${photographer.city}, ${photographer.country}</p>
+          <p>${photographer.tagline}</p>
+          <p>${photographer.price}€/jour</p>
+        </div>
+        <div class="tags-container">
+          ${tagLink}
+        </div>
+      </article>
+      `;
+    })
+    */
+}
+createPage()
 
 /*
    return photographers.map(function(photographer) { // Map through the results and for each run the code below
