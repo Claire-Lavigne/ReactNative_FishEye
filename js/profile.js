@@ -1,3 +1,32 @@
+const dropdown = document.querySelector(".dropdown select");
+
+fetch('./js/datas.json')
+  .then(response => {
+    return response.json()
+  })
+  .then(data => {
+    const photographers = data[0].photographers;
+    const medias = data[0].media;
+    const getUrlId = window.location.search.substr(4);
+
+    const photographersById = photographers.filter(photographer => {
+      return photographer.id == getUrlId;
+    });
+    
+    const mediasById = medias.filter(media => {
+      if (media.photographerId == getUrlId) {
+        return media;
+      };
+    });
+
+    createProfile(photographersById)
+    createAlbum(mediasById);
+
+    dropdown.addEventListener('change', removeOption);
+
+  })
+  .catch(error => { console.log(error) })
+
 
 function removeOption() {
   let option = document.querySelectorAll(".dropdown option");
@@ -6,18 +35,49 @@ function removeOption() {
   })
   console.log(option)
 }
-dropdown.addEventListener('change', removeOption)
 
-function createPage() {
+const sectionOne = document.querySelector('#photographer-infos');
+const album = document.querySelector('.album');
 
-  let getUrlID = window.location.search.substr(4);
-  let photographersByID = photographers.filter(photographer => {
-    return photographer.id == getUrlID;
-  });
-  console.log(photographersByID[0].name)
-  //const container = document.querySelector('#photographer > section');
+function createProfile(photographersById) {
+  let tag = '';
+  const name = photographersById[0].name;
+  const city = photographersById[0].city;
+  const country = photographersById[0].country;
+  const tagline = photographersById[0].tagline;
+  const tags = photographersById[0].tags;
+  const portrait = photographersById[0].portrait;
 
+  tags.forEach(tag => {
+    tag += `<a id="${tag}" href="./index.html#${tag}" aria-label="tag" class="tag">#${tag}</a>`;
+  })
 
+  const content = `
+      <div>
+        <h2>${name}</h2>
+        <p>${city}, ${country}</p>
+        <p>${tagline}</p>
+        <div class="tags-container">
+          ${tag}
+        </div>
+      </div>
+      <button>Contactez-moi</button>
+      <img src="./assets/Photographers ID Photos/${portrait}" alt="${name}">
+  `;
+
+  sectionOne.innerHTML += content;
+
+}
+
+function createAlbum(mediasById) {
+  let images = '';
+  mediasById.forEach(media => {
+    if (media.image !== undefined) {
+      images = `<img src="./assets/${media.photographerId}/${media.image}" alt="">`;
+      album.innerHTML += images;
+    }
+  })
+}
 
 
 
@@ -33,7 +93,7 @@ function createPage() {
       })
   
       container.innerHTML += `
-      <article class="${tagClass}">
+      <div class="${tagClass}">
         <a href="./photographer.html?id=${photographer.id}" aria-label="${photographer.name}">
           <img src="./assets/Photographers ID Photos/${photographer.portrait}" alt="">
           <h2>${photographer.name}</h2>
@@ -46,12 +106,10 @@ function createPage() {
         <div class="tags-container">
           ${tagLink}
         </div>
-      </article>
+      </div>
       `;
     })
     */
-}
-createPage()
 
 /*
    return photographers.map(function(photographer) { // Map through the results and for each run the code below

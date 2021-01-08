@@ -1,0 +1,26 @@
+#photographer-infos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  margin: 5em auto;
+  padding: 3em;
+  background-color: $clr-secondary-lt;
+  border-radius: 5px;
+  max-width: 1240px;
+  @include tablets {
+   // width: calc(100% / 3);
+  }
+  h2 {
+    color: $clr-primary-lt;
+    font-size: 36px;
+  }
+  p:first-child {
+    color: $clr-primary;
+    font-size: 13px;
+  }
+  p:last-child {
+    color: $clr-secondary;
+    font-size: 10px;
+  }
+}

@@ -3,7 +3,6 @@ const array = [];
 const nav = document.querySelector('nav');
 const anchorNav = document.querySelector('#anchor-nav');
 anchorNav.hidden = true;
-const dropdown = document.querySelector(".dropdown select");
 
 // Fetch API
 // = promise-based JavaScript API for making asynchronous HTTP requests to fetch ressources from server
@@ -15,18 +14,17 @@ fetch('./js/datas.json')
   // Get the results
   .then(data => {
     const photographers = data[0].photographers;
-    const media = data[0].media;
 
     photographers.forEach(photographer => {
       displayArticle(photographer)
       array.push(...photographer.tags); // add all tags into empty array
     })
+
     displayNav();
     window.addEventListener('scroll', scrollNav);
-    const tagsNav = document.querySelectorAll('nav > a');
+    const tags = document.querySelectorAll('.tag');
     // when I click on a tag (nav)
-    tagsNav.forEach(tag => tag.addEventListener('click', filterArticles))
-
+    tags.forEach(tag => tag.addEventListener('click', filterArticles))
   })
   .catch(error => { console.log(error) })
 
@@ -37,7 +35,7 @@ const displayArticle = (photographer) => {
 
   photographer.tags.forEach(tag => {
     tagClass += `${tag} `;
-    tagLink += `<a href="#" aria-label="tag" class="tag">#${tag}</a>`;
+    tagLink += `<a id="${tag}" href="#${tag}" aria-label="tag" class="tag">#${tag}</a>`;
   })
 
   const article = `
@@ -67,7 +65,7 @@ const displayNav = () => {
   // --> convert the result into an array (spread operation '...')
   // then for each tag : create element
   [...new Set(array)].forEach(tag => {
-    nav.innerHTML += `<a id="${tag}" aria-label="tag" class="tag">#${tag}</a>`
+    nav.innerHTML += `<a id="${tag}" href="#${tag}" aria-label="tag" class="tag">#${tag}</a>`
   })
 }
 

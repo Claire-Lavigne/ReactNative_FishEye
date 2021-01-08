@@ -4,19 +4,9 @@ article {
   @include tablets {
     width: calc(100% / 3);
   }
-  a {
-    cursor: pointer;
-  }
   h2 {
     color: $clr-primary-lt;
     font-size: 36px;
-  }
-  img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 1em;
   }
   p {
     margin: 0.5em;
