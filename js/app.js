@@ -22,9 +22,8 @@ fetch('./js/datas.json')
 
     displayNav();
     window.addEventListener('scroll', scrollNav);
-    const tags = document.querySelectorAll('.tag');
-    // when I click on a tag (nav)
-    tags.forEach(tag => tag.addEventListener('click', filterArticles))
+    window.addEventListener('hashchange', filterArticles);
+    window.addEventListener('popstate', filterArticles()); // execute immediately
   })
   .catch(error => { console.log(error) })
 
@@ -74,13 +73,16 @@ const scrollNav = () => {
   scrollY > 50 ? anchorNav.hidden = false : anchorNav.hidden = true;
 };
 
-const filterArticles = function () {
-  // get id of target tag
-  const selectedTag = this.id;
+const filterArticles = () => {
+  const hash = window.location.hash;
 
-  // if article has same class as the id keep it, if not hide it
-  const articles = document.querySelectorAll('article');
-  articles.forEach(article => {
-    article.classList.contains(selectedTag) ? article.hidden = false : article.hidden = true;
-  })
+  if (hash) {
+    const tag = hash.replace('#', '');
+    // if article has same class as the hash url keep it, if not hide it
+    const articles = document.querySelectorAll('article');
+    articles.forEach(article => {
+      article.classList.contains(tag) ? article.hidden = false : article.hidden = true;
+    })
+  }
+  return;
 };

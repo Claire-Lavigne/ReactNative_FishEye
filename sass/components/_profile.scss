@@ -11,16 +11,18 @@
   @include tablets {
    // width: calc(100% / 3);
   }
-  h2 {
+  h1 {
     color: $clr-primary-lt;
     font-size: 36px;
   }
-  p:first-child {
+  p:first-of-type {
     color: $clr-primary;
-    font-size: 13px;
+    font-size: 24px;
+    padding: 0.2em 0 0.8em;
   }
-  p:last-child {
+  p:last-of-type {
     color: $clr-secondary;
-    font-size: 10px;
+    font-size: 18px;
+    padding-bottom: 0.8em;
   }
 }

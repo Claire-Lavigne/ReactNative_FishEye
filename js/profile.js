@@ -1,4 +1,6 @@
-const dropdown = document.querySelector(".dropdown select");
+const dropdown = document.querySelector(".dropdown");
+const sectionOne = document.querySelector('#photographer-infos');
+const album = document.querySelector('.album');
 
 fetch('./js/datas.json')
   .then(response => {
@@ -12,7 +14,7 @@ fetch('./js/datas.json')
     const photographersById = photographers.filter(photographer => {
       return photographer.id == getUrlId;
     });
-    
+
     const mediasById = medias.filter(media => {
       if (media.photographerId == getUrlId) {
         return media;
@@ -28,19 +30,31 @@ fetch('./js/datas.json')
   .catch(error => { console.log(error) })
 
 
-function removeOption() {
-  let option = document.querySelectorAll(".dropdown option");
-  option.forEach(e => {
-    e.selected
-  })
-  console.log(option)
+
+const removeOption = () => {
+  let options = document.querySelector(".dropdown");
+  let option = document.querySelector("option:checked");
+  /*
+  switch (option.value) {
+    case "popular":
+      option
+      break;
+    case "date":
+      option
+      break;
+    case "title":
+      option
+      break;
+    default:
+      options
+      break;
+  }
+  */
+
 }
 
-const sectionOne = document.querySelector('#photographer-infos');
-const album = document.querySelector('.album');
-
-function createProfile(photographersById) {
-  let tag = '';
+const createProfile = (photographersById) => {
+  let tagLink = '';
   const name = photographersById[0].name;
   const city = photographersById[0].city;
   const country = photographersById[0].country;
@@ -49,16 +63,16 @@ function createProfile(photographersById) {
   const portrait = photographersById[0].portrait;
 
   tags.forEach(tag => {
-    tag += `<a id="${tag}" href="./index.html#${tag}" aria-label="tag" class="tag">#${tag}</a>`;
+    tagLink += `<a id="${tag}" href="./index.html#${tag}" aria-label="tag" class="tag">#${tag}</a>`;
   })
 
   const content = `
       <div>
-        <h2>${name}</h2>
+        <h1>${name}</h1>
         <p>${city}, ${country}</p>
         <p>${tagline}</p>
         <div class="tags-container">
-          ${tag}
+          ${tagLink}
         </div>
       </div>
       <button>Contactez-moi</button>
@@ -69,7 +83,7 @@ function createProfile(photographersById) {
 
 }
 
-function createAlbum(mediasById) {
+const createAlbum = (mediasById) => {
   let images = '';
   mediasById.forEach(media => {
     if (media.image !== undefined) {
@@ -78,46 +92,3 @@ function createAlbum(mediasById) {
     }
   })
 }
-
-
-
-  /*
-    photographers.forEach(photographer => {
-  
-      let tagClass = '';
-      let tagLink = '';
-  
-      photographer.tags.forEach(tag => {
-        tagClass += `${tag} `;
-        tagLink += `<a href="#" aria-label="tag" class="tag">#${tag}</a>`;
-      })
-  
-      container.innerHTML += `
-      <div class="${tagClass}">
-        <a href="./photographer.html?id=${photographer.id}" aria-label="${photographer.name}">
-          <img src="./assets/Photographers ID Photos/${photographer.portrait}" alt="">
-          <h2>${photographer.name}</h2>
-        </a>
-        <div>
-          <p>${photographer.city}, ${photographer.country}</p>
-          <p>${photographer.tagline}</p>
-          <p>${photographer.price}€/jour</p>
-        </div>
-        <div class="tags-container">
-          ${tagLink}
-        </div>
-      </div>
-      `;
-    })
-    */
-
-/*
-   return photographers.map(function(photographer) { // Map through the results and for each run the code below
-    const li = createNode('li'), //  Create the elements we need
-        img = createNode('img'),
-        span = createNode('span');
-   append(li, img); // Append all our elements
-    append(li, span);
-    append(ul, li);
-  }
-*/
