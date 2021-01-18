@@ -9,11 +9,16 @@
   border-radius: 5px;
   max-width: 1240px;
   @include tablets {
-   // width: calc(100% / 3);
+    // width: calc(100% / 3);
+  }
+  .photographer-heading {
+    display: flex;
+    align-items: center;
   }
   h1 {
     color: $clr-primary-lt;
     font-size: 36px;
+    margin-right: 3em;
   }
   p:first-of-type {
     color: $clr-primary;

@@ -1,4 +1,4 @@
-select, option, button {
+.btn {
   color: white;
   background: $clr-primary;
   width: 170px;
@@ -11,5 +11,8 @@ select, option, button {
   {
     color: black;
     background: $clr-primary-lt;
+  }
+  &:not(select) {
+    cursor: pointer;
   }
 }

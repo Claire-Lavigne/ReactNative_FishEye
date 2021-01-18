@@ -1,6 +1,10 @@
 const dropdown = document.querySelector(".dropdown");
 const sectionOne = document.querySelector('#photographer-infos');
 const album = document.querySelector('.album');
+//
+const modal = document.querySelector('.modal');
+const form = document.querySelector('form');
+const modalTitle = document.querySelector('.modal-title');
 
 fetch('./js/datas.json')
   .then(response => {
@@ -24,7 +28,10 @@ fetch('./js/datas.json')
     createProfile(photographersById)
     createAlbum(mediasById);
 
+    removeOption();
     dropdown.addEventListener('change', removeOption);
+    const modalOpen = document.querySelector('.modal-btn');
+    modalOpen.addEventListener('click', displayModal);
 
   })
   .catch(error => { console.log(error) })
@@ -32,24 +39,14 @@ fetch('./js/datas.json')
 
 
 const removeOption = () => {
-  let options = document.querySelector(".dropdown");
-  let option = document.querySelector("option:checked");
-  /*
-  switch (option.value) {
-    case "popular":
-      option
-      break;
-    case "date":
-      option
-      break;
-    case "title":
-      option
-      break;
-    default:
-      options
-      break;
-  }
-  */
+  let options = document.querySelectorAll(".dropdown-option");
+  let selectedOption = document.querySelector("option:checked");
+
+  Array.from(options).map(option => option.style.display = 'block');
+  selectedOption.style.display = 'none';
+
+  let filteredOptions = Array.from(options).filter(elt => elt.id != selectedOption.id);
+  filteredOptions.map(option => option.style.display = 'block');
 
 }
 
@@ -62,25 +59,30 @@ const createProfile = (photographersById) => {
   const tags = photographersById[0].tags;
   const portrait = photographersById[0].portrait;
 
+
   tags.forEach(tag => {
     tagLink += `<a id="${tag}" href="./index.html#${tag}" aria-label="tag" class="tag">#${tag}</a>`;
   })
 
   const content = `
-      <div>
-        <h1>${name}</h1>
+      <div class="photographer-infos">
+        <div class="photographer-heading">
+          <h1>${name}</h1>
+          <button class="modal-btn btn">Contactez-moi</button>
+        </div>
         <p>${city}, ${country}</p>
         <p>${tagline}</p>
         <div class="tags-container">
           ${tagLink}
         </div>
       </div>
-      <button>Contactez-moi</button>
+      
       <img src="./assets/Photographers ID Photos/${portrait}" alt="${name}">
   `;
 
   sectionOne.innerHTML += content;
 
+  modalTitle.innerHTML += `<br>${name}`;
 }
 
 const createAlbum = (mediasById) => {
@@ -92,3 +94,17 @@ const createAlbum = (mediasById) => {
     }
   })
 }
+
+
+// display & hide form
+const displayModal = () => {
+  modal.style.display = 'block';
+  
+  window.onclick = (event) => {
+    if ( event.target.classList == 'modal' || event.target.classList == 'modal-close' ) {
+      modal.style.display = 'none';
+    }
+  }
+}
+
+
