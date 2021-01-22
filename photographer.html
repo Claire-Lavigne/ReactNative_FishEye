@@ -32,25 +32,25 @@
  
     <div class="modal">
       <div class="modal-content">
-        <span class="modal-close"></span>
+        <span class="modal-close">x</span>
         <div class="modal-body">
           <h2 class="modal-title">Contactez-moi</h2>
-          <form name="reserve" action="index.html" method="post" novalidate>
-            <div class="formData" data-error-visible="" data-error="Veuillez entrer 2 caractères ou plus pour le prénom">
+          <form action="photographer.html" method="post">
+            <div class="formData" data-error-visible="" data-error="Il manque votre prénom">
               <label for="first">Prénom</label><br>
-              <input class="text-control" type="text" id="first" name="prénom" minlength="2" />
+              <input type="text" id="first" name="prénom"/>
             </div>
-            <div class="formData" data-error-visible="" data-error="Veuillez entrer 2 caractères ou plus pour le nom">
+            <div class="formData" data-error-visible="" data-error="Il manque votre nom">
               <label for="last">Nom</label><br>
-              <input class="text-control" type="text" id="last" name="nom" />
+              <input type="text" id="last" name="nom"/>
             </div>
-            <div class="formData" data-error-visible="" data-error="L'adresse électronique est invalide.">
+            <div class="formData" data-error-visible="" data-error="Email invalide">
               <label for="email">E-mail</label><br>
-              <input class="text-control" type="email" id="email" name="email" />
+              <input type="email" id="email" name="email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"/>
             </div>
-            <div class="formData" data-error-visible="" data-error="Veuillez insérer un message.">
+            <div class="formData" data-error-visible="" data-error="Il manque votre message">
               <label for="msg">Message</label><br>
-              <input class="text-control" type="text" id="msg" name="msg" />
+              <input type="text" id="msg" name="msg"/>
             </div>
             <input class="btn" type="submit" value="Envoyer" />
           </form>

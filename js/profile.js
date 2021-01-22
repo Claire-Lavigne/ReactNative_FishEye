@@ -5,6 +5,11 @@ const album = document.querySelector('.album');
 const modal = document.querySelector('.modal');
 const form = document.querySelector('form');
 const modalTitle = document.querySelector('.modal-title');
+const inputFirstname = document.querySelector('#first');
+const inputLastname = document.querySelector('#last');
+const inputEmail = document.querySelector('#email');
+const inputMessage = document.querySelector('#msg');
+const modalClose = document.querySelector('.modal-close');
 
 fetch('./js/datas.json')
   .then(response => {
@@ -27,7 +32,6 @@ fetch('./js/datas.json')
 
     createProfile(photographersById)
     createAlbum(mediasById);
-
     removeOption();
     dropdown.addEventListener('change', removeOption);
     const modalOpen = document.querySelector('.modal-btn');
@@ -99,12 +103,49 @@ const createAlbum = (mediasById) => {
 // display & hide form
 const displayModal = () => {
   modal.style.display = 'block';
-  
+
   window.onclick = (event) => {
-    if ( event.target.classList == 'modal' || event.target.classList == 'modal-close' ) {
+    if (event.target.classList == 'modal' || event.target.classList == 'modal-close') {
       modal.style.display = 'none';
     }
   }
 }
 
 
+
+
+
+form.addEventListener('submit', validateForm);
+
+////// --VALIDATION FUNCTIONS-- //////
+function validateInput(input) {
+  if (input.value.toString().trim().length < 2) {
+    input.parentElement.setAttribute('data-error-visible', 'true');
+    return false;
+  } else {
+    input.parentElement.removeAttribute('data-error-visible');
+    return true;
+  }
+}
+
+// submit form
+function validateForm(event) {
+  let isFormOk = [];
+  event.preventDefault(); // disable redirect + keep form datas if invalid
+
+  isFormOk.push(validateInput(inputFirstname));
+  isFormOk.push(validateInput(inputLastname));
+  isFormOk.push(validateInput(inputMessage));
+  isFormOk.push(validateInput(inputEmail));
+
+  // if form doesn't return any 'false'
+  if (!isFormOk.includes(false)) {
+    // get every valid keys/values
+    let datas = new FormData(form);
+    for (let entry of datas.entries()) {
+      console.log(entry[0], ':', entry[1]);
+    }
+    modal.style.display = 'none';
+    form.reset();
+  }
+}
