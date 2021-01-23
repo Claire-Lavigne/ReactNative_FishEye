@@ -1,6 +1,7 @@
 const dropdown = document.querySelector(".dropdown");
 const sectionOne = document.querySelector('#photographer-infos');
-const album = document.querySelector('.album');
+const gallery = document.querySelector('.gallery-wrapper');
+const lightboxes = document.querySelector('.gallery-lightboxes');
 //
 const modal = document.querySelector('.modal');
 const form = document.querySelector('form');
@@ -31,7 +32,9 @@ fetch('./js/datas.json')
     });
 
     createProfile(photographersById)
-    createAlbum(mediasById);
+    createGallery(mediasById);
+    createLightbox(mediasById);
+    sortGallery(mediasById);
     removeOption();
     dropdown.addEventListener('change', removeOption);
     const modalOpen = document.querySelector('.modal-btn');
@@ -89,16 +92,56 @@ const createProfile = (photographersById) => {
   modalTitle.innerHTML += `<br>${name}`;
 }
 
-const createAlbum = (mediasById) => {
-  let images = '';
+const createGallery = (mediasById) => {
   mediasById.forEach(media => {
     if (media.image !== undefined) {
-      images = `<img src="./assets/${media.photographerId}/${media.image}" alt="">`;
-      album.innerHTML += images;
+      let imageTitle = media.image.split('_').join(' ').replace(/\.[^/.]+$/, "");
+
+      image = `
+        <div class="image-wrapper">
+          <a href="#lightbox-image-${media.id}">
+            <img src="./assets/${media.photographerId}/${media.image}" alt="">
+            <div class="image-infos">${imageTitle} <span>${media.price} € ${media.likes} ❤</span></div>
+          </a>
+        </div>
+        `;
+      gallery.innerHTML += image;
     }
   })
 }
 
+const createLightbox = (mediasById) => {
+  mediasById.forEach(media => {
+    if (media.image !== undefined) {
+      lightbox = `
+      <div class="image-lightbox" id="lightbox-image-${media.id}">
+        <div class="image-lightbox-wrapper">
+          <a href="#" class="close"></a>
+          <a href="#lightbox-image-3" class="arrow-left"></a>
+          <a href="#lightbox-image-2" class="arrow-right"></a>
+          <img src="./assets/${media.photographerId}/${media.image}" alt="">
+          <div class="image-infos">${imageTitle}</div>
+        </div>
+      </div>
+      `;
+      lightboxes.innerHTML += lightbox;
+    }
+  })
+}
+
+
+const sortGallery = (mediasById) => {
+  mediasById.forEach(media => {
+    if (media.image !== undefined) {
+      const sortByDate = [media.date].sort((a, b) => a.valueOf() - b.valueOf());
+      console.log(sortByDate);
+      const sortByTitle = [media.title].sort((a, b) => a - b);
+      console.log(sortByTitle);
+      const sortByLikes = [media.likes].sort((a, b) => a - b);
+      console.log(sortByLikes);
+    }
+  })
+}
 
 // display & hide form
 const displayModal = () => {
