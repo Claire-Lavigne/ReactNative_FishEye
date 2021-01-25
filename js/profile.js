@@ -2,6 +2,7 @@ const dropdown = document.querySelector(".dropdown");
 const sectionOne = document.querySelector('#photographer-infos');
 const gallery = document.querySelector('.gallery-wrapper');
 const lightboxes = document.querySelector('.gallery-lightboxes');
+const url = window.location.href;
 //
 const modal = document.querySelector('.modal');
 const form = document.querySelector('form');
@@ -32,14 +33,15 @@ fetch('./js/datas.json')
     });
 
     createProfile(photographersById)
-    createGallery(mediasById);
-    createLightbox(mediasById);
-    sortGallery(mediasById);
+    createGalleryAndLightbox(mediasById);
+    window.addEventListener('popstate', workingLightbox);
+    // sortGallery(mediasById);
     removeOption();
     dropdown.addEventListener('change', removeOption);
+    
     const modalOpen = document.querySelector('.modal-btn');
     modalOpen.addEventListener('click', displayModal);
-
+    form.addEventListener('submit', validateForm);
   })
   .catch(error => { console.log(error) })
 
@@ -54,7 +56,6 @@ const removeOption = () => {
 
   let filteredOptions = Array.from(options).filter(elt => elt.id != selectedOption.id);
   filteredOptions.map(option => option.style.display = 'block');
-
 }
 
 const createProfile = (photographersById) => {
@@ -92,7 +93,7 @@ const createProfile = (photographersById) => {
   modalTitle.innerHTML += `<br>${name}`;
 }
 
-const createGallery = (mediasById) => {
+const createGalleryAndLightbox = (mediasById) => {
   mediasById.forEach(media => {
     if (media.image !== undefined) {
       let imageTitle = media.image.split('_').join(' ').replace(/\.[^/.]+$/, "");
@@ -105,31 +106,38 @@ const createGallery = (mediasById) => {
           </a>
         </div>
         `;
-      gallery.innerHTML += image;
-    }
-  })
-}
 
-const createLightbox = (mediasById) => {
-  mediasById.forEach(media => {
-    if (media.image !== undefined) {
       lightbox = `
       <div class="image-lightbox" id="lightbox-image-${media.id}">
         <div class="image-lightbox-wrapper">
           <a href="#" class="close"></a>
-          <a href="#lightbox-image-3" class="arrow-left"></a>
-          <a href="#lightbox-image-2" class="arrow-right"></a>
+          <a href="" class="arrow-left"></a>
+          <a href="" class="arrow-right"></a>
           <img src="./assets/${media.photographerId}/${media.image}" alt="">
           <div class="image-infos">${imageTitle}</div>
         </div>
       </div>
       `;
+
+      gallery.innerHTML += image;
       lightboxes.innerHTML += lightbox;
     }
   })
 }
 
-
+const workingLightbox = () => {
+  const urlHash = window.location.hash;
+  const currentLightbox = document.querySelector(urlHash);
+  const arrowLeft = document.querySelector(`${urlHash} .arrow-left`);
+  const arrowRight = document.querySelector(`${urlHash} .arrow-right`);
+  if (currentLightbox.previousElementSibling !== null) {
+    arrowLeft.href = `${url}#${currentLightbox.previousElementSibling.id}`;
+  }
+  if (currentLightbox.nextElementSibling !== null) {
+    arrowRight.href = `${url}#${currentLightbox.nextElementSibling.id}`;
+  }
+}
+/*
 const sortGallery = (mediasById) => {
   mediasById.forEach(media => {
     if (media.image !== undefined) {
@@ -142,6 +150,7 @@ const sortGallery = (mediasById) => {
     }
   })
 }
+*/
 
 // display & hide form
 const displayModal = () => {
@@ -158,7 +167,7 @@ const displayModal = () => {
 
 
 
-form.addEventListener('submit', validateForm);
+
 
 ////// --VALIDATION FUNCTIONS-- //////
 function validateInput(input) {
