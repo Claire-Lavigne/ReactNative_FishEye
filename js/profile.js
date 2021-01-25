@@ -1,7 +1,5 @@
 const dropdown = document.querySelector(".dropdown");
 const sectionOne = document.querySelector('#photographer-infos');
-const gallery = document.querySelector('.gallery-wrapper');
-const lightboxes = document.querySelector('.gallery-lightboxes');
 const url = window.location.href;
 //
 const modal = document.querySelector('.modal');
@@ -37,8 +35,8 @@ fetch('./js/datas.json')
     window.addEventListener('popstate', workingLightbox);
     removeOption();
     dropdown.addEventListener('change', removeOption);
-    dropdown.addEventListener('change', sortGallery(mediasById));
-
+    sortGallery(mediasById)
+    dropdown.addEventListener('change', () => { sortGallery(mediasById) });
 
     const modalOpen = document.querySelector('.modal-btn');
     modalOpen.addEventListener('click', displayModal);
@@ -94,10 +92,17 @@ const createProfile = (photographersById) => {
   modalTitle.innerHTML += `<br>${name}`;
 }
 
+
+
 const createGalleryAndLightbox = (mediasById) => {
+  let gallery = document.querySelector('.gallery-wrapper');
+  let lightboxes = document.querySelector('.gallery-lightboxes');
+  gallery.innerHTML = '';
+  lightboxes.innerHTML = ''
   mediasById.forEach(media => {
     if (media.image !== undefined) {
       let imageTitle = media.image.split('_').join(' ').replace(/\.[^/.]+$/, "");
+      // add smthg in datas.json : media.imageTitle = imageTitle;
 
       image = `
         <div class="image-wrapper">
@@ -140,6 +145,31 @@ const workingLightbox = () => {
   }
 }
 
+const sortGallery = (mediasById) => {
+  const dropdownOption = dropdown.options[dropdown.selectedIndex].innerHTML;
+  let sortedMedias = [];
+  switch (dropdownOption) {
+    case "Titre":
+      sortedMedias = mediasById.sort((a, b) => {
+        if (a.image && b.image) {
+          return a.image.localeCompare(b.image)
+        }
+      })
+      console.log(sortedMedias)
+      break;
+    case "Date":
+      // Timestamp
+      sortedMedias = mediasById.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      console.log(sortedMedias)
+      break;
+    default:
+      // Popularité
+      sortedMedias = mediasById.sort((a, b) => b.likes - a.likes);
+      console.log(sortedMedias)
+      break;
+  }
+  createGalleryAndLightbox(sortedMedias);
+}
 
 // display & hide form
 const displayModal = () => {
@@ -183,27 +213,4 @@ function validateForm(event) {
     modal.style.display = 'none';
     form.reset();
   }
-}
-
-const dropdownOption = dropdown.options[dropdown.selectedIndex].innerHTML;
-
-
-const sortGallery = (mediasById) => {
-  let array = [];
-  mediasById.forEach(media => {
-    if (dropdownOption === 'Popularité') {
-      array.push(media.likes)
-      const sortByLikes = array.sort((a, b) => a - b);
-      console.log(sortByLikes);
-    } else if (dropdownOption === 'Date') {
-      array.push(media.date)
-      const sortByDate = array.sort((a, b) => a.valueOf() - b.valueOf());
-      console.log(sortByDate);
-    } else {
-      array.push(media.title)
-      const sortByTitle = array.sort((a, b) => a - b);
-      console.log(sortByTitle);
-    }
-  })
-
 }
