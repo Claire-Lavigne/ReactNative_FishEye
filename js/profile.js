@@ -35,10 +35,11 @@ fetch('./js/datas.json')
     createProfile(photographersById)
     createGalleryAndLightbox(mediasById);
     window.addEventListener('popstate', workingLightbox);
-    // sortGallery(mediasById);
     removeOption();
     dropdown.addEventListener('change', removeOption);
-    
+    dropdown.addEventListener('change', sortGallery(mediasById));
+
+
     const modalOpen = document.querySelector('.modal-btn');
     modalOpen.addEventListener('click', displayModal);
     form.addEventListener('submit', validateForm);
@@ -107,6 +108,7 @@ const createGalleryAndLightbox = (mediasById) => {
         </div>
         `;
 
+      // lightbox from https://codepen.io/ind88/pen/MzoKzP?editors=1100
       lightbox = `
       <div class="image-lightbox" id="lightbox-image-${media.id}">
         <div class="image-lightbox-wrapper">
@@ -137,20 +139,7 @@ const workingLightbox = () => {
     arrowRight.href = `${url}#${currentLightbox.nextElementSibling.id}`;
   }
 }
-/*
-const sortGallery = (mediasById) => {
-  mediasById.forEach(media => {
-    if (media.image !== undefined) {
-      const sortByDate = [media.date].sort((a, b) => a.valueOf() - b.valueOf());
-      console.log(sortByDate);
-      const sortByTitle = [media.title].sort((a, b) => a - b);
-      console.log(sortByTitle);
-      const sortByLikes = [media.likes].sort((a, b) => a - b);
-      console.log(sortByLikes);
-    }
-  })
-}
-*/
+
 
 // display & hide form
 const displayModal = () => {
@@ -162,12 +151,6 @@ const displayModal = () => {
     }
   }
 }
-
-
-
-
-
-
 
 ////// --VALIDATION FUNCTIONS-- //////
 function validateInput(input) {
@@ -200,4 +183,27 @@ function validateForm(event) {
     modal.style.display = 'none';
     form.reset();
   }
+}
+
+const dropdownOption = dropdown.options[dropdown.selectedIndex].innerHTML;
+
+
+const sortGallery = (mediasById) => {
+  let array = [];
+  mediasById.forEach(media => {
+    if (dropdownOption === 'Popularité') {
+      array.push(media.likes)
+      const sortByLikes = array.sort((a, b) => a - b);
+      console.log(sortByLikes);
+    } else if (dropdownOption === 'Date') {
+      array.push(media.date)
+      const sortByDate = array.sort((a, b) => a.valueOf() - b.valueOf());
+      console.log(sortByDate);
+    } else {
+      array.push(media.title)
+      const sortByTitle = array.sort((a, b) => a - b);
+      console.log(sortByTitle);
+    }
+  })
+
 }
