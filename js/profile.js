@@ -42,6 +42,8 @@ fetch('./js/datas.json')
     const modalOpen = document.querySelector('.modal-btn');
     modalOpen.addEventListener('click', displayModal);
     form.addEventListener('submit', validateForm);
+
+   closeLightbox();
   })
   .catch(error => { console.log(error) })
 
@@ -116,6 +118,16 @@ const workingLightbox = () => {
   if (currentLightbox.nextElementSibling !== null) {
     arrowRight.href = `${url}#${currentLightbox.nextElementSibling.id}`;
   }
+}
+
+const closeLightbox = () => {
+  const openedLightbox = document.querySelectorAll('.media-lightbox');
+  openedLightbox.forEach(lightbox => {
+    console.log(lightbox.style)
+    if (lightbox.style.visibility == '') {
+      window.location.hash = '';
+    }
+  })
 }
 
 const sortGallery = (mediasById) => {
