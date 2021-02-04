@@ -1,5 +1,6 @@
+import Photographer from './photographer.js';
+
 const container = document.querySelector('#introduction > section');
-const array = [];
 const nav = document.querySelector('nav');
 const anchorNav = document.querySelector('#anchor-nav');
 anchorNav.hidden = true;
@@ -15,55 +16,29 @@ fetch('./js/datas.json')
   .then(data => {
     const photographers = data[0].photographers;
 
-    photographers.forEach(photographer => {
-      displayArticle(photographer)
-      array.push(...photographer.tags); // add all tags into empty array
+    photographers.forEach(data => {
+      const photographer = new Photographer(data);
+      container.innerHTML += photographer.generateArticle();
     })
 
-    displayNav();
+    displayNav(photographers);
     window.addEventListener('scroll', scrollNav);
     window.addEventListener('hashchange', filterArticles);
     window.addEventListener('popstate', filterArticles()); // execute immediately
   })
-  .catch(error => { console.log(error) })
+  .catch(error => { console.error('fetch error', error) })
 
-
-const displayArticle = (photographer) => {
-  let tagClass = '';
-  let tagLink = '';
-
-  photographer.tags.forEach(tag => {
-    tagClass += `${tag} `;
-    tagLink += `<a id="${tag}" href="#${tag}" aria-label="tag" class="tag">#${tag}</a>`;
-  })
-
-  const article = `
-  <article class="${tagClass}">
-    <a href="./photographer.html?id=${photographer.id}" aria-label="${photographer.name}">
-      <img src="./assets/Photographers ID Photos/${photographer.portrait}" alt="">
-      <h2>${photographer.name}</h2>
-    </a>
-    <div>
-      <p>${photographer.city}, ${photographer.country}</p>
-      <p>${photographer.tagline}</p>
-      <p>${photographer.price}€/jour</p>
-    </div>
-    <div class="tags-container">
-      ${tagLink}
-    </div>
-  </article>
-  `;
-
-  container.innerHTML += article;
-}
-
-const displayNav = () => {
+const displayNav = (photographers) => {
+  let tagsArray = [];
+  photographers.forEach(photographer => {
+    tagsArray.push(...photographer.tags); // add all tags into empty array
+  });
   // remove duplicate tags
-  // --> create new object ('new')
-  // --> convert the array to a set ('Set' = collection of unique values)
-  // --> convert the result into an array (spread operation '...')
+    // ('new') --> create new object 
+    // ('Set') --> convert the array to a collection of unique values 
+    // (spread operation '...') --> convert the result into an array 
   // then for each tag : create element
-  [...new Set(array)].forEach(tag => {
+  [...new Set(tagsArray)].forEach(tag => {
     nav.innerHTML += `<a id="${tag}" href="#${tag}" aria-label="tag" class="tag">#${tag}</a>`
   })
 }

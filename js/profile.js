@@ -1,7 +1,8 @@
+import Media from './media.js';
+
 const dropdown = document.querySelector(".dropdown");
 const sectionOne = document.querySelector('#photographer-infos');
 const url = window.location.href;
-//
 const modal = document.querySelector('.modal');
 const form = document.querySelector('form');
 const modalTitle = document.querySelector('.modal-title');
@@ -9,7 +10,7 @@ const inputFirstname = document.querySelector('#first');
 const inputLastname = document.querySelector('#last');
 const inputEmail = document.querySelector('#email');
 const inputMessage = document.querySelector('#msg');
-const modalClose = document.querySelector('.modal-close');
+
 
 fetch('./js/datas.json')
   .then(response => {
@@ -92,43 +93,15 @@ const createProfile = (photographersById) => {
   modalTitle.innerHTML += `<br>${name}`;
 }
 
-
-
 const createGalleryAndLightbox = (mediasById) => {
   let gallery = document.querySelector('.gallery-wrapper');
   let lightboxes = document.querySelector('.gallery-lightboxes');
   gallery.innerHTML = '';
   lightboxes.innerHTML = ''
-  mediasById.forEach(media => {
-    if (media.image !== undefined) {
-      let imageTitle = media.image.split('_').join(' ').replace(/\.[^/.]+$/, "");
-      // add smthg in datas.json : media.imageTitle = imageTitle;
-
-      image = `
-        <div class="image-wrapper">
-          <a href="#lightbox-image-${media.id}">
-            <img src="./assets/${media.photographerId}/${media.image}" alt="">
-            <div class="image-infos">${imageTitle} <span>${media.price} € ${media.likes} ❤</span></div>
-          </a>
-        </div>
-        `;
-
-      // lightbox from https://codepen.io/ind88/pen/MzoKzP?editors=1100
-      lightbox = `
-      <div class="image-lightbox" id="lightbox-image-${media.id}">
-        <div class="image-lightbox-wrapper">
-          <a href="#" class="close"></a>
-          <a href="" class="arrow-left"></a>
-          <a href="" class="arrow-right"></a>
-          <img src="./assets/${media.photographerId}/${media.image}" alt="">
-          <div class="image-infos">${imageTitle}</div>
-        </div>
-      </div>
-      `;
-
-      gallery.innerHTML += image;
-      lightboxes.innerHTML += lightbox;
-    }
+  mediasById.forEach(item => {
+    const media = new Media(item);
+    gallery.innerHTML += media.generateCard();
+    lightboxes.innerHTML += media.generateLightbox();
   })
 }
 
