@@ -21,20 +21,21 @@ article,
     transition: all 200ms ease-in-out;
   }
   img, video {
-    padding-bottom: 1em;
+    margin-bottom: 1em;
     object-fit: cover;
     width: 350px;
     height: 300px;
     border-radius: 5px;
-    margin-bottom: 0;
   }
   .media-infos {
     text-transform: capitalize;
     color: $clr-primary;
     font-size: 18px;
+    display: flex;
+    justify-content: space-between;
   }
-  span {
-    float: right;
+  .likesCounter {
+    cursor: pointer;
   }
 }
 

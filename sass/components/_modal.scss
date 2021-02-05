@@ -7,7 +7,10 @@
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color:white;
+  @include tablets {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
   //background-color: $clr-secondary-lt;
   &-content {
     margin: 5% auto;
@@ -51,6 +54,11 @@
     &.btn {
       font-size: 1em;
       width: 180px;
+      display: block; 
+      margin: auto;
+      @include tablets {
+        margin: 0;
+      }
     }
   }
   .formData[data-error]::after {

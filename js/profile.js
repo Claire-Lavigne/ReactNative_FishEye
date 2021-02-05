@@ -3,13 +3,17 @@ import Media from './media.js';
 const dropdown = document.querySelector(".dropdown");
 const sectionOne = document.querySelector('#photographer-infos');
 const url = window.location.href;
+const urlOrigin = window.origin;
+const urlPath = window.location.pathname;
+const urlID = window.location.search;
+const fullURL = urlOrigin + urlPath + urlID;
 const modal = document.querySelector('.modal');
 const form = document.querySelector('form');
 const modalTitle = document.querySelector('.modal-title');
-const inputFirstname = document.querySelector('#first');
-const inputLastname = document.querySelector('#last');
+const inputFirstname = document.querySelector('#first_name');
+const inputLastname = document.querySelector('#last_name');
 const inputEmail = document.querySelector('#email');
-const inputMessage = document.querySelector('#msg');
+const inputMessage = document.querySelector('#your_message');
 
 
 fetch('./js/datas.json')
@@ -19,8 +23,7 @@ fetch('./js/datas.json')
   .then(data => {
     const photographers = data[0].photographers;
     const medias = data[0].media;
-    const getUrlId = window.location.search.substr(4);
-
+    const getUrlId = window.location.search.substr(4); // get id from url
     const photographersById = photographers.filter(photographer => {
       return photographer.id == getUrlId;
     });
@@ -43,7 +46,7 @@ fetch('./js/datas.json')
     modalOpen.addEventListener('click', displayModal);
     form.addEventListener('submit', validateForm);
 
-   closeLightbox();
+    generateLikes()
   })
   .catch(error => { console.log(error) })
 
@@ -93,6 +96,8 @@ const createProfile = (photographersById) => {
   sectionOne.innerHTML += content;
 
   modalTitle.innerHTML += `<br>${name}`;
+  modalTitle.id = `Contact\ me\ ${name}`;
+  modal.setAttribute('aria-labelledby', `Contact me ${name}`);
 }
 
 const createGalleryAndLightbox = (mediasById) => {
@@ -102,8 +107,10 @@ const createGalleryAndLightbox = (mediasById) => {
   lightboxes.innerHTML = ''
   mediasById.forEach(item => {
     const media = new Media(item);
+
     gallery.innerHTML += media.generateCard();
     lightboxes.innerHTML += media.generateLightbox();
+
   })
 }
 
@@ -114,21 +121,20 @@ const workingLightbox = () => {
   const arrowRight = document.querySelector(`${urlHash} .arrow-right`);
   if (currentLightbox.previousElementSibling !== null) {
     arrowLeft.href = `${url}#${currentLightbox.previousElementSibling.id}`;
+    arrowLeft.title = `Previous image`;
+  } else {
+    arrowLeft.style.display = 'none';
   }
+
   if (currentLightbox.nextElementSibling !== null) {
     arrowRight.href = `${url}#${currentLightbox.nextElementSibling.id}`;
+    arrowRight.title = `Next image`;
+  } else {
+    arrowRight.style.display = 'none';
   }
 }
 
-const closeLightbox = () => {
-  const openedLightbox = document.querySelectorAll('.media-lightbox');
-  openedLightbox.forEach(lightbox => {
-    console.log(lightbox.style)
-    if (lightbox.style.visibility == '') {
-      window.location.hash = '';
-    }
-  })
-}
+
 
 const sortGallery = (mediasById) => {
   const dropdownOption = dropdown.options[dropdown.selectedIndex].innerHTML;
@@ -198,4 +204,21 @@ function validateForm(event) {
     modal.style.display = 'none';
     form.reset();
   }
+}
+
+
+const generateLikes = () => {
+
+  let likesCounter = document.querySelectorAll('.likesCounter');
+  likesCounter.forEach(counter => {
+
+    counter.addEventListener('click', (event) => {
+      let number = event.target.childNodes[0].nodeValue; // get number without <i> child
+      number++;
+      counter.childNodes[0].nodeValue = number;
+
+    })
+
+  })
+
 }

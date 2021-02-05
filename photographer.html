@@ -31,29 +31,29 @@
   </main>
 
  
-    <div class="modal">
+    <div class="modal" role="dialog">
       <div class="modal-content">
-        <span class="modal-close">x</span>
+        <span class="modal-close" title="Close contact form">x</span>
         <div class="modal-body">
-          <h2 class="modal-title">Contactez-moi</h2>
+          <h1 class="modal-title">Contactez-moi</h1>
           <form action="photographer.html" method="post">
-            <div class="formData" data-error-visible="" data-error="Il manque votre prénom">
-              <label for="first">Prénom</label><br>
-              <input type="text" id="first" name="prénom"/>
+            <div class="formData" data-error-visible="" data-error="Prénom vide">
+              <label for="first_name">Prénom</label><br>
+              <input type="text" id="first_name" name="prénom"/>
             </div>
-            <div class="formData" data-error-visible="" data-error="Il manque votre nom">
-              <label for="last">Nom</label><br>
-              <input type="text" id="last" name="nom"/>
+            <div class="formData" data-error-visible="" data-error="Nom vide">
+              <label for="last_name">Nom</label><br>
+              <input type="text" id="last_name" name="nom"/>
             </div>
             <div class="formData" data-error-visible="" data-error="Email invalide">
-              <label for="email">E-mail</label><br>
+              <label for="email">Email</label><br>
               <input type="email" id="email" name="email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"/>
             </div>
-            <div class="formData" data-error-visible="" data-error="Il manque votre message">
-              <label for="msg">Message</label><br>
-              <input type="text" id="msg" name="msg"/>
+            <div class="formData" data-error-visible="" data-error="Message vide">
+              <label for="your_message">Votre Message</label><br>
+              <input type="text" id="your_message" name="msg"/>
             </div>
-            <input class="btn" type="submit" value="Envoyer" />
+            <input class="btn" type="submit" value="Envoyer" title="send" />
           </form>
         </div>
       </div>

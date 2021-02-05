@@ -44,8 +44,14 @@ export default class Media {
       <div class="media-wrapper">
         <a href="#lightbox-media-${this.id}">
         ${this.generateMedia()}
-          <div class="media-infos">${this.generateMediaTitle()} <span>${this.price} € ${this.likes} ❤</span></div>
         </a>
+        <div class="media-infos">
+          <div>${this.generateMediaTitle()}</div> 
+          <div>
+            <span class="likesCounter">${this.likes}<i> ❤ </i></span>
+            <span>${this.price}€</span>
+          </div>
+        </div>
       </div>
     `;
 
