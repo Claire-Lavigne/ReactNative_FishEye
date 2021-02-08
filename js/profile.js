@@ -123,11 +123,11 @@ const workingLightbox = () => {
   if (currentLightbox.previousElementSibling !== null) {
     arrowLeft.href = `${fullURL}#${currentLightbox.previousElementSibling.id}`;
     arrowLeft.title = `Previous image`;
-  arrowLeft.addEventListener("keyup", (e) => {
+    arrowLeft.addEventListener("keyup", (e) => {
       if (e.key == "ArrowLeft") {
         window.location.href = `${fullURL}#${currentLightbox.previousElementSibling.id}`;
       }
-  });
+    });
   } else {
     arrowLeft.style.display = 'none';
   }
@@ -136,15 +136,15 @@ const workingLightbox = () => {
     arrowRight.href = `${fullURL}#${currentLightbox.nextElementSibling.id}`;
     arrowRight.title = `Next image`;
     arrowRight.addEventListener("keyup", (e) => {
-        if (e.key == "ArrowRight") {
-          window.location.href = `${fullURL}#${currentLightbox.nextElementSibling.id}`;
-        }
+      if (e.key == "ArrowRight") {
+        window.location.href = `${fullURL}#${currentLightbox.nextElementSibling.id}`;
+      }
     });
   } else {
     arrowRight.style.display = 'none';
   }
 
-  
+
 }
 
 
