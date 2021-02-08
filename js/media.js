@@ -14,7 +14,6 @@ export default class Media {
   generateMediaTitle() {
     if (this.image !== undefined) {
       let mediaTitle = this.image.split('_').join(' ').replace(/\.[^/.]+$/, "");
-      // add smthg in datas.json : this.alt = mediaTitle;
       return mediaTitle;
     } else if (this.video !== undefined) {
       let mediaTitle = this.video.split('_').join(' ').replace(/\.[^/.]+$/, "");

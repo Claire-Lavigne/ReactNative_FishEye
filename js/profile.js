@@ -2,7 +2,6 @@ import Media from './media.js';
 
 const dropdown = document.querySelector(".dropdown");
 const sectionOne = document.querySelector('#photographer-infos');
-const url = window.location.href;
 const urlOrigin = window.origin;
 const urlPath = window.location.pathname;
 const urlID = window.location.search;
@@ -111,6 +110,8 @@ const createGalleryAndLightbox = (mediasById) => {
     gallery.innerHTML += media.generateCard();
     lightboxes.innerHTML += media.generateLightbox();
 
+    // add smthg in datas.json :
+    // item.alt = media.generateMediaTitle();
   })
 }
 
@@ -120,18 +121,30 @@ const workingLightbox = () => {
   const arrowLeft = document.querySelector(`${urlHash} .arrow-left`);
   const arrowRight = document.querySelector(`${urlHash} .arrow-right`);
   if (currentLightbox.previousElementSibling !== null) {
-    arrowLeft.href = `${url}#${currentLightbox.previousElementSibling.id}`;
+    arrowLeft.href = `${fullURL}#${currentLightbox.previousElementSibling.id}`;
     arrowLeft.title = `Previous image`;
+  arrowLeft.addEventListener("keyup", (e) => {
+      if (e.key == "ArrowLeft") {
+        window.location.href = `${fullURL}#${currentLightbox.previousElementSibling.id}`;
+      }
+  });
   } else {
     arrowLeft.style.display = 'none';
   }
 
   if (currentLightbox.nextElementSibling !== null) {
-    arrowRight.href = `${url}#${currentLightbox.nextElementSibling.id}`;
+    arrowRight.href = `${fullURL}#${currentLightbox.nextElementSibling.id}`;
     arrowRight.title = `Next image`;
+    arrowRight.addEventListener("keyup", (e) => {
+        if (e.key == "ArrowRight") {
+          window.location.href = `${fullURL}#${currentLightbox.nextElementSibling.id}`;
+        }
+    });
   } else {
     arrowRight.style.display = 'none';
   }
+
+  
 }
 
 
