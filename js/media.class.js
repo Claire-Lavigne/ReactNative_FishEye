@@ -33,7 +33,6 @@ export default class Media {
     `;
 
     return media;
-
   }
 
 
@@ -45,7 +44,7 @@ export default class Media {
           <a href="" class="close"></a>
           <a href="" class="arrow-left"></a>
           <a href="" class="arrow-right"></a>
-          ${this.media.generatePreview()}
+          ${this.media.generateView()}
           <div class="media-infos">${this.media.generateTitle()}</div>
         </div>
       </div>
@@ -54,6 +53,14 @@ export default class Media {
     return mediaLightbox;
   }
 
+
+  generateTotalLikes() {
+    let totalLikes = `
+      <div class="totalLikes">${this.media.likes}<i> ❤ </i></div>
+    `;
+
+    return totalLikes;
+  }
 
 }
 

@@ -5,6 +5,7 @@
   height: 56px;
   border-radius: 5px;
   padding: 1em;
+  border: none;
   &:hover,
   &:focus
   //active + visited
@@ -15,4 +16,8 @@
   &:not(select) {
     cursor: pointer;
   }
+}
+
+.dropdown {
+  margin-bottom: 2em;
 }

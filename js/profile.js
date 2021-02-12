@@ -1,4 +1,5 @@
-import Media from './media.js';
+import Photographer from './photographer.class.js';
+import Media from './media.class.js';
 
 const dropdown = document.querySelector(".dropdown");
 const sectionOne = document.querySelector('#photographer-infos');
@@ -13,7 +14,7 @@ const inputFirstname = document.querySelector('#first_name');
 const inputLastname = document.querySelector('#last_name');
 const inputEmail = document.querySelector('#email');
 const inputMessage = document.querySelector('#your_message');
-
+const total = document.querySelector('.total');
 
 fetch('./js/datas.json')
   .then(response => {
@@ -23,9 +24,15 @@ fetch('./js/datas.json')
     const photographers = data[0].photographers;
     const medias = data[0].media;
     const getUrlId = window.location.search.substr(4); // get id from url
+
     const photographersById = photographers.filter(photographer => {
       return photographer.id == getUrlId;
     });
+
+    photographers.forEach(data => {
+      const photographer = new Photographer(data);
+      total.innerHTML = photographer.generateTotalPrice();
+    })
 
     const mediasById = medias.filter(media => {
       if (media.photographerId == getUrlId) {
@@ -78,17 +85,14 @@ const createProfile = (photographersById) => {
 
   const content = `
       <div class="photographer-infos">
-        <div class="photographer-heading">
           <h1>${name}</h1>
-          <button class="modal-btn btn">Contactez-moi</button>
-        </div>
         <p>${city}, ${country}</p>
         <p>${tagline}</p>
         <div class="tags-container">
           ${tagLink}
         </div>
       </div>
-      
+      <button class="modal-btn btn">Contactez-moi</button>
       <img src="./assets/Photographers ID Photos/${portrait}" alt="${name}">
   `;
 
@@ -109,7 +113,7 @@ const createGalleryAndLightbox = (mediasById) => {
 
     gallery.innerHTML += media.generateCard();
     lightboxes.innerHTML += media.generateLightbox();
-
+    
     // add smthg in datas.json :
     // item.alt = media.generateMediaTitle();
   })

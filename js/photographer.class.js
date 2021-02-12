@@ -50,6 +50,14 @@ export default class Photographer {
 
     return tagClass;
   }
+
+  generateTotalPrice() {
+    let totalPrice = `
+      <div class="totalprice">${this.price}€ / jour</div>
+    `;
+
+    return totalPrice;
+  }
 }
 
 

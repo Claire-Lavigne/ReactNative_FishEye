@@ -21,5 +21,8 @@ export default class Image {
     return image;
   }
   
+  generateView() {
+    return this.generatePreview();
+  }
   
 }

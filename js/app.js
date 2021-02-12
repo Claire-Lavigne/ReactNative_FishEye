@@ -1,4 +1,4 @@
-import Photographer from './photographer.js';
+import Photographer from './photographer.class.js';
 
 const container = document.querySelector('#introduction > section');
 const nav = document.querySelector('nav');

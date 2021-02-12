@@ -7,7 +7,7 @@ export default class Image {
     this.date = data.date;
     this.price = data.price;
     this.video = data.video;
-    this.image = ""; // TODO
+    this.image = data.image;
   }
 
   generateTitle() {
@@ -16,7 +16,7 @@ export default class Image {
   }
 
   generatePreview() {
-    let title = this.video.slice(0, -3) + 'png';
+    let title = this.video.slice(0, -3) + 'jpg';
     let image = `
       <img src="./assets/${this.photographerId}/${title}" alt="${this.generateTitle()}">
     `;

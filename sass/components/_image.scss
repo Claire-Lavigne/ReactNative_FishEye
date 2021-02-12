@@ -1,5 +1,4 @@
-article,
-#photographer-infos {
+article {
   img, video {
     width: 200px;
     height: 200px;
@@ -15,24 +14,48 @@ article,
   justify-content: center;
   align-items: center;
   .media-wrapper {
-    margin: 2em 2em 1em;
+    margin: 0;
+    @include tablets {
+      margin: 2em 2em 0;
+    }
   }
   a {
     transition: all 200ms ease-in-out;
   }
   img, video {
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
     object-fit: cover;
-    width: 350px;
-    height: 300px;
+    width: 100%;
+    max-width: 335px;
+    height: 190px;
     border-radius: 5px;
+    width: 100%;
+    @include tablets {
+      margin-bottom: 1em;
+      max-width: 350px;
+      height: 300px;
+    }
   }
   .media-infos {
     text-transform: capitalize;
     color: $clr-primary;
-    font-size: 18px;
+    font-size: 14px;
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    @include tablets {
+      font-size: 18px;
+      width: 350px;
+    }
+    div:first-child {
+      text-overflow: ellipsis;
+      white-space: pre-wrap;
+      overflow: hidden;
+      height: 40px;
+    }
+    div:nth-child(2) {
+      white-space: nowrap;
+    }
   }
   .likesCounter {
     cursor: pointer;

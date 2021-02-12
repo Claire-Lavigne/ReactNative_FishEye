@@ -4,16 +4,46 @@
   align-items: center;
   text-align: left;
   margin: 5em auto;
-  padding: 3em;
-  background-color: $clr-secondary-lt;
+  padding: 0;
   border-radius: 5px;
   max-width: 1240px;
   @include tablets {
-    // width: calc(100% / 3);
+    padding: 3em;
+    background-color: $clr-secondary-lt;
   }
-  .photographer-heading {
-    display: flex;
-    align-items: center;
+  img {
+    z-index: -1;
+    align-self: baseline;
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1em;
+    margin-right: 1em;
+    background: #C4C4C4;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
+    @include tablets {
+      z-index: 0;
+      width: 150px;
+      height: 150px;
+    }
+  }
+  .modal-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 32px;
+    width: 140px;
+    font-weight: 700;
+    padding: 0.5em 1em;
+    @include tablets {
+      position: relative;
+      top: -50px;
+      height: 64px;
+      width: 170px;
+    }
   }
   h1 {
     color: $clr-primary-lt;
@@ -23,11 +53,33 @@
   p:first-of-type {
     color: $clr-primary;
     font-size: 24px;
-    padding: 0.2em 0 0.8em;
+    padding: 0.8em 0;
   }
   p:last-of-type {
     color: $clr-secondary;
     font-size: 18px;
     padding-bottom: 0.8em;
   }
+  img {
+    position: absolute;
+    right: 0;
+    @include tablets {
+      position: relative;
+    }
+  }
 }
+
+  .total {
+    background: $clr-primary-lt;
+    position: absolute;
+    bottom: -10px;
+    right: 10%;
+    padding: 1em;
+    border-radius: 5px;
+  }
+  .totalLikes {
+    margin-right: 1em;;
+  }
+  .totalPrice {
+    margin-left: 1em;;
+  }
