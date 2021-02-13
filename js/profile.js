@@ -25,20 +25,21 @@ fetch('./js/datas.json')
     const medias = data[0].media;
     const getUrlId = window.location.search.substr(4); // get id from url
 
-    const photographersById = photographers.filter(photographer => {
-      return photographer.id == getUrlId;
-    });
-
     photographers.forEach(data => {
       const photographer = new Photographer(data);
       total.innerHTML = photographer.generateTotalPrice();
     })
+
+    const photographersById = photographers.filter(photographer => {
+      return photographer.id == getUrlId;
+    });
 
     const mediasById = medias.filter(media => {
       if (media.photographerId == getUrlId) {
         return media;
       };
     });
+
 
     createProfile(photographersById)
     createGalleryAndLightbox(mediasById);
@@ -52,7 +53,13 @@ fetch('./js/datas.json')
     modalOpen.addEventListener('click', displayModal);
     form.addEventListener('submit', validateForm);
 
-    generateLikes()
+    generateTotalLikes()
+    generateLikesCounter()
+    let likesCounter = document.querySelectorAll('.likesCounter');
+
+    likesCounter.forEach(counter => {
+      counter.addEventListener('click', generateTotalLikes)
+    })
 
   })
   .catch(error => { console.log(error) })
@@ -225,24 +232,28 @@ function validateForm(event) {
 }
 
 
-const generateLikes = () => {
+const generateLikesCounter = () => {
+  let likesCounter = document.querySelectorAll('.likesCounter');
 
+  likesCounter.forEach(counter => {
+    counter.addEventListener('click', (event) => {
+      let targetNumber = parseInt(event.target.childNodes[0].nodeValue); // get number without <i> child
+      console.log(typeof targetNumber)
+      targetNumber++;
+      counter.childNodes[0].nodeValue = targetNumber;
+    })
+  })
+}
+
+
+const generateTotalLikes = () => {
   let likesCounter = document.querySelectorAll('.likesCounter');
 
   let arr = [];
   likesCounter.forEach(counter => {
     let number = parseInt(counter.innerText.slice(0, -3));
-
     arr.push(number);
-    counter.addEventListener('click', (event) => {
-      let targetNumber = event.target.childNodes[0].nodeValue; // get number without <i> child
-      targetNumber++;
-      counter.childNodes[0].nodeValue = targetNumber;
-    })
-
   })
   let totalLikes = arr.reduce((a, b) => a + b);
-  console.log(totalLikes)
-  total.innerHTML += totalLikes;
-
+  total.innerHTML += `<div class="totalLikes">${totalLikes}<i> ❤ </i></div>`;
 }

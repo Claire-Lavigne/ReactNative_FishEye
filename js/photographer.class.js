@@ -53,7 +53,7 @@ export default class Photographer {
 
   generateTotalPrice() {
     let totalPrice = `
-      <div class="totalprice">${this.price}€ / jour</div>
+      <div class="totalPrice">${this.price}€ / jour</div>
     `;
 
     return totalPrice;

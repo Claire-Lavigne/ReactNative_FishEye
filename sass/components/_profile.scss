@@ -70,17 +70,24 @@
 }
 
   .total {
+    width: 200px;
     background: $clr-primary-lt;
-    position: absolute;
-    bottom: -10px;
+    position: fixed;
+    bottom: -2px;
     right: 10%;
-    padding: 1em 2em 1.2em;
+    padding: 1em 2em 1.8em;
     border-radius: 5px;
     font-weight: bold;
   }
   .totalLikes {
-    margin-right: 1em;;
+    padding-left: 1em;
+    margin-right: 1em;
+    position: absolute;
+    left: 0;
   }
   .totalPrice {
-    margin-left: 1em;;
+    padding-right: 1em;
+    margin-left: 1em;
+    position: absolute;
+    right: 0;
   }
