@@ -53,15 +53,6 @@ export default class Media {
     return mediaLightbox;
   }
 
-
-  generateTotalLikes() {
-    let totalLikes = `
-      <div class="totalLikes">${this.media.likes}<i> ❤ </i></div>
-    `;
-
-    return totalLikes;
-  }
-
 }
 
 

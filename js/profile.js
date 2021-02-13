@@ -53,6 +53,7 @@ fetch('./js/datas.json')
     form.addEventListener('submit', validateForm);
 
     generateLikes()
+
   })
   .catch(error => { console.log(error) })
 
@@ -113,10 +114,10 @@ const createGalleryAndLightbox = (mediasById) => {
 
     gallery.innerHTML += media.generateCard();
     lightboxes.innerHTML += media.generateLightbox();
-    
     // add smthg in datas.json :
     // item.alt = media.generateMediaTitle();
   })
+
 }
 
 const workingLightbox = () => {
@@ -227,15 +228,24 @@ function validateForm(event) {
 const generateLikes = () => {
 
   let likesCounter = document.querySelectorAll('.likesCounter');
+  
+   let arr = [];
   likesCounter.forEach(counter => {
-
-    counter.addEventListener('click', (event) => {
-      let number = event.target.childNodes[0].nodeValue; // get number without <i> child
-      number++;
-      counter.childNodes[0].nodeValue = number;
-
-    })
+      let test = parseInt(counter.innerText.slice(0, -3));
+      console.log(arr.push(test));
 
   })
+  console.log(arr)
+  let truc = arr.reduce((a, b) => a + b);
+  console.log(truc)
+  /*
+      counter.addEventListener('click', (event) => {
+        let number = event.target.childNodes[0].nodeValue; // get number without <i> child
+        number++;
+        counter.childNodes[0].nodeValue = number;
+      })
+    })
+    */
+
 
 }
