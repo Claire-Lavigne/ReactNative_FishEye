@@ -86,7 +86,7 @@ const createProfile = (photographersById) => {
 
   const content = `
       <div class="photographer-infos">
-          <h1>${name}</h1>
+        <h1>${name}</h1>
         <p>${city}, ${country}</p>
         <p>${tagline}</p>
         <div class="tags-container">
@@ -228,24 +228,21 @@ function validateForm(event) {
 const generateLikes = () => {
 
   let likesCounter = document.querySelectorAll('.likesCounter');
-  
-   let arr = [];
+
+  let arr = [];
   likesCounter.forEach(counter => {
-      let test = parseInt(counter.innerText.slice(0, -3));
-      console.log(arr.push(test));
+    let number = parseInt(counter.innerText.slice(0, -3));
+
+    arr.push(number);
+    counter.addEventListener('click', (event) => {
+      let targetNumber = event.target.childNodes[0].nodeValue; // get number without <i> child
+      targetNumber++;
+      counter.childNodes[0].nodeValue = targetNumber;
+    })
 
   })
-  console.log(arr)
-  let truc = arr.reduce((a, b) => a + b);
-  console.log(truc)
-  /*
-      counter.addEventListener('click', (event) => {
-        let number = event.target.childNodes[0].nodeValue; // get number without <i> child
-        number++;
-        counter.childNodes[0].nodeValue = number;
-      })
-    })
-    */
-
+  let totalLikes = arr.reduce((a, b) => a + b);
+  console.log(totalLikes)
+  total.innerHTML += totalLikes;
 
 }
