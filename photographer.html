@@ -28,39 +28,42 @@
       <div class="gallery-wrapper"></div>
       <div class="gallery-lightboxes"></div>
       <div class="total">
+        <div class="totalLikes"></div>
+        <div class="totalPrice"></div>
       </div>
     </section>
   </main>
 
- 
-    <div class="modal" role="dialog">
-      <div class="modal-content">
-        <span class="modal-close" title="Close contact form">x</span>
-        <div class="modal-body">
-          <h1 class="modal-title">Contactez-moi</h1>
-          <form action="photographer.html" method="post">
-            <div class="formData" data-error-visible="" data-error="Prénom vide">
-              <label for="first_name">Prénom</label><br>
-              <input type="text" id="first_name" name="prénom"/>
-            </div>
-            <div class="formData" data-error-visible="" data-error="Nom vide">
-              <label for="last_name">Nom</label><br>
-              <input type="text" id="last_name" name="nom"/>
-            </div>
-            <div class="formData" data-error-visible="" data-error="Email invalide">
-              <label for="email">Email</label><br>
-              <input type="email" id="email" name="email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"/>
-            </div>
-            <div class="formData" data-error-visible="" data-error="Message vide">
-              <label for="your_message">Votre Message</label><br>
-              <input type="text" id="your_message" name="msg"/>
-            </div>
-            <input class="btn" type="submit" value="Envoyer" title="send" />
-          </form>
-        </div>
+
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="modal-close" title="Close contact form"><img class="icon-close" src="./assets/cross.png" alt="icon close"></button>
+      <div class="modal-body">
+        <h1 class="modal-title">Contactez-moi</h1>
+        <form action="photographer.html" method="post">
+          <div class="formData" data-error-visible="" data-error="Prénom vide">
+            <label for="first_name">Prénom</label><br>
+            <input type="text" id="first_name" name="prénom" required aria-required="true" />
+          </div>
+          <div class="formData" data-error-visible="" data-error="Nom vide">
+            <label for="last_name">Nom</label><br>
+            <input type="text" id="last_name" name="nom" required aria-required="true" />
+          </div>
+          <div class="formData" data-error-visible="" data-error="Email invalide">
+            <label for="email">Email</label><br>
+            <input type="email" id="email" name="email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+              required aria-required="true" />
+          </div>
+          <div class="formData" data-error-visible="" data-error="Message vide">
+            <label for="your_message">Votre Message</label><br>
+            <input type="text" id="your_message" name="msg" required aria-required="true" />
+          </div>
+          <input class="btn" type="submit" value="Envoyer" title="send" />
+        </form>
       </div>
     </div>
-    
+  </div>
+
   <script type="module" src="./js/profile.js"></script>
 </body>
 

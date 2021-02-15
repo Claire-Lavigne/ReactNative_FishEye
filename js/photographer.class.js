@@ -3,7 +3,7 @@ export default class Photographer {
     this.name = data.name;
     this.id = data.id;
     this.city = data.city;
-    this.country = data.contry;
+    this.country = data.country;
     this.tags = data.tags;
     this.tagline = data.tagline;
     this.price = data.price;
@@ -49,14 +49,6 @@ export default class Photographer {
     })
 
     return tagClass;
-  }
-
-  generateTotalPrice() {
-    let totalPrice = `
-      <div class="totalPrice">${this.price}€ / jour</div>
-    `;
-
-    return totalPrice;
   }
 }
 

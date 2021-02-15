@@ -14,7 +14,6 @@ const inputFirstname = document.querySelector('#first_name');
 const inputLastname = document.querySelector('#last_name');
 const inputEmail = document.querySelector('#email');
 const inputMessage = document.querySelector('#your_message');
-const total = document.querySelector('.total');
 
 fetch('./js/datas.json')
   .then(response => {
@@ -24,11 +23,6 @@ fetch('./js/datas.json')
     const photographers = data[0].photographers;
     const medias = data[0].media;
     const getUrlId = window.location.search.substr(4); // get id from url
-
-    photographers.forEach(data => {
-      const photographer = new Photographer(data);
-      total.innerHTML = photographer.generateTotalPrice();
-    })
 
     const photographersById = photographers.filter(photographer => {
       return photographer.id == getUrlId;
@@ -54,9 +48,10 @@ fetch('./js/datas.json')
     form.addEventListener('submit', validateForm);
 
     generateTotalLikes()
+    generateTotalPrice(photographersById)
     generateLikesCounter()
-    let likesCounter = document.querySelectorAll('.likesCounter');
 
+    let likesCounter = document.querySelectorAll('.likesCounter');
     likesCounter.forEach(counter => {
       counter.addEventListener('click', generateTotalLikes)
     })
@@ -192,7 +187,7 @@ const displayModal = () => {
   modal.style.display = 'block';
 
   window.onclick = (event) => {
-    if (event.target.classList == 'modal' || event.target.classList == 'modal-close') {
+    if (event.target.classList == 'modal' || event.target.classList == 'icon-close') {
       modal.style.display = 'none';
     }
   }
@@ -238,22 +233,26 @@ const generateLikesCounter = () => {
   likesCounter.forEach(counter => {
     counter.addEventListener('click', (event) => {
       let targetNumber = parseInt(event.target.childNodes[0].nodeValue); // get number without <i> child
-      console.log(typeof targetNumber)
       targetNumber++;
       counter.childNodes[0].nodeValue = targetNumber;
     })
   })
 }
 
-
 const generateTotalLikes = () => {
   let likesCounter = document.querySelectorAll('.likesCounter');
-
+  let totalLikes = document.querySelector('.totalLikes');
   let arr = [];
   likesCounter.forEach(counter => {
     let number = parseInt(counter.innerText.slice(0, -3));
     arr.push(number);
   })
-  let totalLikes = arr.reduce((a, b) => a + b);
-  total.innerHTML += `<div class="totalLikes">${totalLikes}<i> ❤ </i></div>`;
+  let totalLikesCounter = arr.reduce((a, b) => a + b);
+  totalLikes.innerHTML = `${totalLikesCounter}<i> ❤ </i>`;
+}
+
+
+const generateTotalPrice = (photographersById) => {
+  let totalPrice = document.querySelector('.totalPrice');
+  totalPrice.innerHTML = `${photographersById[0].price}€ / jour`;
 }

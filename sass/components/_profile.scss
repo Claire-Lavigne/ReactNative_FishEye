@@ -14,8 +14,8 @@
   img {
     z-index: -1;
     align-self: baseline;
-    width: 130px;
-    height: 130px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     border-radius: 50%;
     margin-bottom: 1em;
@@ -78,6 +78,10 @@
     padding: 1em 2em 1.8em;
     border-radius: 5px;
     font-weight: bold;
+    display: none;
+    @include tablets {
+      display: block;
+    }
   }
   .totalLikes {
     padding-left: 1em;

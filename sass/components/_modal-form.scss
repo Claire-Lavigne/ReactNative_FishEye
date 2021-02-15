@@ -34,7 +34,7 @@
     padding: 15px 8%;
     margin: 15px auto;
   }
-  #msg {
+  #your_message {
     height: 180px;
   }
   label {
@@ -48,14 +48,16 @@
     outline: none;
     margin: 0;
     width: 100%;
-    border-radius: 8px;
+    border: 1px solid $clr-secondary-lt;
+    border-radius: 5px;
     font-size: 20px;
     height: 48px;
     &.btn {
       font-size: 1em;
-      width: 180px;
+      width: 170px;
       display: block; 
       margin: auto;
+      border: none;
       @include tablets {
         margin: 0;
       }
@@ -81,12 +83,16 @@
   }
   &-close {
     position: absolute;
-    right: 20px;
-    top: 15px;
+    right: 15px;
+    top: 20px;
     opacity: 1;
     cursor: pointer;
-    font-size: 2.5em;
-    color: white;
+    background: none;
+    border: none;
+    img {
+      width: 32px;
+      height: 32px;
+    }
   }
 }
 
