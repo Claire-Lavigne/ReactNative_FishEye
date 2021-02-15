@@ -1,4 +1,4 @@
-export default class Image {
+export default class Video {
   constructor(data) {
     this.id = data.id;
     this.photographerId = data.photographerId;
@@ -7,7 +7,6 @@ export default class Image {
     this.date = data.date;
     this.price = data.price;
     this.video = data.video;
-    this.image = data.image;
   }
 
   generateTitle() {

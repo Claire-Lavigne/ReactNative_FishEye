@@ -19,7 +19,7 @@ export default class Media {
   generateCard() {
     let media = `
       <div class="media-wrapper">
-        <a href="#lightbox-media-${this.media.id}">
+        <a id="${this.media.id}">
         ${this.media.generatePreview()}
         </a>
         <div class="media-infos">
@@ -35,7 +35,7 @@ export default class Media {
     return media;
   }
 
-
+/*
   generateLightbox() {
     // lightbox from https://codepen.io/ind88/pen/MzoKzP?editors=1100
     let mediaLightbox = `
@@ -52,7 +52,7 @@ export default class Media {
 
     return mediaLightbox;
   }
-
+*/
 }
 
 

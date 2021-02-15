@@ -1,4 +1,3 @@
-import Photographer from './photographer.class.js';
 import Media from './media.class.js';
 
 const dropdown = document.querySelector(".dropdown");
@@ -14,37 +13,39 @@ const inputFirstname = document.querySelector('#first_name');
 const inputLastname = document.querySelector('#last_name');
 const inputEmail = document.querySelector('#email');
 const inputMessage = document.querySelector('#your_message');
+const lightbox = document.querySelector('.lightbox');
+const lightboxElement = document.querySelector('.current-media');
 
 fetch('./js/datas.json')
   .then(response => {
     return response.json()
   })
   .then(data => {
-    const photographers = data[0].photographers;
-    const medias = data[0].media;
     const getUrlId = window.location.search.substr(4); // get id from url
 
-    const photographersById = photographers.filter(photographer => {
+    const photographersById = data[0].photographers.filter(photographer => {
       return photographer.id == getUrlId;
     });
 
-    const mediasById = medias.filter(media => {
+    const mediasById = data[0].media.filter(media => {
       if (media.photographerId == getUrlId) {
         return media;
       };
     });
 
+    const formatedMedias = mediasById.map(media => new Media(media));
 
     createProfile(photographersById)
-    createGalleryAndLightbox(mediasById);
-    window.addEventListener('popstate', workingLightbox);
+    //window.addEventListener('popstate', workingLightbox);
     removeOption();
     dropdown.addEventListener('change', removeOption);
-    sortGallery(mediasById)
-    dropdown.addEventListener('change', () => { sortGallery(mediasById) });
+    sortGallery(formatedMedias)
+    dropdown.addEventListener('change', () => { sortGallery(formatedMedias) });
 
     const modalOpen = document.querySelector('.modal-btn');
-    modalOpen.addEventListener('click', displayModal);
+    modalOpen.addEventListener('click', () => {
+      modal.style.display = 'block'
+    });
     form.addEventListener('submit', validateForm);
 
     generateTotalLikes()
@@ -55,6 +56,30 @@ fetch('./js/datas.json')
     likesCounter.forEach(counter => {
       counter.addEventListener('click', generateTotalLikes)
     })
+
+    let allMedias = document.querySelectorAll('.media-wrapper a');
+    allMedias.forEach(el => {
+      el.addEventListener("click", (e) => {
+        e.preventDefault();
+        lightbox.style.display = 'block';
+        const getMediaSrc = el.children[0].src;
+        lightboxElement.src = getMediaSrc;
+
+      });
+    })
+
+    // close modal form + lightbox
+    window.onclick = (event) => {
+      if (
+        event.target.classList == 'lightbox' ||
+        event.target.classList == 'icon-close' ||
+        event.target.classList == 'modal' ||
+        event.target.classList == 'icon-close'
+      ) {
+        modal.style.display = 'none';
+        lightbox.style.display = 'none';
+      }
+    }
 
   })
   .catch(error => { console.log(error) })
@@ -106,22 +131,21 @@ const createProfile = (photographersById) => {
   modal.setAttribute('aria-labelledby', `Contact me ${name}`);
 }
 
-const createGalleryAndLightbox = (mediasById) => {
+const createGalleryAndLightbox = (medias) => {
   let gallery = document.querySelector('.gallery-wrapper');
   let lightboxes = document.querySelector('.gallery-lightboxes');
   gallery.innerHTML = '';
   lightboxes.innerHTML = ''
-  mediasById.forEach(item => {
-    const media = new Media(item);
+  medias.forEach(media => {
 
     gallery.innerHTML += media.generateCard();
-    lightboxes.innerHTML += media.generateLightbox();
+    // lightboxes.innerHTML += media.generateLightbox();
     // add smthg in datas.json :
     // item.alt = media.generateMediaTitle();
   })
 
 }
-
+/*
 const workingLightbox = () => {
   const urlHash = window.location.hash;
   const currentLightbox = document.querySelector(urlHash);
@@ -154,43 +178,30 @@ const workingLightbox = () => {
 
 }
 
+*/
 
-
-const sortGallery = (mediasById) => {
+const sortGallery = (medias) => {
   const dropdownOption = dropdown.options[dropdown.selectedIndex].innerHTML;
   let sortedMedias = [];
   switch (dropdownOption) {
     case "Titre":
-      sortedMedias = mediasById.sort((a, b) => {
-        if (a.image && b.image) {
-          return a.image.localeCompare(b.image)
-        }
+      sortedMedias = medias.sort((a, b) => {
+        return a.media.generateTitle().localeCompare(b.media.generateTitle())
       })
       console.log(sortedMedias)
       break;
     case "Date":
       // Timestamp
-      sortedMedias = mediasById.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      sortedMedias = medias.sort((a, b) => new Date(b.media.date).getTime() - new Date(a.media.date).getTime())
       console.log(sortedMedias)
       break;
     default:
       // Popularité
-      sortedMedias = mediasById.sort((a, b) => b.likes - a.likes);
+      sortedMedias = medias.sort((a, b) => b.media.likes - a.media.likes);
       console.log(sortedMedias)
       break;
   }
   createGalleryAndLightbox(sortedMedias);
-}
-
-// display & hide form
-const displayModal = () => {
-  modal.style.display = 'block';
-
-  window.onclick = (event) => {
-    if (event.target.classList == 'modal' || event.target.classList == 'icon-close') {
-      modal.style.display = 'none';
-    }
-  }
 }
 
 ////// --VALIDATION FUNCTIONS-- //////
@@ -255,4 +266,38 @@ const generateTotalLikes = () => {
 const generateTotalPrice = (photographersById) => {
   let totalPrice = document.querySelector('.totalPrice');
   totalPrice.innerHTML = `${photographersById[0].price}€ / jour`;
+}
+
+
+const workingLightbox = () => {
+  document.querySelector('.lightbox__close').addEventListener('click', this.close.bind(this))
+  document.querySelector('.lightbox__next').addEventListener('click', this.next.bind(this))
+  document.querySelector('.lightbox__prev').addEventListener('click', this.prev.bind(this))
+
+
+  if (currentLightbox.previousElementSibling !== null) {
+    arrowLeft.href = `${fullURL}#${currentLightbox.previousElementSibling.id}`;
+
+    arrowLeft.addEventListener("keyup", (e) => {
+      if (e.key == "ArrowLeft") {
+        window.location.href = `${fullURL}#${currentLightbox.previousElementSibling.id}`;
+      }
+    });
+  } else {
+    arrowLeft.style.display = 'none';
+  }
+
+  if (currentLightbox.nextElementSibling !== null) {
+    arrowRight.href = `${fullURL}#${currentLightbox.nextElementSibling.id}`;
+    arrowRight.title = `Next image`;
+    arrowRight.addEventListener("keyup", (e) => {
+      if (e.key == "ArrowRight") {
+        window.location.href = `${fullURL}#${currentLightbox.nextElementSibling.id}`;
+      }
+    });
+  } else {
+    arrowRight.style.display = 'none';
+  }
+
+
 }
