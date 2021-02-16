@@ -26,7 +26,21 @@
         </select>
       </div>
       <div class="gallery-wrapper"></div>
-      <div class="gallery-lightboxes"></div>
+      <div class="lightbox" role="dialog" aria-modal="true">
+        <div class="lightbox-content">
+          <button class="lightbox-close" title="Close modal lightbox">
+            <img class="icon-close" src="./assets/cross-alt.png" alt="icon close">
+          </button>
+          <div class="lightbox-body"></div>
+          <a class="lightbox__prev" title="Previous image">
+            <img class="icon-prev" src="./assets/prev.png" alt="previous arrow">
+          </a>
+          <a class="lightbox__next" title="Next image">
+            <img class="icon-next" src="./assets/next.png" alt="next arrow">
+          </a>
+        </div>
+      </div>
+    
       <div class="total">
         <div class="totalLikes"></div>
         <div class="totalPrice"></div>
@@ -35,38 +49,10 @@
   </main>
 
 
-  <!-- The Modal/Lightbox -->
-  <div class="lightbox" role="dialog" aria-modal="true">
-    <div class="lightbox-content">
-      <button class="lightbox-close" title="Close modal lightbox">
-        <img class="icon-close" src="./assets/cross-alt.png" alt="icon close">
-      </button>
-      <div class="lightbox-body">
-        <img src="" class="current-media">
-        <div class="media-infos">Sport Tricks in the air</div>
-      </div>
-      <!-- Next/previous controls -->
-      <a class="lightbox__prev" title="Previous image">
-        <img class="icon-prev" src="./assets/prev.png" alt="previous arrow">
-      </a>
-      <a class="lightbox__next" title="Next image">
-        <img class="icon-next" src="./assets/next.png" alt="next arrow">
-      </a>
-    </div>
-  </div>
-
-
-
-
-
-
-
-
   <div class="modal" role="dialog" aria-modal="true">
     <div class="modal-content">
       <button class="modal-close" title="Close contact form">
-        <img class="icon-close" src="./assets/cross.png"
-          alt="icon close"></button>
+        <img class="icon-close" src="./assets/cross.png" alt="icon close"></button>
       <div class="modal-body">
         <h1 class="modal-title">Contactez-moi</h1>
         <form action="photographer.html" method="post">

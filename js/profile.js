@@ -1,104 +1,103 @@
-import Media from './media.class.js';
+import Media from "./media.class.js";
 
 const dropdown = document.querySelector(".dropdown");
-const sectionOne = document.querySelector('#photographer-infos');
+const sectionOne = document.querySelector("#photographer-infos");
 const urlOrigin = window.origin;
 const urlPath = window.location.pathname;
 const urlID = window.location.search;
 const fullURL = urlOrigin + urlPath + urlID;
-const modal = document.querySelector('.modal');
-const form = document.querySelector('form');
-const modalTitle = document.querySelector('.modal-title');
-const inputFirstname = document.querySelector('#first_name');
-const inputLastname = document.querySelector('#last_name');
-const inputEmail = document.querySelector('#email');
-const inputMessage = document.querySelector('#your_message');
-const lightbox = document.querySelector('.lightbox');
-const lightboxElement = document.querySelector('.current-media');
+const modal = document.querySelector(".modal");
+const form = document.querySelector("form");
+const modalTitle = document.querySelector(".modal-title");
+const inputFirstname = document.querySelector("#first_name");
+const inputLastname = document.querySelector("#last_name");
+const inputEmail = document.querySelector("#email");
+const inputMessage = document.querySelector("#your_message");
+const lightbox = document.querySelector(".lightbox-body");
 
-fetch('./js/datas.json')
-  .then(response => {
-    return response.json()
+fetch("./js/datas.json")
+  .then((response) => {
+    return response.json();
   })
-  .then(data => {
+  .then((data) => {
     const getUrlId = window.location.search.substr(4); // get id from url
 
-    const photographersById = data[0].photographers.filter(photographer => {
+    const photographersById = data[0].photographers.filter((photographer) => {
       return photographer.id == getUrlId;
     });
 
-    const mediasById = data[0].media.filter(media => {
+    const mediasById = data[0].media.filter((media) => {
       if (media.photographerId == getUrlId) {
         return media;
-      };
+      }
     });
 
-    const formatedMedias = mediasById.map(media => new Media(media));
+    const formatedMedias = mediasById.map((media) => new Media(media));
 
-    createProfile(photographersById)
-    //window.addEventListener('popstate', workingLightbox);
+    createProfile(photographersById);
+    // window.addEventListener("popstate", workingLightbox);
     removeOption();
-    dropdown.addEventListener('change', removeOption);
-    sortGallery(formatedMedias)
-    dropdown.addEventListener('change', () => { sortGallery(formatedMedias) });
-
-    const modalOpen = document.querySelector('.modal-btn');
-    modalOpen.addEventListener('click', () => {
-      modal.style.display = 'block'
+    dropdown.addEventListener("change", removeOption);
+    sortGallery(formatedMedias);
+    dropdown.addEventListener("change", () => {
+      sortGallery(formatedMedias);
     });
-    form.addEventListener('submit', validateForm);
 
-    generateTotalLikes()
-    generateTotalPrice(photographersById)
-    generateLikesCounter()
+    const modalOpen = document.querySelector(".modal-btn");
+    modalOpen.addEventListener("click", () => {
+      modal.style.display = "block";
+    });
+    form.addEventListener("submit", validateForm);
 
-    let likesCounter = document.querySelectorAll('.likesCounter');
-    likesCounter.forEach(counter => {
-      counter.addEventListener('click', generateTotalLikes)
-    })
+    generateTotalLikes();
+    generateTotalPrice(photographersById);
+    generateLikesCounter();
 
-    let allMedias = document.querySelectorAll('.media-wrapper a');
-    allMedias.forEach(el => {
-      el.addEventListener("click", (e) => {
+    let likesCounter = document.querySelectorAll(".likesCounter");
+    likesCounter.forEach((counter) => {
+      counter.addEventListener("click", generateTotalLikes);
+    });
+
+    const allMedias = document.querySelectorAll(".media-link");
+    allMedias.forEach((media) => {
+      media.addEventListener("click", (e) => {
         e.preventDefault();
-        lightbox.style.display = 'block';
-        const getMediaSrc = el.children[0].src;
-        lightboxElement.src = getMediaSrc;
-
+        const imgID = e.currentTarget.getAttribute("href").split('#').pop();
       });
-    })
+    });
 
     // close modal form + lightbox
     window.onclick = (event) => {
       if (
-        event.target.classList == 'lightbox' ||
-        event.target.classList == 'icon-close' ||
-        event.target.classList == 'modal' ||
-        event.target.classList == 'icon-close'
+        event.target.classList == "lightbox" ||
+        event.target.classList == "icon-close" ||
+        event.target.classList == "modal" ||
+        event.target.classList == "icon-close"
       ) {
-        modal.style.display = 'none';
-        lightbox.style.display = 'none';
+        modal.style.display = "none";
+        lightbox.style.display = "none";
       }
-    }
-
+    };
   })
-  .catch(error => { console.log(error) })
-
-
+  .catch((error) => {
+    console.log(error);
+  });
 
 const removeOption = () => {
   let options = document.querySelectorAll(".dropdown-option");
   let selectedOption = document.querySelector("option:checked");
 
-  Array.from(options).map(option => option.style.display = 'block');
-  selectedOption.style.display = 'none';
+  Array.from(options).map((option) => (option.style.display = "block"));
+  selectedOption.style.display = "none";
 
-  let filteredOptions = Array.from(options).filter(elt => elt.id != selectedOption.id);
-  filteredOptions.map(option => option.style.display = 'block');
-}
+  let filteredOptions = Array.from(options).filter(
+    (elt) => elt.id != selectedOption.id
+  );
+  filteredOptions.map((option) => (option.style.display = "block"));
+};
 
 const createProfile = (photographersById) => {
-  let tagLink = '';
+  let tagLink = "";
   const name = photographersById[0].name;
   const city = photographersById[0].city;
   const country = photographersById[0].country;
@@ -106,10 +105,9 @@ const createProfile = (photographersById) => {
   const tags = photographersById[0].tags;
   const portrait = photographersById[0].portrait;
 
-
-  tags.forEach(tag => {
+  tags.forEach((tag) => {
     tagLink += `<a id="${tag}" href="./index.html#${tag}" aria-label="tag" class="tag">#${tag}</a>`;
-  })
+  });
 
   const content = `
       <div class="photographer-infos">
@@ -128,24 +126,20 @@ const createProfile = (photographersById) => {
 
   modalTitle.innerHTML += `<br>${name}`;
   modalTitle.id = `Contact\ me\ ${name}`;
-  modal.setAttribute('aria-labelledby', `Contact me ${name}`);
-}
+  modal.setAttribute("aria-labelledby", `Contact me ${name}`);
+};
 
 const createGalleryAndLightbox = (medias) => {
-  let gallery = document.querySelector('.gallery-wrapper');
-  let lightboxes = document.querySelector('.gallery-lightboxes');
-  gallery.innerHTML = '';
-  lightboxes.innerHTML = ''
-  medias.forEach(media => {
-
+  let gallery = document.querySelector(".gallery-wrapper");
+  gallery.innerHTML = "";
+  medias.forEach((media) => {
     gallery.innerHTML += media.generateCard();
-    // lightboxes.innerHTML += media.generateLightbox();
+    lightbox.innerHTML += media.generateLightbox();
     // add smthg in datas.json :
     // item.alt = media.generateMediaTitle();
-  })
+  });
+};
 
-}
-/*
 const workingLightbox = () => {
   const urlHash = window.location.hash;
   const currentLightbox = document.querySelector(urlHash);
@@ -160,7 +154,7 @@ const workingLightbox = () => {
       }
     });
   } else {
-    arrowLeft.style.display = 'none';
+    arrowLeft.style.display = "none";
   }
 
   if (currentLightbox.nextElementSibling !== null) {
@@ -172,13 +166,9 @@ const workingLightbox = () => {
       }
     });
   } else {
-    arrowRight.style.display = 'none';
+    arrowRight.style.display = "none";
   }
-
-
-}
-
-*/
+};
 
 const sortGallery = (medias) => {
   const dropdownOption = dropdown.options[dropdown.selectedIndex].innerHTML;
@@ -186,31 +176,34 @@ const sortGallery = (medias) => {
   switch (dropdownOption) {
     case "Titre":
       sortedMedias = medias.sort((a, b) => {
-        return a.media.generateTitle().localeCompare(b.media.generateTitle())
-      })
-      console.log(sortedMedias)
+        return a.media.generateTitle().localeCompare(b.media.generateTitle());
+      });
+      console.log(sortedMedias);
       break;
     case "Date":
       // Timestamp
-      sortedMedias = medias.sort((a, b) => new Date(b.media.date).getTime() - new Date(a.media.date).getTime())
-      console.log(sortedMedias)
+      sortedMedias = medias.sort(
+        (a, b) =>
+          new Date(b.media.date).getTime() - new Date(a.media.date).getTime()
+      );
+      console.log(sortedMedias);
       break;
     default:
       // Popularité
       sortedMedias = medias.sort((a, b) => b.media.likes - a.media.likes);
-      console.log(sortedMedias)
+      console.log(sortedMedias);
       break;
   }
   createGalleryAndLightbox(sortedMedias);
-}
+};
 
 ////// --VALIDATION FUNCTIONS-- //////
 function validateInput(input) {
   if (input.value.toString().trim().length < 2) {
-    input.parentElement.setAttribute('data-error-visible', 'true');
+    input.parentElement.setAttribute("data-error-visible", "true");
     return false;
   } else {
-    input.parentElement.removeAttribute('data-error-visible');
+    input.parentElement.removeAttribute("data-error-visible");
     return true;
   }
 }
@@ -230,44 +223,43 @@ function validateForm(event) {
     // get every valid keys/values
     let datas = new FormData(form);
     for (let entry of datas.entries()) {
-      console.log(entry[0], ':', entry[1]);
+      console.log(entry[0], ":", entry[1]);
     }
-    modal.style.display = 'none';
+    modal.style.display = "none";
     form.reset();
   }
 }
 
-
 const generateLikesCounter = () => {
-  let likesCounter = document.querySelectorAll('.likesCounter');
+  let likesCounter = document.querySelectorAll(".likesCounter");
 
-  likesCounter.forEach(counter => {
-    counter.addEventListener('click', (event) => {
+  likesCounter.forEach((counter) => {
+    counter.addEventListener("click", (event) => {
       let targetNumber = parseInt(event.target.childNodes[0].nodeValue); // get number without <i> child
       targetNumber++;
       counter.childNodes[0].nodeValue = targetNumber;
-    })
-  })
-}
+    });
+  });
+};
 
 const generateTotalLikes = () => {
-  let likesCounter = document.querySelectorAll('.likesCounter');
-  let totalLikes = document.querySelector('.totalLikes');
+  let likesCounter = document.querySelectorAll(".likesCounter");
+  let totalLikes = document.querySelector(".totalLikes");
   let arr = [];
-  likesCounter.forEach(counter => {
+  likesCounter.forEach((counter) => {
     let number = parseInt(counter.innerText.slice(0, -3));
     arr.push(number);
-  })
+  });
   let totalLikesCounter = arr.reduce((a, b) => a + b);
   totalLikes.innerHTML = `${totalLikesCounter}<i> ❤ </i>`;
-}
-
+};
 
 const generateTotalPrice = (photographersById) => {
-  let totalPrice = document.querySelector('.totalPrice');
+  let totalPrice = document.querySelector(".totalPrice");
   totalPrice.innerHTML = `${photographersById[0].price}€ / jour`;
-}
+};
 
+/*
 
 const workingLightbox = () => {
   document.querySelector('.lightbox__close').addEventListener('click', this.close.bind(this))
@@ -301,3 +293,4 @@ const workingLightbox = () => {
 
 
 }
+*/

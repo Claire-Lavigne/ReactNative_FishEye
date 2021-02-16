@@ -19,7 +19,7 @@ export default class Media {
   generateCard() {
     let media = `
       <div class="media-wrapper">
-        <a id="${this.media.id}">
+        <a class="media-link" href="#${this.media.id}">
         ${this.media.generatePreview()}
         </a>
         <div class="media-infos">
@@ -35,24 +35,35 @@ export default class Media {
     return media;
   }
 
-/*
+  /*
+    generateLightbox() {
+      // lightbox from https://codepen.io/ind88/pen/MzoKzP?editors=1100
+      let mediaLightbox = `
+        <div class="media-lightbox" id="lightbox-media-${this.media.id}">
+          <div class="media-lightbox-wrapper">
+            <a href="" class="close"></a>
+            <a href="" class="arrow-left"></a>
+            <a href="" class="arrow-right"></a>
+            ${this.media.generateView()}
+            <div class="media-infos">${this.media.generateTitle()}</div>
+          </div>
+        </div>
+        `;
+  
+      return mediaLightbox;
+    }
+  */
+
+
   generateLightbox() {
-    // lightbox from https://codepen.io/ind88/pen/MzoKzP?editors=1100
     let mediaLightbox = `
-      <div class="media-lightbox" id="lightbox-media-${this.media.id}">
-        <div class="media-lightbox-wrapper">
-          <a href="" class="close"></a>
-          <a href="" class="arrow-left"></a>
-          <a href="" class="arrow-right"></a>
+        <div id="${this.media.id}">
           ${this.media.generateView()}
           <div class="media-infos">${this.media.generateTitle()}</div>
         </div>
-      </div>
       `;
-
     return mediaLightbox;
   }
-*/
 }
 
 
