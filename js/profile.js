@@ -2,10 +2,6 @@ import Media from "./media.class.js";
 
 const dropdown = document.querySelector(".dropdown");
 const sectionOne = document.querySelector("#photographer-infos");
-const urlOrigin = window.origin;
-const urlPath = window.location.pathname;
-const urlID = window.location.search;
-const fullURL = urlOrigin + urlPath + urlID;
 const modal = document.querySelector(".modal");
 const form = document.querySelector("form");
 const modalTitle = document.querySelector(".modal-title");
@@ -13,7 +9,8 @@ const inputFirstname = document.querySelector("#first_name");
 const inputLastname = document.querySelector("#last_name");
 const inputEmail = document.querySelector("#email");
 const inputMessage = document.querySelector("#your_message");
-const lightbox = document.querySelector(".lightbox-body");
+const lightbox = document.querySelector(".lightbox");
+const gallery = document.querySelector(".gallery-wrapper");
 
 fetch("./js/datas.json")
   .then((response) => {
@@ -35,7 +32,7 @@ fetch("./js/datas.json")
     const formatedMedias = mediasById.map((media) => new Media(media));
 
     createProfile(photographersById);
-    // window.addEventListener("popstate", workingLightbox);
+    window.addEventListener("popstate", workingLightbox);
     removeOption();
     dropdown.addEventListener("change", removeOption);
     sortGallery(formatedMedias);
@@ -61,9 +58,21 @@ fetch("./js/datas.json")
     const allMedias = document.querySelectorAll(".media-link");
     allMedias.forEach((media) => {
       media.addEventListener("click", (e) => {
-        e.preventDefault();
         const imgID = e.currentTarget.getAttribute("href").split('#').pop();
-      });
+
+        lightbox.style.display = 'block';
+        const lightboxes = Array.from(lightbox.children);
+        lightboxes.forEach(item => {
+          if (item.id === imgID) {
+            item.style.display = 'block';
+            item.classList.add('active');
+          } else {
+            item.style.display = 'none';
+            item.classList.remove('active');
+          }
+        });
+      })
+
     });
 
     // close modal form + lightbox
@@ -76,6 +85,9 @@ fetch("./js/datas.json")
       ) {
         modal.style.display = "none";
         lightbox.style.display = "none";
+        const cleanURL = window.location.href.split("#")[0];
+        const newURL = new URL(cleanURL);
+        window.history.pushState({}, '', newURL);
       }
     };
   })
@@ -130,8 +142,6 @@ const createProfile = (photographersById) => {
 };
 
 const createGalleryAndLightbox = (medias) => {
-  let gallery = document.querySelector(".gallery-wrapper");
-  gallery.innerHTML = "";
   medias.forEach((media) => {
     gallery.innerHTML += media.generateCard();
     lightbox.innerHTML += media.generateLightbox();
@@ -141,8 +151,46 @@ const createGalleryAndLightbox = (medias) => {
 };
 
 const workingLightbox = () => {
+  const urlHash = window.location.href.split("#")[0];
+  const actualLightbox = document.querySelector('.lightbox-content.active')
+  const prevArrow = actualLightbox.children[2];
+  const nextArrow = actualLightbox.children[3];
+
+  if (actualLightbox.previousElementSibling != null) {
+    prevArrow.style.display = 'flex';
+    prevArrow.href = `${urlHash}#${actualLightbox.previousElementSibling.id}`;
+    prevArrow.addEventListener('click', () => {
+      actualLightbox.style.display = "none";
+      actualLightbox.classList.remove("active");
+      actualLightbox.previousElementSibling.style.display = "block";
+      actualLightbox.previousElementSibling.classList.add("active");
+    })
+  } else {
+    prevArrow.style.display = 'none';
+  }
+
+
+  if (actualLightbox.nextElementSibling != null) {
+    nextArrow.style.display = 'flex';
+    nextArrow.href = `${urlHash}#${actualLightbox.nextElementSibling.id}`;
+    nextArrow.addEventListener('click', () => {
+      actualLightbox.style.display = "none";
+      actualLightbox.classList.remove("active");
+      actualLightbox.nextElementSibling.style.display = "block";
+      actualLightbox.nextElementSibling.classList.add("active");
+    })
+  } else {
+    nextArrow.style.display = 'none';
+  }
+
+
+
+
+  /*
   const urlHash = window.location.hash;
+  console.log(urlHash)
   const currentLightbox = document.querySelector(urlHash);
+  console.log(currentLightbox)
   const arrowLeft = document.querySelector(`${urlHash} .arrow-left`);
   const arrowRight = document.querySelector(`${urlHash} .arrow-right`);
   if (currentLightbox.previousElementSibling !== null) {
@@ -168,6 +216,7 @@ const workingLightbox = () => {
   } else {
     arrowRight.style.display = "none";
   }
+  */
 };
 
 const sortGallery = (medias) => {

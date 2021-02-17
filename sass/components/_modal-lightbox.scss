@@ -1,4 +1,3 @@
-
 .gallery-lightboxes {
   .media-lightbox {
     position: fixed;
@@ -125,23 +124,21 @@
   }
 }
 
-
-
 .lightbox {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 5;
   left: 0;
   top: 0;
   height: 100%;
   width: 100%;
   overflow: auto;
+  animation: modalopen 0.5s;
   background-color: white;
   &-content {
     margin: 5% auto;
     width: 100%;
     max-width: 1000px;
-    animation: modalopen 0.5s;
     background: white;
     overflow: hidden;
     position: relative;
@@ -151,6 +148,7 @@
   }
   &-body {
     padding: 15px 30px;
+    text-align: center;
   }
   .media-infos {
     color: $clr-primary;
@@ -169,7 +167,7 @@
       height: 18px;
     }
   }
-  
+
   img,
   video {
     margin: 0 auto;

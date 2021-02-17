@@ -57,10 +57,20 @@ export default class Media {
 
   generateLightbox() {
     let mediaLightbox = `
-        <div id="${this.media.id}">
-          ${this.media.generateView()}
+      <div id="${this.media.id}" class="lightbox-content">
+        <button class="lightbox-close" title="Close modal lightbox">
+          <img class="icon-close" src="./assets/cross-alt.png" alt="icon close">
+        </button>
+        <div class="lightbox-body">${this.media.generateView()}
           <div class="media-infos">${this.media.generateTitle()}</div>
         </div>
+        <a class="lightbox__prev" title="Previous image">
+          <img class="icon-prev" src="./assets/prev.png" alt="previous arrow">
+        </a>
+        <a class="lightbox__next" title="Next image">
+          <img class="icon-next" src="./assets/next.png" alt="next arrow">
+        </a>
+      </div>
       `;
     return mediaLightbox;
   }
