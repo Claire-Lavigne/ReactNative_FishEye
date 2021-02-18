@@ -19,14 +19,15 @@ export default class Media {
   generateCard() {
     let media = `
       <div class="media-wrapper">
-        <a class="media-link" href="#${this.media.id}">
+        <a class="media-link" href="#${this.media.id}" title="${this.media.generateTitle()}, closeup view">
         ${this.media.generatePreview()}
         </a>
         <div class="media-infos">
           <div>${this.media.generateTitle()}</div> 
           <div>
-            <span class="likesCounter">${this.media.likes}<i> ❤ </i></span>
             <span>${this.media.price}€</span>
+            <span class="likesCounter">${this.media.likes}</span>
+            <i aria-label="likes"> ❤ </i>
           </div>
         </div>
       </div>
@@ -35,30 +36,10 @@ export default class Media {
     return media;
   }
 
-  /*
-    generateLightbox() {
-      // lightbox from https://codepen.io/ind88/pen/MzoKzP?editors=1100
-      let mediaLightbox = `
-        <div class="media-lightbox" id="lightbox-media-${this.media.id}">
-          <div class="media-lightbox-wrapper">
-            <a href="" class="close"></a>
-            <a href="" class="arrow-left"></a>
-            <a href="" class="arrow-right"></a>
-            ${this.media.generateView()}
-            <div class="media-infos">${this.media.generateTitle()}</div>
-          </div>
-        </div>
-        `;
-  
-      return mediaLightbox;
-    }
-  */
-
-
   generateLightbox() {
     let mediaLightbox = `
       <div id="${this.media.id}" class="lightbox-content">
-        <button class="lightbox-close" title="Close modal lightbox">
+        <button class="lightbox-close" title="Close dialog">
           <img class="icon-close" src="./assets/cross-alt.png" alt="icon close">
         </button>
         <div class="lightbox-body">${this.media.generateView()}

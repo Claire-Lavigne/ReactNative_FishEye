@@ -39,7 +39,7 @@ const displayNav = (photographers) => {
     // (spread operation '...') --> convert the result into an array 
   // then for each tag : create element
   [...new Set(tagsArray)].forEach(tag => {
-    nav.innerHTML += `<a id="${tag}" href="#${tag}" aria-label="tag" class="tag">#${tag}</a>`
+    nav.innerHTML += `<a href="#${tag}" aria-label="tag" class="tag ${tag}">#${tag}</a>`
   })
 }
 

@@ -126,8 +126,9 @@
 
 .lightbox {
   display: none;
+  overflow: hidden;
   position: fixed;
-  z-index: 5;
+  z-index: 1;
   left: 0;
   top: 0;
   height: 100%;
@@ -136,7 +137,9 @@
   animation: modalopen 0.5s;
   background-color: white;
   &-content {
-    margin: 5% auto;
+    margin: auto;
+    margin-top: 50vh;
+    transform: translateY(-50%);
     width: 100%;
     max-width: 1000px;
     background: white;
@@ -152,9 +155,11 @@
   }
   .media-infos {
     color: $clr-primary;
+    text-align: left;
+    padding-top: 1em;
   }
   &-close {
-    z-index: 1;
+    z-index: 5;
     position: absolute;
     right: 13px;
     top: 25px;

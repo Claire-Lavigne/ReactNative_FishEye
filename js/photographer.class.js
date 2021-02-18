@@ -14,7 +14,7 @@ export default class Photographer {
     return `
     <article class="${this.generateTagsClass()}">
       <a href="./photographer.html?id=${this.id}" aria-label="${this.name}">
-        <img src="./assets/Photographers ID Photos/${this.portrait}" alt="">
+        <img src="./assets/Photographers ID Photos/${this.portrait}" alt="${this.name}">
         <h2>${this.name}</h2>
       </a>
       <div>
@@ -34,7 +34,7 @@ export default class Photographer {
     let tagLink = '';
 
     this.tags.forEach(tag => {
-      tagLink += `<a id="${tag}" href="#${tag}" aria-label="tag" class="tag">#${tag}</a>`;
+      tagLink += `<a href="#${tag}" aria-label="tag" class="tag ${tag}">#${tag}</a>`;
     })
 
     return tagLink;

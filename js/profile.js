@@ -50,7 +50,7 @@ fetch("./js/datas.json")
     generateTotalPrice(photographersById);
     generateLikesCounter();
 
-    let likesCounter = document.querySelectorAll(".likesCounter");
+    let likesCounter = document.querySelectorAll(".likesCounter:not(i)");
     likesCounter.forEach((counter) => {
       counter.addEventListener("click", generateTotalLikes);
     });
@@ -118,7 +118,7 @@ const createProfile = (photographersById) => {
   const portrait = photographersById[0].portrait;
 
   tags.forEach((tag) => {
-    tagLink += `<a id="${tag}" href="./index.html#${tag}" aria-label="tag" class="tag">#${tag}</a>`;
+    tagLink += `<a href="./index.html#${tag}" aria-label="tag" class="tag ${tag}">#${tag}</a>`;
   });
 
   const content = `
@@ -130,7 +130,7 @@ const createProfile = (photographersById) => {
           ${tagLink}
         </div>
       </div>
-      <button class="modal-btn btn">Contactez-moi</button>
+      <button class="modal-btn btn" title="Contact Me">Contactez-moi</button>
       <img src="./assets/Photographers ID Photos/${portrait}" alt="${name}">
   `;
 
@@ -160,63 +160,45 @@ const workingLightbox = () => {
     prevArrow.style.display = 'flex';
     prevArrow.href = `${urlHash}#${actualLightbox.previousElementSibling.id}`;
     prevArrow.addEventListener('click', () => {
+      prevLightbox()
+    })
+    actualLightbox.addEventListener("keyup", (e) => {
+      if (e.key == "ArrowLeft") {
+        prevLightbox()
+      }
+    })
+    function prevLightbox() {
       actualLightbox.style.display = "none";
       actualLightbox.classList.remove("active");
       actualLightbox.previousElementSibling.style.display = "block";
       actualLightbox.previousElementSibling.classList.add("active");
-    })
+    }
   } else {
     prevArrow.style.display = 'none';
   }
-
 
   if (actualLightbox.nextElementSibling != null) {
     nextArrow.style.display = 'flex';
     nextArrow.href = `${urlHash}#${actualLightbox.nextElementSibling.id}`;
     nextArrow.addEventListener('click', () => {
+      nextLightbox()
+    })
+    actualLightbox.addEventListener("keyup", (e) => {
+      if (e.key == "ArrowRight") {
+        nextLightbox()
+      }
+    })
+
+    function nextLightbox() {
       actualLightbox.style.display = "none";
       actualLightbox.classList.remove("active");
       actualLightbox.nextElementSibling.style.display = "block";
       actualLightbox.nextElementSibling.classList.add("active");
-    })
+    }
   } else {
     nextArrow.style.display = 'none';
   }
 
-
-
-
-  /*
-  const urlHash = window.location.hash;
-  console.log(urlHash)
-  const currentLightbox = document.querySelector(urlHash);
-  console.log(currentLightbox)
-  const arrowLeft = document.querySelector(`${urlHash} .arrow-left`);
-  const arrowRight = document.querySelector(`${urlHash} .arrow-right`);
-  if (currentLightbox.previousElementSibling !== null) {
-    arrowLeft.href = `${fullURL}#${currentLightbox.previousElementSibling.id}`;
-    arrowLeft.title = `Previous image`;
-    arrowLeft.addEventListener("keyup", (e) => {
-      if (e.key == "ArrowLeft") {
-        window.location.href = `${fullURL}#${currentLightbox.previousElementSibling.id}`;
-      }
-    });
-  } else {
-    arrowLeft.style.display = "none";
-  }
-
-  if (currentLightbox.nextElementSibling !== null) {
-    arrowRight.href = `${fullURL}#${currentLightbox.nextElementSibling.id}`;
-    arrowRight.title = `Next image`;
-    arrowRight.addEventListener("keyup", (e) => {
-      if (e.key == "ArrowRight") {
-        window.location.href = `${fullURL}#${currentLightbox.nextElementSibling.id}`;
-      }
-    });
-  } else {
-    arrowRight.style.display = "none";
-  }
-  */
 };
 
 const sortGallery = (medias) => {
@@ -284,9 +266,9 @@ const generateLikesCounter = () => {
 
   likesCounter.forEach((counter) => {
     counter.addEventListener("click", (event) => {
-      let targetNumber = parseInt(event.target.childNodes[0].nodeValue); // get number without <i> child
+      let targetNumber = parseInt(event.target.innerText); // get number without <i> child
       targetNumber++;
-      counter.childNodes[0].nodeValue = targetNumber;
+      counter.innerText = targetNumber;
     });
   });
 };
@@ -296,50 +278,14 @@ const generateTotalLikes = () => {
   let totalLikes = document.querySelector(".totalLikes");
   let arr = [];
   likesCounter.forEach((counter) => {
-    let number = parseInt(counter.innerText.slice(0, -3));
+    let number = parseInt(counter.innerText);
     arr.push(number);
   });
   let totalLikesCounter = arr.reduce((a, b) => a + b);
-  totalLikes.innerHTML = `${totalLikesCounter}<i> ❤ </i>`;
+  totalLikes.innerHTML = `${totalLikesCounter} <i aria-label="likes"> ❤ </i>`;
 };
 
 const generateTotalPrice = (photographersById) => {
   let totalPrice = document.querySelector(".totalPrice");
   totalPrice.innerHTML = `${photographersById[0].price}€ / jour`;
 };
-
-/*
-
-const workingLightbox = () => {
-  document.querySelector('.lightbox__close').addEventListener('click', this.close.bind(this))
-  document.querySelector('.lightbox__next').addEventListener('click', this.next.bind(this))
-  document.querySelector('.lightbox__prev').addEventListener('click', this.prev.bind(this))
-
-
-  if (currentLightbox.previousElementSibling !== null) {
-    arrowLeft.href = `${fullURL}#${currentLightbox.previousElementSibling.id}`;
-
-    arrowLeft.addEventListener("keyup", (e) => {
-      if (e.key == "ArrowLeft") {
-        window.location.href = `${fullURL}#${currentLightbox.previousElementSibling.id}`;
-      }
-    });
-  } else {
-    arrowLeft.style.display = 'none';
-  }
-
-  if (currentLightbox.nextElementSibling !== null) {
-    arrowRight.href = `${fullURL}#${currentLightbox.nextElementSibling.id}`;
-    arrowRight.title = `Next image`;
-    arrowRight.addEventListener("keyup", (e) => {
-      if (e.key == "ArrowRight") {
-        window.location.href = `${fullURL}#${currentLightbox.nextElementSibling.id}`;
-      }
-    });
-  } else {
-    arrowRight.style.display = 'none';
-  }
-
-
-}
-*/
