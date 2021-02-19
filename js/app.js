@@ -1,7 +1,8 @@
 import Photographer from './photographer.class.js';
 
+const intro = document.querySelector('#introduction');
 const container = document.querySelector('#introduction > section');
-const nav = document.querySelector('nav');
+const nav = document.querySelector('nav ul');
 const anchorNav = document.querySelector('#anchor-nav');
 anchorNav.hidden = true;
 
@@ -25,6 +26,10 @@ fetch('./js/datas.json')
     window.addEventListener('scroll', scrollNav);
     window.addEventListener('hashchange', filterArticles);
     window.addEventListener('popstate', filterArticles()); // execute immediately
+    anchorNav.addEventListener('click', (event) => {
+      event.preventDefault();
+      intro.scrollIntoView({ behavior: 'smooth' });
+    })
   })
   .catch(error => { console.error('fetch error', error) })
 
@@ -34,12 +39,12 @@ const displayNav = (photographers) => {
     tagsArray.push(...photographer.tags); // add all tags into empty array
   });
   // remove duplicate tags
-    // ('new') --> create new object 
-    // ('Set') --> convert the array to a collection of unique values 
-    // (spread operation '...') --> convert the result into an array 
+  // ('new') --> create new object 
+  // ('Set') --> convert the array to a collection of unique values 
+  // (spread operation '...') --> convert the result into an array 
   // then for each tag : create element
   [...new Set(tagsArray)].forEach(tag => {
-    nav.innerHTML += `<a href="#${tag}" aria-label="tag" class="tag ${tag}">#${tag}</a>`
+    nav.innerHTML += `<li><a href="#${tag}" aria-label="tag" class="tag ${tag}">#${tag}</a></li>`
   })
 }
 

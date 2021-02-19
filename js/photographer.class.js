@@ -23,7 +23,9 @@ export default class Photographer {
         <p>${this.price}€/jour</p>
       </div>
       <div class="tags-container">
-        ${this.generateTagsLink()}
+        <ul>
+          ${this.generateTagsLink()}
+        </ul>
       </div>
     </article>
     `;
@@ -34,7 +36,7 @@ export default class Photographer {
     let tagLink = '';
 
     this.tags.forEach(tag => {
-      tagLink += `<a href="#${tag}" aria-label="tag" class="tag ${tag}">#${tag}</a>`;
+      tagLink += `<li><a href="#${tag}" aria-label="tag" class="tag ${tag}">#${tag}</a></li>`;
     })
 
     return tagLink;

@@ -18,6 +18,11 @@
   }
 }
 
-.dropdown {
-  margin-bottom: 2em;
+#photographer-pix {
+  > label {
+    padding: 1em;
+  }
+  .dropdown {
+    margin-bottom: 2em;
+  }
 }

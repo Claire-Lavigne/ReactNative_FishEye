@@ -39,7 +39,7 @@ fetch("./js/datas.json")
     closeModals();
 
     const modalOpen = document.querySelector(".modal-btn");
-    const buttonLikes = document.querySelectorAll(".media-infos i");
+    const buttonLikes = document.querySelectorAll(".likes");
     const mediasLink = document.querySelectorAll(".media-link");
 
     modalOpen.addEventListener("click", () => modal.style.display = "block");
@@ -51,10 +51,10 @@ fetch("./js/datas.json")
     });
 
     buttonLikes.forEach(btn => btn.addEventListener("click", (e) => {
-      e.target.previousElementSibling.innerText++;
+      e.preventDefault();
+      e.currentTarget.previousElementSibling.innerText++;
       generateTotalLikes();
-    })
-    );
+    }));
 
     mediasLink.forEach(link => {
       link.addEventListener("click", (e) => {
@@ -90,7 +90,7 @@ const createProfile = (photographersById) => {
   const portrait = photographersById[0].portrait;
 
   tags.forEach((tag) => {
-    tagLink += `<a href="./index.html#${tag}" aria-label="tag" class="tag ${tag}">#${tag}</a>`;
+    tagLink += `<li><a href="./index.html#${tag}" aria-label="tag" class="tag ${tag}">#${tag}</a></li>`;
   });
 
   const content = `
@@ -99,7 +99,9 @@ const createProfile = (photographersById) => {
         <p>${city}, ${country}</p>
         <p>${tagline}</p>
         <div class="tags-container">
-          ${tagLink}
+          <ul>
+            ${tagLink}
+          </ul>
         </div>
       </div>
       <button class="modal-btn btn" title="Contact Me">Contactez-moi</button>
@@ -203,7 +205,9 @@ const workingLightbox = () => {
     prevArrow.addEventListener('click', () => {
       prevLightbox()
     })
-    actualLightbox.addEventListener("keyup", (e) => {
+    prevArrow.addEventListener("keyup", (e) => {
+      console.log(actualLightbox)
+      console.log(e.key)
       if (e.key == "ArrowLeft") {
         prevLightbox()
       }
@@ -218,7 +222,9 @@ const workingLightbox = () => {
     nextArrow.addEventListener('click', () => {
       nextLightbox()
     })
-    actualLightbox.addEventListener("keyup", (e) => {
+    nextArrow.addEventListener("keyup", (e) => {
+      console.log(actualLightbox)
+      console.log(e.key)
       if (e.key == "ArrowRight") {
         nextLightbox()
       }

@@ -14,13 +14,11 @@ article {
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
+  margin-bottom: 3em;
   .media-wrapper {
-    margin: 0;
-    @include tablets {
+    margin: 0 1em;
+    @include for-desktop-up {
       margin: 2em 2em 0;
-    }
-    &:last-of-type {
-      margin-bottom: 2em;
     }
   }
   a {
@@ -35,7 +33,7 @@ article {
     height: 190px;
     border-radius: 5px;
     width: 100%;
-    @include tablets {
+    @include for-desktop-up {
       margin-bottom: 1em;
       max-width: 350px;
       height: 300px;
@@ -48,7 +46,7 @@ article {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    @include tablets {
+    @include for-desktop-up {
       font-size: 18px;
       width: 350px;
     }
@@ -63,6 +61,7 @@ article {
     }
     i {
       cursor: pointer;
+      color: $clr-primary;
     }
   }
 }

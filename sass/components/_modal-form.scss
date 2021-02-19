@@ -8,7 +8,7 @@
   width: 100%;
   overflow: auto;
   background-color:white;
-  @include tablets {
+  @include for-desktop-up {
     background-color: rgba(0, 0, 0, 0.3);
   }
   //background-color: $clr-secondary-lt;
@@ -58,7 +58,7 @@
       display: block; 
       margin: auto;
       border: none;
-      @include tablets {
+      @include for-desktop-up {
         margin: 0;
       }
     }

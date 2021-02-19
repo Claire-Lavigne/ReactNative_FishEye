@@ -7,11 +7,14 @@ body,
   font-weight: 400;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  padding: 1em;
   font-weight: 400;
-  max-width: 1500px;
   margin: auto;
+  max-width: 1500px;
   position: relative;
   scroll-behavior: smooth;
 }
@@ -19,8 +22,19 @@ body {
 section {
   display: flex;
   flex-flow: row wrap;
-  margin-top: 2em;
-  max-width: 1500px;
+  margin-top: 10em;
+  @include for-tablets-up {
+    margin: 2em;
+    margin-top: 10em;
+  }
+  @include for-desktop-up {
+    margin-top: 5em;
+  }
+}
+
+ul {
+  display: flex;
+  justify-content: center;
 }
 
 a {

@@ -27,7 +27,7 @@ export default class Media {
           <div>
             <span>${this.media.price}€</span>
             <span class="likesCounter">${this.media.likes}</span>
-            <i aria-label="likes">❤</i>
+            <a class="likes" href=""><i aria-label="likes">❤</i></a>
           </div>
         </div>
       </div>
