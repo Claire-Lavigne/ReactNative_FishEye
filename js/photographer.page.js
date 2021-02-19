@@ -206,8 +206,6 @@ const workingLightbox = () => {
       prevLightbox()
     })
     prevArrow.addEventListener("keyup", (e) => {
-      console.log(actualLightbox)
-      console.log(e.key)
       if (e.key == "ArrowLeft") {
         prevLightbox()
       }
@@ -223,8 +221,6 @@ const workingLightbox = () => {
       nextLightbox()
     })
     nextArrow.addEventListener("keyup", (e) => {
-      console.log(actualLightbox)
-      console.log(e.key)
       if (e.key == "ArrowRight") {
         nextLightbox()
       }
