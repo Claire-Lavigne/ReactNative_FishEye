@@ -61,8 +61,8 @@ article {
     div:nth-child(2) {
       white-space: nowrap;
     }
-  }
-  .likesCounter {
-    cursor: pointer;
+    i {
+      cursor: pointer;
+    }
   }
 }

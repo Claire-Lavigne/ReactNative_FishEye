@@ -20,7 +20,7 @@
     border-radius: 50%;
     margin-bottom: 1em;
     margin-right: 1em;
-    background: #C4C4C4;
+    background: #c4c4c4;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
     @include tablets {
       z-index: 0;
@@ -70,29 +70,21 @@
   }
 }
 
-  .total {
-    width: 200px;
-    background: $clr-primary-lt;
-    position: fixed;
-    bottom: -2px;
-    right: 10%;
-    padding: 1em 2em 1.8em;
-    border-radius: 5px;
-    font-weight: bold;
-    display: none;
-    @include tablets {
-      display: block;
-    }
+.total {
+  width: auto;
+  background: $clr-primary-lt;
+  position: fixed;
+  bottom: -2px;
+  right: 10%;
+  padding: 1em 2em;
+  border-radius: 5px;
+  font-weight: bold;
+  display: none;
+  @include tablets {
+    display: flex;
   }
-  .totalLikes {
-    padding-left: 1em;
+  i {
     margin-right: 1em;
-    position: absolute;
-    left: 0;
+    margin-left: 0.3em;
   }
-  .totalPrice {
-    padding-right: 1em;
-    margin-left: 1em;
-    position: absolute;
-    right: 0;
-  }
+}
