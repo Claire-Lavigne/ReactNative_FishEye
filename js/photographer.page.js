@@ -1,4 +1,4 @@
-import Media from "./media.class.js";
+import Media from "./Media.class.js";
 
 const dropdown = document.querySelector(".dropdown");
 const sectionOne = document.querySelector("#photographer-infos");

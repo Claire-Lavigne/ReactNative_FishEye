@@ -1,4 +1,4 @@
-import Photographer from './photographer.class.js';
+import Photographer from './Person.class.js';
 
 const intro = document.querySelector('#introduction');
 const main = document.querySelector('#introduction > section');
