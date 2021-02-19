@@ -1,7 +1,7 @@
 import Photographer from './photographer.class.js';
 
 const intro = document.querySelector('#introduction');
-const container = document.querySelector('#introduction > section');
+const main = document.querySelector('#introduction > section');
 const nav = document.querySelector('nav ul');
 const anchorNav = document.querySelector('#anchor-nav');
 anchorNav.hidden = true;
@@ -19,15 +19,15 @@ fetch('./js/datas.json')
 
     photographers.forEach(data => {
       const photographer = new Photographer(data);
-      container.innerHTML += photographer.generateArticle();
+      main.innerHTML += photographer.generateArticle();
     })
 
     displayNav(photographers);
     window.addEventListener('scroll', scrollNav);
     window.addEventListener('hashchange', filterArticles);
     window.addEventListener('popstate', filterArticles()); // execute immediately
-    anchorNav.addEventListener('click', (event) => {
-      event.preventDefault();
+    anchorNav.addEventListener('click', (e) => {
+      e.preventDefault();
       intro.scrollIntoView({ behavior: 'smooth' });
     })
   })
