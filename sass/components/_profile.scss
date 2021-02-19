@@ -7,6 +7,7 @@
   }
 }
 
+// photographer intro
 #photographer-infos {
   margin: 5em auto;
   padding: 1em;
@@ -73,6 +74,72 @@
   }
   ul {
     justify-content: flex-start;
+  }
+}
+
+// dropdown + gallery
+#photographer-pix {
+  > label {
+    padding: 1em;
+  }
+  .dropdown {
+    margin-bottom: 2em;
+  }
+  .gallery-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3em;
+    .media-wrapper {
+      margin: 0 1em;
+      @include for-desktop-up {
+        margin: 2em 2em 0;
+      }
+    }
+    a {
+      transition: all 200ms ease-in-out;
+    }
+    img,
+    video {
+      margin-bottom: 0.5em;
+      object-fit: cover;
+      width: 100%;
+      max-width: 335px;
+      height: 190px;
+      border-radius: 5px;
+      width: 100%;
+      @include for-desktop-up {
+        margin-bottom: 1em;
+        max-width: 350px;
+        height: 300px;
+      }
+    }
+    .media-infos {
+      text-transform: capitalize;
+      color: $clr-primary;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      @include for-desktop-up {
+        font-size: 18px;
+        width: 350px;
+      }
+      div:first-child {
+        text-overflow: ellipsis;
+        white-space: pre-wrap;
+        overflow: hidden;
+        height: 40px;
+      }
+      div:nth-child(2) {
+        white-space: nowrap;
+      }
+      i {
+        cursor: pointer;
+        color: $clr-primary;
+      }
+    }
   }
 }
 

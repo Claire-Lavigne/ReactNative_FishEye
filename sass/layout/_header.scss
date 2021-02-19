@@ -27,7 +27,7 @@ header {
       margin-left: 5%;
     }
   }
-  nav ul {
+  ul {
     flex-flow: row wrap;
   }
   #anchor-nav {
@@ -45,21 +45,5 @@ header {
       color: black;
       background: $clr-primary-lt;
     }
-  }
-}
-
-#introduction h1 {
-  color: $clr-primary;
-  z-index: 2;
-  font-size: 14px;
-  position: fixed;
-  top: 15px;
-  right: 16px;
-  padding-top: 16px;
-  @include for-desktop-up {
-    font-size: 36px;
-    padding-top: 10px;
-    left: 70%;
-    right: unset;
   }
 }

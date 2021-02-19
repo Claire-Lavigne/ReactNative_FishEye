@@ -19,6 +19,22 @@ body {
   scroll-behavior: smooth;
 }
 
+#introduction h1 {
+  color: $clr-primary;
+  z-index: 2;
+  font-size: 14px;
+  position: fixed;
+  top: 15px;
+  right: 16px;
+  padding-top: 16px;
+  @include for-desktop-up {
+    font-size: 36px;
+    padding-top: 10px;
+    left: 70%;
+    right: unset;
+  }
+}
+
 section {
   display: flex;
   flex-flow: row wrap;
