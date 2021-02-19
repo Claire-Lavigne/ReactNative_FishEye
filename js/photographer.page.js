@@ -55,6 +55,13 @@ fetch("./js/datas.json")
       e.currentTarget.previousElementSibling.innerText++;
       generateTotalLikes();
     }));
+    buttonLikes.forEach(btn => btn.addEventListener("keyup", (e) => {
+      if (e.key == "Enter") {
+        e.preventDefault();
+        e.currentTarget.previousElementSibling.innerText++;
+        generateTotalLikes();
+      }
+    }));
 
     mediasLink.forEach(link => {
       link.addEventListener("click", (e) => {
@@ -232,20 +239,41 @@ const workingLightbox = () => {
 };
 
 const closeModals = () => {
-  window.onclick = (event) => {
+  window.addEventListener("click", (event) => {
     if (
       event.target.classList == "lightbox" ||
       event.target.classList == "icon-close" ||
       event.target.classList == "modal" ||
       event.target.classList == "icon-close"
     ) {
-      modal.style.display = "none";
+      closeModalForm();
+      closeModalLightbox();
+    }
+  });
+  
+  const lightboxCloseBtn = document.querySelector('.lightbox-close');
+  const formCloseBtn = document.querySelector('.modal-close');
+  lightboxCloseBtn.addEventListener("keydown", (e) => {
+    if (e.key == "Enter") {
+      closeModalLightbox();
+    }
+  })
+  formCloseBtn.addEventListener("keyup", (e) => {
+    if (e.key == "Enter") {
+      closeModalForm();
+    }
+  })
+}
+
+const closeModalForm = () => {
+  modal.style.display = "none";
+}
+
+const closeModalLightbox = () => {
       lightbox.style.display = "none";
       const cleanURL = window.location.href.split("#")[0];
       const newURL = new URL(cleanURL);
       window.history.pushState({}, '', newURL);
-    }
-  };
 }
 
 const validateFormInput = (input) => {
