@@ -44,9 +44,9 @@ fetch("./js/datas.json")
     const buttonLikes = document.querySelectorAll(".likes");
     const mediasLink = document.querySelectorAll(".media-link");
 
-    modalOpen.addEventListener("click", (e) => {
+    modalOpen.addEventListener("click", () => {
       modal.style.display = "block";
-
+      document.querySelector('#first_name').focus();
       window.addEventListener('keydown', handleKeyModal);
     });
     form.addEventListener("submit", validateForm);
@@ -192,15 +192,31 @@ const sortGallery = (medias) => {
   createGalleryAndLightbox(sortedMedias);
 };
 
+const listenKey = (e) => {
+  actualLightbox = document.querySelector('.lightbox-content.active')
+  const prevArrow = actualLightbox.children[2];
+  const nextArrow = actualLightbox.children[3];
+
+  if (e.key == "ArrowLeft" && prevArrow.style.display != 'none') {
+    window.removeEventListener('keyup', listenKey)
+    prevArrow.click();
+  }
+  if (e.key == "ArrowRight" && nextArrow.style.display != 'none') {
+    window.removeEventListener('keyup', listenKey)
+    nextArrow.click();
+  }
+}
+
 const workingLightbox = () => {
   actualLightbox = document.querySelector('.lightbox-content.active')
   const prevArrow = actualLightbox.children[2];
   const nextArrow = actualLightbox.children[3];
   document.querySelector('body').style.height = '100vh';
   document.querySelector('body').style.overflow = 'hidden';
-  // add the listener when the dialog is shown
+  
   window.addEventListener('keydown', handleKeyLightbox);
 
+  window.addEventListener("keyup", listenKey)
 
   if (actualLightbox.previousElementSibling != null) {
     prevArrow.style.display = 'flex';
@@ -208,13 +224,6 @@ const workingLightbox = () => {
     prevArrow.addEventListener('click', () => {
       prevLightbox()
     })
-    /*
-    prevArrow.addEventListener("keyup", (e) => {
-      if (e.key == "ArrowLeft") {
-        prevLightbox()
-      }
-    })
-    */
   } else {
     prevArrow.style.display = 'none';
   }
@@ -225,13 +234,6 @@ const workingLightbox = () => {
     nextArrow.addEventListener('click', () => {
       nextLightbox()
     })
-    /*
-    window.addEventListener("keyup", (e) => {
-      if (e.key == "ArrowRight") {
-        nextLightbox()
-      }
-    })
-    */
   } else {
     nextArrow.style.display = 'none';
   }
@@ -285,6 +287,7 @@ const handleKeyLightbox = (e) => {
 }
 // code from https://stackoverflow.com/questions/50178419/how-can-restrict-the-tab-key-press-only-within-the-modal-popup-when-its-open
 const handleKeyModal = (e) => {
+
   if (e.keyCode === 9) { // tab
     let focusableLightbox = modal.querySelectorAll('input,button');
     if (focusableLightbox.length) {
