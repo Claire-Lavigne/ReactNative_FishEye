@@ -6,22 +6,22 @@ article {
   }
   h2 {
     color: $clr-primary-lt;
-    font-size: 36px;
+    font-size: 2.25em; /* 36px */
   }
   p {
     margin: 0.5em;
   }
   p:first-child {
     color: $clr-primary;
-    font-size: 13px;
+    font-size: 0.8125em; /* 13px */
   }
   p:nth-child(2) {
     color: black;
-    font-size: 10px;
+    font-size: 0.625em; /* 10px */
   }
   p:last-child {
     color: $clr-secondary;
-    font-size: 9px;
+    font-size: 0.5625em; /* 9px */
   }
   img,
   video {

@@ -62,7 +62,7 @@ fetch("./js/datas.json")
       generateTotalLikes();
     }));
     buttonLikes.forEach(btn => btn.addEventListener("keyup", (e) => {
-      if (e.key == "Enter") {
+      if (e.key === "Enter") {
         e.preventDefault();
         e.currentTarget.previousElementSibling.innerText++;
         generateTotalLikes();
@@ -197,13 +197,18 @@ const listenKey = (e) => {
   const prevArrow = actualLightbox.children[2];
   const nextArrow = actualLightbox.children[3];
 
-  if (e.key == "ArrowLeft" && prevArrow.style.display != 'none') {
+  if (e.key === "ArrowLeft" && prevArrow.style.display != 'none') {
     window.removeEventListener('keyup', listenKey)
     prevArrow.click();
   }
-  if (e.key == "ArrowRight" && nextArrow.style.display != 'none') {
+  if (e.key === "ArrowRight" && nextArrow.style.display != 'none') {
     window.removeEventListener('keyup', listenKey)
     nextArrow.click();
+  }
+
+  if (e.key === "Escape") {
+    window.removeEventListener('keyup', listenKey)
+    closeModalLightbox();
   }
 }
 
@@ -213,7 +218,7 @@ const workingLightbox = () => {
   const nextArrow = actualLightbox.children[3];
   document.querySelector('body').style.height = '100vh';
   document.querySelector('body').style.overflow = 'hidden';
-  
+
   window.addEventListener('keydown', handleKeyLightbox);
 
   window.addEventListener("keyup", listenKey)
@@ -241,7 +246,7 @@ const workingLightbox = () => {
   if (actualLightbox) {
     const lightboxCloseBtn = actualLightbox.children[0];
     lightboxCloseBtn.addEventListener("keydown", (e) => {
-      if (e.key == "Enter") {
+      if (e.key === "Enter") {
         closeModalLightbox();
       }
     })
@@ -265,7 +270,7 @@ const nextLightbox = () => {
 
 // code from https://stackoverflow.com/questions/50178419/how-can-restrict-the-tab-key-press-only-within-the-modal-popup-when-its-open
 const handleKeyLightbox = (e) => {
-  if (e.keyCode === 9) { // tab
+  if (e.key === 'Tab') {
     let focusableLightbox = actualLightbox.querySelectorAll('a,button');
     if (focusableLightbox.length) {
       let first = focusableLightbox[0];
@@ -288,7 +293,7 @@ const handleKeyLightbox = (e) => {
 // code from https://stackoverflow.com/questions/50178419/how-can-restrict-the-tab-key-press-only-within-the-modal-popup-when-its-open
 const handleKeyModal = (e) => {
 
-  if (e.keyCode === 9) { // tab
+  if (e.key === 'Tab') {
     let focusableLightbox = modal.querySelectorAll('input,button');
     if (focusableLightbox.length) {
       let first = focusableLightbox[0];
@@ -325,7 +330,12 @@ const closeModals = () => {
 
   const formCloseBtn = document.querySelector('.modal-close');
   formCloseBtn.addEventListener("keyup", (e) => {
-    if (e.key == "Enter") {
+    if (e.key === "Enter") {
+      closeModalForm();
+    }
+  })
+  window.addEventListener('keyup', (e) => {
+    if (e.key === "Escape") {
       closeModalForm();
     }
   })
@@ -346,10 +356,10 @@ const closeModalLightbox = () => {
 
 const validateFormInput = (input) => {
   if (input.value.toString().trim().length < 2) {
-    input.parentElement.setAttribute("data-error-visible", "true");
+    input.parentElement.setAttribute("aria-invalid", "true");
     return false;
   } else {
-    input.parentElement.removeAttribute("data-error-visible");
+    input.parentElement.setAttribute("aria-invalid", "false");
     return true;
   }
 }

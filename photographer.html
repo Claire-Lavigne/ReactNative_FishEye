@@ -42,22 +42,22 @@
       <button class="modal-close" title="Close contact form">
         <img class="icon-close" src="./assets/cross.png" alt="icon close"></button>
       <div class="modal-body">
-        <h1 class="modal-title">Contactez-moi</h1>
+        <h1 class="modal-title">Contactez-moi </h1>
         <form action="photographer.html" method="post">
-          <div class="formData" data-error-visible="" data-error="Prénom vide">
+          <div class="formData" data-error="Votre prénom doit contenir au moins 2 lettres">
             <label for="first_name">Prénom</label><br>
             <input id="first_name" type="text" name="prénom" required aria-required="true"/>
           </div>
-          <div class="formData" data-error-visible="" data-error="Nom vide">
+          <div class="formData" data-error="Votre nom doit contenir au moins 2 lettres">
             <label for="last_name">Nom</label><br>
             <input id="last_name" type="text" name="nom" required aria-required="true" />
           </div>
-          <div class="formData" data-error-visible="" data-error="Email invalide">
+          <div class="formData" data-error="Votre email est invalide">
             <label for="email">Email</label><br>
             <input id="email" type="email" name="email" pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
               required aria-required="true" />
           </div>
-          <div class="formData" data-error-visible="" data-error="Message vide">
+          <div class="formData" data-error="Votre message est trop court">
             <label for="your_message">Votre Message</label><br>
             <input id="your_message" type="text" name="msg" required aria-required="true" />
           </div>
