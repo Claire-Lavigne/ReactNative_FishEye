@@ -57,3 +57,7 @@ a {
   text-decoration: none;
   cursor: pointer;
 }
+
+*[aria-hidden='true'] { 
+  pointer-events: none;
+}

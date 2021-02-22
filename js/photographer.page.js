@@ -11,6 +11,8 @@ const inputEmail = document.querySelector("#email");
 const inputMessage = document.querySelector("#your_message");
 const lightbox = document.querySelector(".lightbox");
 const gallery = document.querySelector(".gallery-wrapper");
+let actualLightbox;
+let fullPathURL = window.location.href.split("#")[0];
 
 fetch("./js/datas.json")
   .then((response) => {
@@ -42,7 +44,11 @@ fetch("./js/datas.json")
     const buttonLikes = document.querySelectorAll(".likes");
     const mediasLink = document.querySelectorAll(".media-link");
 
-    modalOpen.addEventListener("click", () => modal.style.display = "block");
+    modalOpen.addEventListener("click", (e) => {
+      modal.style.display = "block";
+
+      window.addEventListener('keydown', handleKeyModal);
+    });
     form.addEventListener("submit", validateForm);
     window.addEventListener("popstate", workingLightbox);
     dropdown.addEventListener("change", () => {
@@ -187,56 +193,119 @@ const sortGallery = (medias) => {
 };
 
 const workingLightbox = () => {
-  const urlHash = window.location.href.split("#")[0];
-  const actualLightbox = document.querySelector('.lightbox-content.active')
+  actualLightbox = document.querySelector('.lightbox-content.active')
   const prevArrow = actualLightbox.children[2];
   const nextArrow = actualLightbox.children[3];
+  document.querySelector('body').style.height = '100vh';
+  document.querySelector('body').style.overflow = 'hidden';
+  // add the listener when the dialog is shown
+  window.addEventListener('keydown', handleKeyLightbox);
 
-  const prevLightbox = () => {
-    actualLightbox.style.display = "none";
-    actualLightbox.classList.remove("active");
-    actualLightbox.previousElementSibling.style.display = "block";
-    actualLightbox.previousElementSibling.classList.add("active");
-  }
-
-  const nextLightbox = () => {
-    actualLightbox.style.display = "none";
-    actualLightbox.classList.remove("active");
-    actualLightbox.nextElementSibling.style.display = "block";
-    actualLightbox.nextElementSibling.classList.add("active");
-  }
 
   if (actualLightbox.previousElementSibling != null) {
     prevArrow.style.display = 'flex';
-    prevArrow.href = `${urlHash}#${actualLightbox.previousElementSibling.id}`;
+    prevArrow.href = `${fullPathURL}#${actualLightbox.previousElementSibling.id}`;
     prevArrow.addEventListener('click', () => {
       prevLightbox()
     })
+    /*
     prevArrow.addEventListener("keyup", (e) => {
       if (e.key == "ArrowLeft") {
         prevLightbox()
       }
     })
+    */
   } else {
     prevArrow.style.display = 'none';
   }
 
   if (actualLightbox.nextElementSibling != null) {
     nextArrow.style.display = 'flex';
-    nextArrow.href = `${urlHash}#${actualLightbox.nextElementSibling.id}`;
+    nextArrow.href = `${fullPathURL}#${actualLightbox.nextElementSibling.id}`;
     nextArrow.addEventListener('click', () => {
       nextLightbox()
     })
-    nextArrow.addEventListener("keyup", (e) => {
+    /*
+    window.addEventListener("keyup", (e) => {
       if (e.key == "ArrowRight") {
         nextLightbox()
       }
     })
+    */
   } else {
     nextArrow.style.display = 'none';
   }
 
+  if (actualLightbox) {
+    const lightboxCloseBtn = actualLightbox.children[0];
+    lightboxCloseBtn.addEventListener("keydown", (e) => {
+      if (e.key == "Enter") {
+        closeModalLightbox();
+      }
+    })
+  }
+
 };
+
+const prevLightbox = () => {
+  actualLightbox.style.display = "none";
+  actualLightbox.classList.remove("active");
+  actualLightbox.previousElementSibling.style.display = "block";
+  actualLightbox.previousElementSibling.classList.add("active");
+}
+
+const nextLightbox = () => {
+  actualLightbox.style.display = "none";
+  actualLightbox.classList.remove("active");
+  actualLightbox.nextElementSibling.style.display = "block";
+  actualLightbox.nextElementSibling.classList.add("active");
+}
+
+// code from https://stackoverflow.com/questions/50178419/how-can-restrict-the-tab-key-press-only-within-the-modal-popup-when-its-open
+const handleKeyLightbox = (e) => {
+  if (e.keyCode === 9) { // tab
+    let focusableLightbox = actualLightbox.querySelectorAll('a,button');
+    if (focusableLightbox.length) {
+      let first = focusableLightbox[0];
+      let last = focusableLightbox[focusableLightbox.length - 1];
+      let shift = e.shiftKey;
+      if (shift) {
+        if (e.target === first) { // shift-tab pressed on first element in dialog
+          last.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (e.target === last) { // tab pressed on last element in dialog
+          first.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  }
+}
+// code from https://stackoverflow.com/questions/50178419/how-can-restrict-the-tab-key-press-only-within-the-modal-popup-when-its-open
+const handleKeyModal = (e) => {
+  if (e.keyCode === 9) { // tab
+    let focusableLightbox = modal.querySelectorAll('input,button');
+    if (focusableLightbox.length) {
+      let first = focusableLightbox[0];
+      let last = focusableLightbox[focusableLightbox.length - 1];
+      let shift = e.shiftKey;
+      if (shift) {
+        if (e.target === first) { // shift-tab pressed on first element in dialog
+          last.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (e.target === last) { // tab pressed on last element in dialog
+          first.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  }
+}
+
 
 const closeModals = () => {
   window.addEventListener("click", (event) => {
@@ -250,14 +319,8 @@ const closeModals = () => {
       closeModalLightbox();
     }
   });
-  
-  const lightboxCloseBtn = document.querySelector('.lightbox-close');
+
   const formCloseBtn = document.querySelector('.modal-close');
-  lightboxCloseBtn.addEventListener("keydown", (e) => {
-    if (e.key == "Enter") {
-      closeModalLightbox();
-    }
-  })
   formCloseBtn.addEventListener("keyup", (e) => {
     if (e.key == "Enter") {
       closeModalForm();
@@ -267,13 +330,15 @@ const closeModals = () => {
 
 const closeModalForm = () => {
   modal.style.display = "none";
+  window.removeEventListener('keydown', handleKeyModal);
 }
 
 const closeModalLightbox = () => {
-      lightbox.style.display = "none";
-      const cleanURL = window.location.href.split("#")[0];
-      const newURL = new URL(cleanURL);
-      window.history.pushState({}, '', newURL);
+  lightbox.style.display = "none";
+  document.querySelector('body').style.height = '100%'; // prevent scroll
+  document.querySelector('body').style.overflow = 'unset'; // prevent scroll
+  window.history.pushState({}, '', new URL(fullPathURL));
+  window.removeEventListener('keydown', handleKeyLightbox);
 }
 
 const validateFormInput = (input) => {

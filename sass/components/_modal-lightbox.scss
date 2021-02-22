@@ -1,13 +1,11 @@
 .lightbox {
   display: none;
-  overflow: hidden;
   position: fixed;
   z-index: 1;
   left: 0;
   top: 0;
   width: 100vw;
   height: 100vh;
-  overflow: auto;
   animation: modalopen 0.5s;
   background-color: white;
   &-content {
@@ -17,7 +15,6 @@
     width: 100%;
     max-width: 1000px;
     background: white;
-    overflow: hidden;
     position: relative;
     color: black;
     padding: 10px 20px;

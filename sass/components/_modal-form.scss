@@ -4,9 +4,8 @@
   z-index: 1;
   left: 0;
   top: 0;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
+  width: 100vw;
+  height: 100vh;
   background-color:white;
   @include for-desktop-up {
     background-color: rgba(0, 0, 0, 0.3);
@@ -19,7 +18,7 @@
     animation: modalopen 0.5s;
     background: #db8876;
     border-radius: 5px;
-    overflow: hidden;
+   // overflow: hidden;
     position: relative;
     color: black;
     padding-top: 10px;
