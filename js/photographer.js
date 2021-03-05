@@ -44,6 +44,7 @@ fetch("./js/datas.json")
     const buttonLikes = document.querySelectorAll(".likes");
     const mediasLink = document.querySelectorAll(".media-link");
 
+    // contact form Modal with accessibility options
     modalOpen.addEventListener("click", () => {
       modal.style.display = "block";
       document.querySelector('#first_name').focus();
@@ -61,6 +62,7 @@ fetch("./js/datas.json")
       e.currentTarget.previousElementSibling.innerText++;
       generateTotalLikes();
     }));
+    // button Likes for accessibility
     buttonLikes.forEach(btn => btn.addEventListener("keyup", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
@@ -69,6 +71,7 @@ fetch("./js/datas.json")
       }
     }));
 
+    // show lightbox with current Img click
     mediasLink.forEach(link => {
       link.addEventListener("click", (e) => {
         const imgID = e.currentTarget.getAttribute("href").split('#').pop();
@@ -192,25 +195,6 @@ const sortGallery = (medias) => {
   createGalleryAndLightbox(sortedMedias);
 };
 
-const listenKey = (e) => {
-  actualLightbox = document.querySelector('.lightbox-content.active')
-  const prevArrow = actualLightbox.children[2];
-  const nextArrow = actualLightbox.children[3];
-
-  if (e.key === "ArrowLeft" && prevArrow.style.display != 'none') {
-    window.removeEventListener('keyup', listenKey)
-    prevArrow.click();
-  }
-  if (e.key === "ArrowRight" && nextArrow.style.display != 'none') {
-    window.removeEventListener('keyup', listenKey)
-    nextArrow.click();
-  }
-
-  if (e.key === "Escape") {
-    window.removeEventListener('keyup', listenKey)
-    closeModalLightbox();
-  }
-}
 
 const workingLightbox = () => {
   actualLightbox = document.querySelector('.lightbox-content.active')
@@ -220,9 +204,10 @@ const workingLightbox = () => {
   document.querySelector('body').style.overflow = 'hidden';
 
   window.addEventListener('keydown', handleKeyLightbox);
-
   window.addEventListener("keyup", listenKey)
 
+  // if actual lightbox has a previous lightbox element
+  // keep arrow and add an href attribute to it
   if (actualLightbox.previousElementSibling != null) {
     prevArrow.style.display = 'flex';
     prevArrow.href = `${fullPathURL}#${actualLightbox.previousElementSibling.id}`;
@@ -233,6 +218,8 @@ const workingLightbox = () => {
     prevArrow.style.display = 'none';
   }
 
+  // if actual lightbox has a next lightbox element
+  // keep arrow and add an href attribute to it
   if (actualLightbox.nextElementSibling != null) {
     nextArrow.style.display = 'flex';
     nextArrow.href = `${fullPathURL}#${actualLightbox.nextElementSibling.id}`;
@@ -243,6 +230,7 @@ const workingLightbox = () => {
     nextArrow.style.display = 'none';
   }
 
+  // close actual lightbox with accessibility (using tab and enter)
   if (actualLightbox) {
     const lightboxCloseBtn = actualLightbox.children[0];
     lightboxCloseBtn.addEventListener("keydown", (e) => {
@@ -254,13 +242,13 @@ const workingLightbox = () => {
 
 };
 
+// change active lightbox with class and css
 const prevLightbox = () => {
   actualLightbox.style.display = "none";
   actualLightbox.classList.remove("active");
   actualLightbox.previousElementSibling.style.display = "block";
   actualLightbox.previousElementSibling.classList.add("active");
 }
-
 const nextLightbox = () => {
   actualLightbox.style.display = "none";
   actualLightbox.classList.remove("active");
@@ -268,6 +256,7 @@ const nextLightbox = () => {
   actualLightbox.nextElementSibling.classList.add("active");
 }
 
+// lightbox accessibility events with tab and enter
 // code from https://stackoverflow.com/questions/50178419/how-can-restrict-the-tab-key-press-only-within-the-modal-popup-when-its-open
 const handleKeyLightbox = (e) => {
   if (e.key === 'Tab') {
@@ -290,6 +279,28 @@ const handleKeyLightbox = (e) => {
     }
   }
 }
+
+// lightbox accessibility events with arrows and escape
+const listenKey = (e) => {
+  actualLightbox = document.querySelector('.lightbox-content.active')
+  const prevArrow = actualLightbox.children[2];
+  const nextArrow = actualLightbox.children[3];
+
+  if (e.key === "ArrowLeft" && prevArrow.style.display != 'none') {
+    window.removeEventListener('keyup', listenKey)
+    prevArrow.click();
+  }
+  if (e.key === "ArrowRight" && nextArrow.style.display != 'none') {
+    window.removeEventListener('keyup', listenKey)
+    nextArrow.click();
+  }
+
+  if (e.key === "Escape") {
+    window.removeEventListener('keyup', listenKey)
+    closeModalLightbox();
+  }
+}
+
 // code from https://stackoverflow.com/questions/50178419/how-can-restrict-the-tab-key-press-only-within-the-modal-popup-when-its-open
 const handleKeyModal = (e) => {
 

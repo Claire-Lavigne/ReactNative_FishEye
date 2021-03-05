@@ -14,6 +14,7 @@ export default class Image {
     return mediaTitle;
   }
 
+  // Preview = Image in gallery
   generatePreview() {
     let image = `
       <img src="./assets/${this.photographerId}/${this.image}" alt="${this.generateTitle()}">
@@ -21,6 +22,7 @@ export default class Image {
     return image;
   }
   
+  // View = Image in Modal
   generateView() {
     return this.generatePreview();
   }

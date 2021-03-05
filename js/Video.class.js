@@ -14,6 +14,7 @@ export default class Video {
     return mediaTitle;
   }
 
+  // Preview = Image in gallery
   generatePreview() {
     let title = this.video.slice(0, -3) + 'jpg';
     let image = `
@@ -22,6 +23,7 @@ export default class Video {
     return image;
   }
 
+  // View = Video in Modal
   generateView() {
     let video = `
       <video controls>
