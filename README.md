@@ -4,5 +4,7 @@
 - Responsive
 
 ## Run commands
+- `git checkout dev`
+- `npm install autoprefixer postcss postcss-cli -g`
 - `npm i`
 - `npm run dev`
