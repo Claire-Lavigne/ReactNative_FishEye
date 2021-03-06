@@ -106,7 +106,7 @@ const createProfile = (photographersById) => {
   const portrait = photographersById[0].portrait;
 
   tags.forEach((tag) => {
-    tagLink += `<li><a href="./index.html#${tag}" aria-label="tag" class="tag ${tag}">#${tag}</a></li>`;
+    tagLink += `<li><a href="./index.html#${tag}" aria-label="tag ${tag}" class="tag ${tag}">#${tag}</a></li>`;
   });
 
   const content = `

@@ -36,7 +36,7 @@ export default class Photographer {
     let tagLink = '';
 
     this.tags.forEach(tag => {
-      tagLink += `<li><a href="#${tag}" aria-label="tag" class="tag ${tag}">#${tag}</a></li>`;
+      tagLink += `<li><a href="#${tag}" aria-label="tag ${tag}" class="tag ${tag}">#${tag}</a></li>`;
     })
 
     return tagLink;
