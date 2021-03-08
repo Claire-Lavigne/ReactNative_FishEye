@@ -10,7 +10,7 @@ export default class Image {
   }
 
   generateTitle() {
-    let mediaTitle = this.image.split('_').join(' ').replace(/\.[^/.]+$/, "");
+    let mediaTitle = this.image.split('_').join(' ').replace(/\.[^/.]+$/, '');
     return mediaTitle;
   }
 

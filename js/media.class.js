@@ -3,17 +3,14 @@ import Video from './Video.class.js';
 
 export default class Media {
   constructor(data) {
-    this.media = this.createMedia(data)
+    this.media = this.createMedia(data);
   }
 
   createMedia(data) {
-    if (data.image) {
-      return new Image(data)
-    } else if (data.video) {
-      return new Video(data)
-    } else {
-      console.error('Erreur')
+    if (data.video) {
+      return new Video(data);
     }
+    return new Image(data);
   }
 
   generateCard() {

@@ -1,20 +1,26 @@
-import Media from "./Media.class.js";
+import Media from './Media.class.js';
 
-const dropdown = document.querySelector(".dropdown");
-const sectionOne = document.querySelector("#photographer-infos");
-const modal = document.querySelector(".modal");
-const form = document.querySelector("form");
-const modalTitle = document.querySelector(".modal-title");
-const inputFirstname = document.querySelector("#first_name");
-const inputLastname = document.querySelector("#last_name");
-const inputEmail = document.querySelector("#email");
-const inputMessage = document.querySelector("#your_message");
-const lightbox = document.querySelector(".lightbox");
-const gallery = document.querySelector(".gallery-wrapper");
+/**
+ * [querySelector description]
+ *
+ * @type {Element}
+ */
+const dropdown = document.querySelector('.dropdown');
+const sectionOne = document.querySelector('#photographer-infos');
+const modal = document.querySelector('.modal');
+
+const form = document.querySelector('form');
+const modalTitle = document.querySelector('.modal-title');
+const inputFirstname = document.querySelector('#first_name');
+const inputLastname = document.querySelector('#last_name');
+const inputEmail = document.querySelector('#email');
+const inputMessage = document.querySelector('#your_message');
+const lightbox = document.querySelector('.lightbox');
+const gallery = document.querySelector('.gallery-wrapper');
 let actualLightbox;
-let fullPathURL = window.location.href.split("#")[0];
+let fullPathURL = window.location.href.split('#')[0];
 
-fetch("./js/datas.json")
+fetch('./js/datas.json')
   .then((response) => {
     return response.json();
   })
@@ -40,24 +46,24 @@ fetch("./js/datas.json")
     generateTotalPrice(photographersById);
     closeModals();
 
-    const modalOpen = document.querySelector(".modal-btn");
-    const buttonLikes = document.querySelectorAll(".likes");
-    const mediasLink = document.querySelectorAll(".media-link");
+    const modalOpen = document.querySelector('.modal-btn');
+    const buttonLikes = document.querySelectorAll('.likes');
+    const mediasLink = document.querySelectorAll('.media-link');
 
     // contact form Modal with accessibility options
-    modalOpen.addEventListener("click", () => {
-      modal.style.display = "block";
+    modalOpen.addEventListener('click', () => {
+      modal.style.display = 'block';
       document.querySelector('#first_name').focus();
       window.addEventListener('keydown', handleKeyModal);
     });
-    form.addEventListener("submit", validateForm);
-    window.addEventListener("popstate", workingLightbox);
-    dropdown.addEventListener("change", () => {
+    form.addEventListener('submit', validateForm);
+    window.addEventListener('popstate', workingLightbox);
+    dropdown.addEventListener('change', () => {
       removeDropdownOption();
       sortGallery(formatedMedias);
     });
 
-    buttonLikes.forEach(btn => btn.addEventListener("click", (e) => {
+    buttonLikes.forEach(btn => btn.addEventListener('click', (e) => {
       e.preventDefault();
       e.currentTarget.previousElementSibling.innerText++;
       generateTotalLikes();
@@ -65,8 +71,8 @@ fetch("./js/datas.json")
 
     // show lightbox with current Img click
     mediasLink.forEach(link => {
-      link.addEventListener("click", (e) => {
-        const imgID = e.currentTarget.getAttribute("href").split('#').pop();
+      link.addEventListener('click', (e) => {
+        const imgID = e.currentTarget.getAttribute('href').split('#').pop();
 
         lightbox.style.display = 'block';
         const lightboxes = Array.from(lightbox.children);
@@ -79,7 +85,7 @@ fetch("./js/datas.json")
             item.classList.remove('active');
           }
         });
-      })
+      });
 
     });
 
@@ -89,7 +95,7 @@ fetch("./js/datas.json")
   });
 
 const createProfile = (photographersById) => {
-  let tagLink = "";
+  let tagLink = '';
   const name = photographersById[0].name;
   const city = photographersById[0].city;
   const country = photographersById[0].country;
@@ -113,27 +119,28 @@ const createProfile = (photographersById) => {
         </div>
       </div>
       <button class="modal-btn btn" title="Contact Me">Contactez-moi</button>
-      <img src="./assets/Photographers ID Photos/${portrait}" alt="${name}">
+      <img src="./assets/Photographers_ID_Photos/${portrait}" alt="${name}">
   `;
 
   sectionOne.innerHTML += content;
 
   modalTitle.innerHTML += `<br>${name}`;
-  modalTitle.id = `Contact\ me\ ${name}`;
-  modal.setAttribute("aria-labelledby", `Contact me ${name}`);
+  modalTitle.id = 'modal_title';
+  modal.setAttribute('aria-labelledby', modalTitle.id);
+  modal.setAttribute('title', `Contact me ${name}`);
 };
 
 const removeDropdownOption = () => {
-  let dropdownOptions = document.querySelectorAll(".dropdown option:not(:checked)");
-  let selectedOption = document.querySelector(".dropdown option:checked");
+  let dropdownOptions = document.querySelectorAll('.dropdown option:not(:checked)');
+  let selectedOption = document.querySelector('.dropdown option:checked');
 
-  selectedOption.style.display = "none"; // hide selected one
-  dropdownOptions.forEach(option => option.style.display = "block"); // display all unselected
+  selectedOption.style.display = 'none'; // hide selected one
+  dropdownOptions.forEach(option => option.style.display = 'block'); // display all unselected
 };
 
 const createGalleryAndLightbox = (medias) => {
   gallery.innerHTML = '';
-  lightbox.innerHTML = ''
+  lightbox.innerHTML = '';
 
   medias.forEach(media => {
     gallery.innerHTML += media.generateCard();
@@ -144,8 +151,8 @@ const createGalleryAndLightbox = (medias) => {
 };
 
 const generateTotalLikes = () => {
-  let likesCounter = document.querySelectorAll(".likesCounter");
-  let totalLikes = document.querySelector(".totalLikes");
+  let likesCounter = document.querySelectorAll('.likesCounter');
+  let totalLikes = document.querySelector('.totalLikes');
 
   let arr = [];
   likesCounter.forEach((counter) => {
@@ -157,7 +164,7 @@ const generateTotalLikes = () => {
 };
 
 const generateTotalPrice = (photographersById) => {
-  let totalPrice = document.querySelector(".totalPrice");
+  let totalPrice = document.querySelector('.totalPrice');
   totalPrice.innerHTML = `${photographersById[0].price}€ / jour`;
 };
 
@@ -165,38 +172,38 @@ const sortGallery = (medias) => {
   const dropdownOption = dropdown.options[dropdown.selectedIndex].innerHTML;
   let sortedMedias = [];
   switch (dropdownOption) {
-    case "Titre":
-      sortedMedias = medias.sort((a, b) =>
-        a.media.generateTitle().localeCompare(b.media.generateTitle())
-      );
-      console.log('Titre ', sortedMedias);
-      break;
-    case "Date":
-      sortedMedias = medias.sort((a, b) =>
-        new Date(b.media.date).getTime() - new Date(a.media.date).getTime() // Timestamp
-      );
-      console.log('Date ', sortedMedias);
-      break;
-    default:
-      sortedMedias = medias.sort((a, b) =>
-        b.media.likes - a.media.likes
-      );
-      console.log('Popularité ', sortedMedias);
-      break;
+  case 'Titre':
+    sortedMedias = medias.sort((a, b) =>
+      a.media.generateTitle().localeCompare(b.media.generateTitle())
+    );
+    console.log('Titre ', sortedMedias);
+    break;
+  case 'Date':
+    sortedMedias = medias.sort((a, b) =>
+      new Date(b.media.date).getTime() - new Date(a.media.date).getTime() // Timestamp
+    );
+    console.log('Date ', sortedMedias);
+    break;
+  default:
+    sortedMedias = medias.sort((a, b) =>
+      b.media.likes - a.media.likes
+    );
+    console.log('Popularité ', sortedMedias);
+    break;
   }
   createGalleryAndLightbox(sortedMedias);
 };
 
 
 const workingLightbox = () => {
-  actualLightbox = document.querySelector('.lightbox-content.active')
+  actualLightbox = document.querySelector('.lightbox-content.active');
   const prevArrow = actualLightbox.children[2];
   const nextArrow = actualLightbox.children[3];
   document.querySelector('body').style.height = '100vh';
   document.querySelector('body').style.overflow = 'hidden';
 
   window.addEventListener('keydown', handleKeyLightbox);
-  window.addEventListener("keyup", listenKey)
+  window.addEventListener('keyup', listenKey);
 
   // if actual lightbox has a previous lightbox element
   // keep arrow and add an href attribute to it
@@ -204,8 +211,8 @@ const workingLightbox = () => {
     prevArrow.style.display = 'flex';
     prevArrow.href = `${fullPathURL}#${actualLightbox.previousElementSibling.id}`;
     prevArrow.addEventListener('click', () => {
-      prevLightbox()
-    })
+      prevLightbox();
+    });
   } else {
     prevArrow.style.display = 'none';
   }
@@ -216,8 +223,8 @@ const workingLightbox = () => {
     nextArrow.style.display = 'flex';
     nextArrow.href = `${fullPathURL}#${actualLightbox.nextElementSibling.id}`;
     nextArrow.addEventListener('click', () => {
-      nextLightbox()
-    })
+      nextLightbox();
+    });
   } else {
     nextArrow.style.display = 'none';
   }
@@ -225,28 +232,28 @@ const workingLightbox = () => {
   // close actual lightbox with accessibility (using tab and enter)
   if (actualLightbox) {
     const lightboxCloseBtn = actualLightbox.children[0];
-    lightboxCloseBtn.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
+    lightboxCloseBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
         closeModalLightbox();
       }
-    })
+    });
   }
 
 };
 
 // change active lightbox with class and css
 const prevLightbox = () => {
-  actualLightbox.style.display = "none";
-  actualLightbox.classList.remove("active");
-  actualLightbox.previousElementSibling.style.display = "block";
-  actualLightbox.previousElementSibling.classList.add("active");
-}
+  actualLightbox.style.display = 'none';
+  actualLightbox.classList.remove('active');
+  actualLightbox.previousElementSibling.style.display = 'block';
+  actualLightbox.previousElementSibling.classList.add('active');
+};
 const nextLightbox = () => {
-  actualLightbox.style.display = "none";
-  actualLightbox.classList.remove("active");
-  actualLightbox.nextElementSibling.style.display = "block";
-  actualLightbox.nextElementSibling.classList.add("active");
-}
+  actualLightbox.style.display = 'none';
+  actualLightbox.classList.remove('active');
+  actualLightbox.nextElementSibling.style.display = 'block';
+  actualLightbox.nextElementSibling.classList.add('active');
+};
 
 // lightbox accessibility events with tab and enter
 // code from https://stackoverflow.com/questions/50178419/how-can-restrict-the-tab-key-press-only-within-the-modal-popup-when-its-open
@@ -270,28 +277,28 @@ const handleKeyLightbox = (e) => {
       }
     }
   }
-}
+};
 
 // lightbox accessibility events with arrows and escape
 const listenKey = (e) => {
-  actualLightbox = document.querySelector('.lightbox-content.active')
+  actualLightbox = document.querySelector('.lightbox-content.active');
   const prevArrow = actualLightbox.children[2];
   const nextArrow = actualLightbox.children[3];
 
-  if (e.key === "ArrowLeft" && prevArrow.style.display != 'none') {
-    window.removeEventListener('keyup', listenKey)
+  if (e.key === 'ArrowLeft' && prevArrow.style.display != 'none') {
+    window.removeEventListener('keyup', listenKey);
     prevArrow.click();
   }
-  if (e.key === "ArrowRight" && nextArrow.style.display != 'none') {
-    window.removeEventListener('keyup', listenKey)
+  if (e.key === 'ArrowRight' && nextArrow.style.display != 'none') {
+    window.removeEventListener('keyup', listenKey);
     nextArrow.click();
   }
 
-  if (e.key === "Escape") {
-    window.removeEventListener('keyup', listenKey)
+  if (e.key === 'Escape') {
+    window.removeEventListener('keyup', listenKey);
     closeModalLightbox();
   }
-}
+};
 
 // code from https://stackoverflow.com/questions/50178419/how-can-restrict-the-tab-key-press-only-within-the-modal-popup-when-its-open
 const handleKeyModal = (e) => {
@@ -315,16 +322,16 @@ const handleKeyModal = (e) => {
       }
     }
   }
-}
+};
 
 
 const closeModals = () => {
-  window.addEventListener("click", (event) => {
+  window.addEventListener('click', (event) => {
     if (
-      event.target.classList == "lightbox" ||
-      event.target.classList == "icon-close" ||
-      event.target.classList == "modal" ||
-      event.target.classList == "icon-close"
+      event.target.classList == 'lightbox' ||
+      event.target.classList == 'icon-close' ||
+      event.target.classList == 'modal' ||
+      event.target.classList == 'icon-close'
     ) {
       closeModalForm();
       closeModalLightbox();
@@ -332,40 +339,40 @@ const closeModals = () => {
   });
 
   const formCloseBtn = document.querySelector('.modal-close');
-  formCloseBtn.addEventListener("keyup", (e) => {
-    if (e.key === "Enter") {
+  formCloseBtn.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
       closeModalForm();
     }
-  })
+  });
   window.addEventListener('keyup', (e) => {
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
       closeModalForm();
     }
-  })
-}
+  });
+};
 
 const closeModalForm = () => {
-  modal.style.display = "none";
+  modal.style.display = 'none';
   window.removeEventListener('keydown', handleKeyModal);
-}
+};
 
 const closeModalLightbox = () => {
-  lightbox.style.display = "none";
+  lightbox.style.display = 'none';
   document.querySelector('body').style.height = '100%'; // prevent scroll
   document.querySelector('body').style.overflow = 'unset'; // prevent scroll
   window.history.pushState({}, '', new URL(fullPathURL));
   window.removeEventListener('keydown', handleKeyLightbox);
-}
+};
 
 const validateFormInput = (input) => {
   if (input.value.toString().trim().length < 2) {
-    input.parentElement.setAttribute("aria-invalid", "true");
+    input.parentElement.setAttribute('aria-invalid', 'true');
     return false;
   } else {
-    input.parentElement.setAttribute("aria-invalid", "false");
+    input.parentElement.setAttribute('aria-invalid', 'false');
     return true;
   }
-}
+};
 
 const validateForm = (event) => {
   let isFormOk = [];
@@ -381,9 +388,9 @@ const validateForm = (event) => {
     // get every valid keys/values
     let datas = new FormData(form);
     for (let entry of datas.entries()) {
-      console.log(entry[0], ":", entry[1].trim());
+      console.log(entry[0], ':', entry[1].trim());
     }
-    modal.style.display = "none";
+    modal.style.display = 'none';
     form.reset();
   }
 };

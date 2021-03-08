@@ -5,14 +5,14 @@ const main = document.querySelector('#introduction > section');
 const nav = document.querySelector('nav ul');
 const anchorNav = document.querySelector('#anchor-nav');
 anchorNav.hidden = true;
-let fullPathURL = window.location.href.split("#")[0];
+let fullPathURL = window.location.href.split('#')[0];
 
 // Fetch API
 // = promise-based JavaScript API for making asynchronous HTTP requests to fetch ressources from server
 fetch('./js/datas.json')
   // Transform the data into json
   .then(response => {
-    return response.json()
+    return response.json();
   })
   // Get the results
   .then(data => {
@@ -21,7 +21,7 @@ fetch('./js/datas.json')
     photographers.forEach(data => {
       const photographer = new Photographer(data);
       main.innerHTML += photographer.generateArticle();
-    })
+    });
 
     displayNav(photographers);
     window.addEventListener('scroll', scrollNav);
@@ -29,11 +29,11 @@ fetch('./js/datas.json')
     window.addEventListener('popstate', filterArticles()); // execute immediately
     anchorNav.addEventListener('click', (e) => {
       e.preventDefault();
-      returnArticles()
+      returnArticles();
       intro.scrollIntoView({ behavior: 'smooth' });
-    })
+    });
   })
-  .catch(error => { console.error('fetch error', error) })
+  .catch(error => { console.error('fetch error', error); });
 
 const displayNav = (photographers) => {
   let tagsArray = [];
@@ -46,9 +46,9 @@ const displayNav = (photographers) => {
   // (spread operation '...') --> convert the result into an array 
   // then for each tag : create element
   [...new Set(tagsArray)].forEach(tag => {
-    nav.innerHTML += `<li><a href="#${tag}" aria-label="tag ${tag}" class="tag ${tag}">#${tag}</a></li>`
-  })
-}
+    nav.innerHTML += `<li><a href="#${tag}" aria-label="tag ${tag}" class="tag ${tag}">#${tag}</a></li>`;
+  });
+};
 
 const scrollNav = () => {
   const scrollY = window.scrollY;
@@ -64,7 +64,7 @@ const filterArticles = () => {
     const articles = document.querySelectorAll('article');
     articles.forEach(article => {
       article.classList.contains(tag) ? article.hidden = false : article.hidden = true;
-    })
+    });
   }
   return;
 };
@@ -74,5 +74,5 @@ const returnArticles = () => {
   const articles = document.querySelectorAll('article');
   articles.forEach(article => {
     article.hidden = false;
-  })
-}
+  });
+};

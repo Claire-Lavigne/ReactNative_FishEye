@@ -10,7 +10,7 @@ export default class Video {
   }
 
   generateTitle() {
-    let mediaTitle = this.video.split('_').join(' ').replace(/\.[^/.]+$/, "");
+    let mediaTitle = this.video.split('_').join(' ').replace(/\.[^/.]+$/, '');
     return mediaTitle;
   }
 

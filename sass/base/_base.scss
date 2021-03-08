@@ -35,7 +35,8 @@ body {
   }
 }
 
-section {
+section,
+#photographer > div {
   display: flex;
   flex-flow: row wrap;
   margin-top: 10em;
