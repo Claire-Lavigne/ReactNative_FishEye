@@ -41,49 +41,6 @@ fetch('./js/datas.json')
     generateTotalPrice(photographersById);
     closeModals();
 
-    const modalOpen = document.querySelector('.modal-btn');
-    const buttonLikes = document.querySelectorAll('.likes');
-    const mediasLink = document.querySelectorAll('.media-link');
-
-    // contact form Modal with accessibility options
-    modalOpen.addEventListener('click', () => {
-      modal.style.display = 'block';
-      document.querySelector('#first_name').focus();
-      window.addEventListener('keydown', handleKeyModal);
-    });
-    form.addEventListener('submit', validateForm);
-    window.addEventListener('popstate', workingLightbox);
-    dropdown.addEventListener('change', () => {
-      removeDropdownOption();
-      sortGallery(formatedMedias);
-    });
-
-    buttonLikes.forEach(btn => btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      e.currentTarget.previousElementSibling.innerText++;
-      generateTotalLikes();
-    }));
-
-    // show lightbox with current Img click
-    mediasLink.forEach(link => {
-      link.addEventListener('click', (e) => {
-        const imgID = e.currentTarget.getAttribute('href').split('#').pop();
-
-        lightbox.style.display = 'block';
-        const lightboxes = Array.from(lightbox.children);
-        lightboxes.forEach(item => {
-          if (item.id === imgID) {
-            item.style.display = 'block';
-            item.classList.add('active');
-          } else {
-            item.style.display = 'none';
-            item.classList.remove('active');
-          }
-        });
-      });
-
-    });
-
   })
   .catch((error) => {
     console.log(error);
@@ -164,8 +121,6 @@ const generateTotalPrice = (photographersById) => {
 };
 
 const sortGallery = (medias) => {
-  console.log(typeof(dropdown.selectedIndex));
-
   // @ts-ignore
   const dropdownOption = dropdown.options[dropdown.selectedIndex].innerHTML;
   let sortedMedias = [];
@@ -190,6 +145,7 @@ const sortGallery = (medias) => {
     break;
   }
   createGalleryAndLightbox(sortedMedias);
+  addListeners(medias);
 };
 
 
@@ -392,3 +348,50 @@ const validateForm = (event) => {
     form.reset();
   }
 };
+
+
+const addListeners = (formatedMedias) => {
+  
+  const modalOpen = document.querySelector('.modal-btn');
+  const buttonLikes = document.querySelectorAll('.likes');
+  const mediasLink = document.querySelectorAll('.media-link');
+
+  // contact form Modal with accessibility options
+  modalOpen.addEventListener('click', () => {
+    modal.style.display = 'block';
+    document.querySelector('#first_name').focus();
+    window.addEventListener('keydown', handleKeyModal);
+  });
+  form.addEventListener('submit', validateForm);
+  window.addEventListener('popstate', workingLightbox);
+  dropdown.addEventListener('change', () => {
+    removeDropdownOption();
+    sortGallery(formatedMedias);
+  });
+
+  buttonLikes.forEach(btn => btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.currentTarget.previousElementSibling.innerText++;
+    generateTotalLikes();
+  }));
+
+  // show lightbox with current Img click
+  mediasLink.forEach(link => {
+    link.addEventListener('click', (e) => {
+      const imgID = e.currentTarget.getAttribute('href').split('#').pop();
+
+      lightbox.style.display = 'block';
+      const lightboxes = Array.from(lightbox.children);
+      lightboxes.forEach(item => {
+        if (item.id === imgID) {
+          item.style.display = 'block';
+          item.classList.add('active');
+        } else {
+          item.style.display = 'none';
+          item.classList.remove('active');
+        }
+      });
+    });
+
+  });
+}
