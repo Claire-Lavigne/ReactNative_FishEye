@@ -25,8 +25,7 @@ fetch('./js/datas.json')
 
     displayNav(photographers);
     window.addEventListener('scroll', scrollNav);
-    window.addEventListener('hashchange', filterArticles);
-    window.addEventListener('popstate', filterArticles()); // execute immediately
+    window.addEventListener('popstate', filterArticles);
     anchorNav.addEventListener('click', (e) => {
       e.preventDefault();
       returnArticles();
@@ -70,7 +69,7 @@ const filterArticles = () => {
 };
 
 const returnArticles = () => {
-  window.history.pushState({}, '', new URL(fullPathURL));
+  window.history.pushState({}, '', fullPathURL);
   const articles = document.querySelectorAll('article');
   articles.forEach(article => {
     article.hidden = false;

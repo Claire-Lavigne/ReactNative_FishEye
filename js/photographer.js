@@ -1,10 +1,5 @@
 import Media from './Media.class.js';
 
-/**
- * [querySelector description]
- *
- * @type {Element}
- */
 const dropdown = document.querySelector('.dropdown');
 const sectionOne = document.querySelector('#photographer-infos');
 const modal = document.querySelector('.modal');
@@ -156,7 +151,7 @@ const generateTotalLikes = () => {
 
   let arr = [];
   likesCounter.forEach((counter) => {
-    let number = parseInt(counter.innerText);
+    let number = parseInt(counter.textContent);
     arr.push(number);
   });
   let totalLikesCounter = arr.reduce((a, b) => a + b);
@@ -169,6 +164,9 @@ const generateTotalPrice = (photographersById) => {
 };
 
 const sortGallery = (medias) => {
+  console.log(typeof(dropdown.selectedIndex));
+
+  // @ts-ignore
   const dropdownOption = dropdown.options[dropdown.selectedIndex].innerHTML;
   let sortedMedias = [];
   switch (dropdownOption) {
@@ -360,7 +358,7 @@ const closeModalLightbox = () => {
   lightbox.style.display = 'none';
   document.querySelector('body').style.height = '100%'; // prevent scroll
   document.querySelector('body').style.overflow = 'unset'; // prevent scroll
-  window.history.pushState({}, '', new URL(fullPathURL));
+  window.history.pushState({}, '', fullPathURL);
   window.removeEventListener('keydown', handleKeyLightbox);
 };
 
@@ -388,7 +386,7 @@ const validateForm = (event) => {
     // get every valid keys/values
     let datas = new FormData(form);
     for (let entry of datas.entries()) {
-      console.log(entry[0], ':', entry[1].trim());
+      console.log(entry[0], ':', entry[1]);
     }
     modal.style.display = 'none';
     form.reset();
