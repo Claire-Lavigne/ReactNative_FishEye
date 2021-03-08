@@ -5,6 +5,7 @@ const main = document.querySelector('#introduction > section');
 const nav = document.querySelector('nav ul');
 const anchorNav = document.querySelector('#anchor-nav');
 anchorNav.hidden = true;
+let fullPathURL = window.location.href.split("#")[0];
 
 // Fetch API
 // = promise-based JavaScript API for making asynchronous HTTP requests to fetch ressources from server
@@ -28,6 +29,7 @@ fetch('./js/datas.json')
     window.addEventListener('popstate', filterArticles()); // execute immediately
     anchorNav.addEventListener('click', (e) => {
       e.preventDefault();
+      returnArticles()
       intro.scrollIntoView({ behavior: 'smooth' });
     })
   })
@@ -66,3 +68,11 @@ const filterArticles = () => {
   }
   return;
 };
+
+const returnArticles = () => {
+  window.history.pushState({}, '', new URL(fullPathURL));
+  const articles = document.querySelectorAll('article');
+  articles.forEach(article => {
+    article.hidden = false;
+  })
+}
