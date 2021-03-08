@@ -62,14 +62,6 @@ fetch("./js/datas.json")
       e.currentTarget.previousElementSibling.innerText++;
       generateTotalLikes();
     }));
-    // button Likes for accessibility
-    buttonLikes.forEach(btn => btn.addEventListener("keyup", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        e.currentTarget.previousElementSibling.innerText++;
-        generateTotalLikes();
-      }
-    }));
 
     // show lightbox with current Img click
     mediasLink.forEach(link => {
