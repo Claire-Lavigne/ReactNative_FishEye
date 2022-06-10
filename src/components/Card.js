@@ -1,22 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Tags from "./Tags";
 
-const Card = ({ dataPhotographers }) => {
+const Card = ({ dataPhotographers, setCurrentTag }) => {
   const navigation = useNavigation();
-  console.log(dataPhotographers);
 
   return dataPhotographers.map((item) => (
-    <View key={`card-${item.id}`} className={item.tags.join(" ")}>
-      {console.log(
-        `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/Photographers_ID_Photos/${item.portrait}`
-      )}
+    <View
+      style={styles.article}
+      key={`card-${item.id}`}
+      classname={`tag ${item.tags.join(" ")}`}
+    >
       <TouchableOpacity
         style={styles.link}
-        onPress={() => navigation.navigate("Photograph")}
-        // href={`/photographer.html?id=${item.id}`}
-        //  aria-label={item.name}
+        onPress={() => navigation.navigate("Photograph", { id: item.id })}
       >
         <Image
           source={{
@@ -33,10 +31,8 @@ const Card = ({ dataPhotographers }) => {
         <Text style={styles.tagline}>{item.tagline}</Text>
         <Text style={styles.price}>{item.price}€/jour</Text>
       </View>
-      <View className="tags-container">
-        <View style={styles.list}>
-          <Tags tags={item.tags} />
-        </View>
+      <View style={styles.horContainer}>
+        <Tags tags={item.tags} setCurrentTag={setCurrentTag} />
       </View>
     </View>
   ));
@@ -45,15 +41,23 @@ const Card = ({ dataPhotographers }) => {
 export default Card;
 
 const styles = StyleSheet.create({
+  horContainer: {
+    flexFlow: "row wrap",
+    justifyContent: "center",
+  },
+  article: {
+    padding: 40,
+    textAlign: "center",
+  },
   link: {
-    textDecorationLine: "none",
+    alignItems: "center",
   },
   image: {
     resizeMode: "cover",
     borderRadius: "50%",
     marginBottom: 16,
-    width: 100,
-    height: 100,
+    width: 200,
+    height: 200,
   },
   subtitle: {
     color: "#d35735",
@@ -74,11 +78,5 @@ const styles = StyleSheet.create({
     color: "#525252",
     fontSize: 9,
     marginBottom: 4,
-  },
-  list: {
-    flex: 1,
-    flexFlow: "row wrap",
-    justifyContent: "center",
-    listStyle: "none",
   },
 });

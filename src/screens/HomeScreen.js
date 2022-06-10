@@ -1,20 +1,50 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, Image, ScrollView, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  View,
+} from "react-native";
 import React, { useState } from "react";
+import Header from "../components/Header";
 import Card from "../components/Card";
-
-let data = require("../../data.json");
-let dataPhotographers = data[0].photographers;
-let media = data[0].media;
-console.log(dataPhotographers);
-console.log(media);
+import Tags from "../components/Tags";
 
 const HomeScreen = () => {
+  let data = require("../../data.json");
+  let dataPhotographers = data[0].photographers;
+  let media = data[0].media;
+  console.log(dataPhotographers);
+  console.log(media);
+
+  const [currentTag, setCurrentTag] = useState("");
+
+  const dataTags = dataPhotographers.map((item) => item.tags);
+  const mergeDeduplicate = (arr) => {
+    return [...new Set([].concat(...arr))];
+  };
+  const uniqueTags = mergeDeduplicate(dataTags);
+  const filterDataByTag = dataPhotographers.filter((item) =>
+    item.tags.includes(currentTag)
+  );
+
   return (
     <ScrollView vertical>
       <View style={styles.container}>
-        <Text style={styles.title}>Home</Text>
-        <Card dataPhotographers={dataPhotographers} />
+        <Header />
+        <View style={styles.horContainer}>
+          <Tags tags={uniqueTags} setCurrentTag={setCurrentTag} />
+        </View>
+        <View style={styles.horContainer}>
+          <Card
+            dataPhotographers={
+              filterDataByTag.length > 0 ? filterDataByTag : dataPhotographers
+            }
+            setCurrentTag={setCurrentTag}
+          />
+        </View>
         <StatusBar style="auto" />
       </View>
     </ScrollView>
@@ -26,8 +56,12 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    justifyContent: "center",
     alignItems: "center",
+    padding: 20,
+  },
+  horContainer: {
+    flexFlow: "row wrap",
     justifyContent: "center",
   },
 });

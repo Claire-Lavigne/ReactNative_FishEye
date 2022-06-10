@@ -7,15 +7,21 @@ let data = require("../../data.json");
 let dataPhotographers = data[0].photographers;
 let media = data[0].media;
 
-const PhotographScreen = () => (
-  <ScrollView vertical>
-    <View style={styles.container}>
-      <Text style={styles.title}>Photographer</Text>
-      <Card dataPhotographers={dataPhotographers} />
-      <StatusBar style="auto" />
-    </View>
-  </ScrollView>
-);
+const PhotographScreen = ({ route }) => {
+  const dataFilteredByID = dataPhotographers.filter(
+    (item) => item.id == route.params.id
+  );
+
+  return (
+    <ScrollView vertical>
+      <View style={styles.container}>
+        <Text style={styles.title}>Photographer</Text>
+        <Card dataPhotographers={dataFilteredByID} />
+        <StatusBar style="auto" />
+      </View>
+    </ScrollView>
+  );
+};
 
 export default PhotographScreen;
 

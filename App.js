@@ -9,17 +9,8 @@ const Stack = createNativeStackNavigator();
 const App = () => (
   <NavigationContainer>
     <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        // dataPhotographers={dataPhotographers}
-      />
-      <Stack.Screen
-        name="Photograph"
-        component={PhotographScreen}
-        // dataPhotographers={dataPhotographers}
-        // media={media}
-      />
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Photograph" component={PhotographScreen} />
     </Stack.Navigator>
   </NavigationContainer>
 );

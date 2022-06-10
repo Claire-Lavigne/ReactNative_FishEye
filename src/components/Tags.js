@@ -1,9 +1,16 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const Tags = ({ tags }) => {
-  return tags.map((tag, index) => (
-    <TouchableOpacity key={`tag-${index}`} style={styles.tagWrapper}>
+const Tags = ({ tags, setCurrentTag }) => {
+  return tags.map((tag) => (
+    <TouchableOpacity
+      key={tag}
+      accessibilityLabel="Press to filter the photographers"
+      style={styles.tagWrapper}
+      onPress={() => {
+        setCurrentTag(tag);
+      }}
+    >
       <Text style={styles.tag}>#{tag}</Text>
     </TouchableOpacity>
   ));
@@ -19,11 +26,13 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     borderColor: "#525252",
     borderRadius: 11,
+    width: "fit-content",
   },
   tag: {
     color: "#901c1c",
     fontSize: 12,
     fontWeight: 500,
+    textAlign: "center",
     textTransform: "capitalize",
   },
 });
