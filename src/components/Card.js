@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Tags from "./Tags";
 
-const Card = ({ dataPhotographers, setCurrentTag }) => {
+const Card = ({
+  dataPhotographers,
+  displayTags,
+  displayPrice,
+  setCurrentTag,
+}) => {
   const navigation = useNavigation();
-
   return dataPhotographers.map((item) => (
     <View
       style={styles.article}
@@ -29,11 +33,13 @@ const Card = ({ dataPhotographers, setCurrentTag }) => {
           {item.city}, {item.country}
         </Text>
         <Text style={styles.tagline}>{item.tagline}</Text>
-        <Text style={styles.price}>{item.price}€/jour</Text>
+        {displayPrice && <Text style={styles.price}>{item.price}€/jour</Text>}
       </View>
-      <View style={styles.horContainer}>
-        <Tags tags={item.tags} setCurrentTag={setCurrentTag} />
-      </View>
+      {displayTags && (
+        <View style={styles.horContainer}>
+          <Tags tags={item.tags} setCurrentTag={setCurrentTag} />
+        </View>
+      )}
     </View>
   ));
 };

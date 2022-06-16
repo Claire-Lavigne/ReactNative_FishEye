@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 
 const Header = () => {
   const navigation = useNavigation();
@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <TouchableOpacity
       style={styles.link}
-      onPress={() => navigation.navigate("Home")}
+      onPress={() => navigation.navigate("Nos photographes")}
     >
       <Image
         source={{

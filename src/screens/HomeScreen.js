@@ -1,12 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  View,
-} from "react-native";
+import { StyleSheet, ScrollView, View } from "react-native";
 import React, { useState } from "react";
 import Header from "../components/Header";
 import Card from "../components/Card";
@@ -15,9 +8,6 @@ import Tags from "../components/Tags";
 const HomeScreen = () => {
   let data = require("../../data.json");
   let dataPhotographers = data[0].photographers;
-  let media = data[0].media;
-  console.log(dataPhotographers);
-  console.log(media);
 
   const [currentTag, setCurrentTag] = useState("");
 
@@ -43,6 +33,8 @@ const HomeScreen = () => {
               filterDataByTag.length > 0 ? filterDataByTag : dataPhotographers
             }
             setCurrentTag={setCurrentTag}
+            displayPrice={true}
+            displayTags={true}
           />
         </View>
         <StatusBar style="auto" />
