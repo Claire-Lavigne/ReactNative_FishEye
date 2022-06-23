@@ -24,10 +24,10 @@ const HomeScreen = () => {
     <ScrollView vertical>
       <View style={styles.container}>
         <Header />
-        <View style={styles.horContainer}>
+        <View style={styles.row}>
           <Tags tags={uniqueTags} setCurrentTag={setCurrentTag} />
         </View>
-        <View style={styles.horContainer}>
+        <View style={styles.row}>
           <Card
             dataPhotographers={
               filterDataByTag.length > 0 ? filterDataByTag : dataPhotographers
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
   },
-  horContainer: {
+  row: {
     flexFlow: "row wrap",
     justifyContent: "center",
   },

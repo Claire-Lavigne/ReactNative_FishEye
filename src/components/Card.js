@@ -11,11 +11,7 @@ const Card = ({
 }) => {
   const navigation = useNavigation();
   return dataPhotographers.map((item) => (
-    <View
-      style={styles.article}
-      key={`card-${item.id}`}
-      classname={`tag ${item.tags.join(" ")}`}
-    >
+    <View style={styles.article} key={`card-${item.id}`}>
       <TouchableOpacity
         style={styles.link}
         onPress={() => navigation.navigate("Photograph", { id: item.id })}
@@ -36,7 +32,7 @@ const Card = ({
         {displayPrice && <Text style={styles.price}>{item.price}€/jour</Text>}
       </View>
       {displayTags && (
-        <View style={styles.horContainer}>
+        <View style={styles.row}>
           <Tags tags={item.tags} setCurrentTag={setCurrentTag} />
         </View>
       )}
@@ -47,7 +43,7 @@ const Card = ({
 export default Card;
 
 const styles = StyleSheet.create({
-  horContainer: {
+  row: {
     flexFlow: "row wrap",
     justifyContent: "center",
   },

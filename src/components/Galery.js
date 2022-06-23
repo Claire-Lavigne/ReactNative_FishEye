@@ -1,17 +1,30 @@
-import React, { useState } from "react";
-import { StyleSheet, Image, Text, View, TouchableOpacity } from "react-native";
-import CustomModal from "./CustomModal";
+import React from "react";
+import { StyleSheet, FlatList, Image, Text, View } from "react-native";
 
 const Galery = ({ media }) => {
   return (
-    <View>
-      <Image
-        source={{
-          uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/logo.svg`,
+    <View style={styles.galery}>
+      <FlatList
+        data={media}
+        renderItem={(item) => {
+          item.image !== undefined ? (
+            <View style={styles.row} key={`img-${item.id}`}>
+              <Image
+                source={{
+                  uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/${item.photographerId}/${item.image}`,
+                }}
+                style={styles.image}
+              />
+              <Text>{item.alt}</Text>
+              <Text>{item.likes}</Text>
+            </View>
+          ) : (
+            <View style={styles.row} key={`img-${item.id}`}>
+              <Text>{item.likes}</Text>
+            </View>
+          );
         }}
-        style={styles.logo}
       />
-      <CustomModal />
     </View>
   );
 };
@@ -19,18 +32,21 @@ const Galery = ({ media }) => {
 export default Galery;
 
 const styles = StyleSheet.create({
-  button: {
-    width: 170,
-    height: 69,
-    color: "#fff",
-    backgroundColor: "#911c1c",
-    borderRadius: 5,
-    padding: 10,
-    margin: 5,
-    fontWeight: 700,
-    fontSize: 20,
-    lineHeight: 26,
+  galery: {
     flex: 1,
-    textAlign: "center",
+  },
+  row: {
+    backgroundColor: "red",
+    height: 300,
+    flexFlow: "row wrap",
+    justifyContent: "center",
+  },
+  image: {
+    width: 350,
+    height: 300,
+    color: "#fff",
+    backgroundColor: "#C4C4C4",
+    borderRadius: 5,
+    margin: 30,
   },
 });
