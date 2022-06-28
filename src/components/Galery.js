@@ -1,52 +1,44 @@
 import React from "react";
-import { StyleSheet, FlatList, Image, Text, View } from "react-native";
+import { StyleSheet, Image, Text, View } from "react-native";
 
 const Galery = ({ media }) => {
-  return (
-    <View style={styles.galery}>
-      <FlatList
-        data={media}
-        renderItem={(item) => {
-          item.image !== undefined ? (
-            <View style={styles.row} key={`img-${item.id}`}>
-              <Image
-                source={{
-                  uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/${item.photographerId}/${item.image}`,
-                }}
-                style={styles.image}
-              />
-              <Text>{item.alt}</Text>
-              <Text>{item.likes}</Text>
-            </View>
-          ) : (
-            <View style={styles.row} key={`img-${item.id}`}>
-              <Text>{item.likes}</Text>
-            </View>
-          );
-        }}
-      />
-    </View>
+  return media.map(
+    (item) =>
+      item.image !== undefined && (
+        <View style={styles.mediaWrapper} key={`media-${item.id}`}>
+          <Image
+            source={{
+              uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/${item.photographerId}/${item.image}`,
+            }}
+            style={styles.media}
+          />
+          <View style={styles.description}>
+            <Text>{item.alt}</Text>
+            <Text>{item.likes}</Text>
+          </View>
+        </View>
+      )
   );
 };
 
 export default Galery;
 
 const styles = StyleSheet.create({
-  galery: {
-    flex: 1,
+  mediaWrapper: {
+    maxWidth: 350,
+    marginHorizontal: 47.5,
+    marginVertical: 15,
   },
-  row: {
-    backgroundColor: "red",
-    height: 300,
-    flexFlow: "row wrap",
-    justifyContent: "center",
-  },
-  image: {
+  media: {
     width: 350,
     height: 300,
-    color: "#fff",
     backgroundColor: "#C4C4C4",
     borderRadius: 5,
-    margin: 30,
+  },
+  description: {
+    color: "#fff",
+    paddingTop: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });

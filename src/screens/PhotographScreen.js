@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, Image, ScrollView, View } from "react-native";
+import { StyleSheet, Text, ScrollView, View } from "react-native";
 import React, { useState } from "react";
 import Card from "../components/Card";
 import Galery from "../components/Galery";
@@ -25,12 +25,11 @@ const PhotographScreen = ({ route }) => {
       <View style={styles.container}>
         <View style={styles.intro}>
           <Card dataPhotographers={dataFilteredByID} />
-          <SmallModal
-            buttonContent="Contactez-moi"
-            photographerName={photographerName}
-          />
+          <SmallModal photographerName={photographerName} />
         </View>
-        <Galery style={styles.galery} media={mediaFilteredByID} />
+        <View style={styles.gallery}>
+          <Galery media={mediaFilteredByID} />
+        </View>
         <StatusBar style="auto" />
       </View>
     </ScrollView>
@@ -47,13 +46,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   intro: {
+    flex: 1,
     textAlign: "center",
     borderRadius: 5,
     paddingBottom: 30,
-    flex: 1,
   },
-  galery: {
-    backgroundColor: "red",
-    flex: 1,
+  gallery: {
+    flex: 2,
   },
 });

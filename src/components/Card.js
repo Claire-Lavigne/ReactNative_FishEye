@@ -43,10 +43,6 @@ const Card = ({
 export default Card;
 
 const styles = StyleSheet.create({
-  row: {
-    flexFlow: "row wrap",
-    justifyContent: "center",
-  },
   article: {
     padding: 40,
     textAlign: "center",
@@ -56,7 +52,7 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: "cover",
-    borderRadius: "50%",
+    borderRadius: 100,
     marginBottom: 16,
     width: 200,
     height: 200,
@@ -80,5 +76,9 @@ const styles = StyleSheet.create({
     color: "#525252",
     fontSize: 9,
     marginBottom: 4,
+  },
+  row: {
+    flexFlow: "row wrap",
+    justifyContent: "center",
   },
 });

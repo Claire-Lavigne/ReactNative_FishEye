@@ -9,43 +9,36 @@ import {
 } from "react-native";
 import Form from "./Form";
 
-const SmallModal = ({ buttonContent, photographerName }) => {
+const SmallModal = ({ photographerName }) => {
   const [modalVisible, setModalVisible] = useState(false);
   return (
-    <View style={styles.centeredView}>
+    <View style={styles.center}>
       <Modal
-        animationType="slide"
-        transparent={true}
+        animationType="fade"
+        transparent
         visible={modalVisible}
         onRequestClose={() => {
-          setModalVisible(!modalVisible);
+          setModalVisible(false);
         }}
       >
         <TouchableOpacity
-          style={styles.modalContainer}
+          style={styles.center}
           onPress={() => setModalVisible(false)}
         >
           <TouchableOpacity
             style={styles.modal}
-            onPress={() => console.log("do nothing")}
+            onPress={null}
             activeOpacity={1}
           >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <Pressable
-                  style={styles.buttonClose}
-                  onPress={() => setModalVisible(false)}
-                >
-                  X
-                </Pressable>
-                <Form photographerName={photographerName} />
-              </View>
-            </View>
+            <Form
+              photographerName={photographerName}
+              setModalVisible={setModalVisible}
+            />
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
       <Pressable onPress={() => setModalVisible(true)}>
-        <Text style={styles.button}>{buttonContent}</Text>
+        <Text style={styles.button}>Contactez-moi</Text>
       </Pressable>
     </View>
   );
@@ -54,45 +47,31 @@ const SmallModal = ({ buttonContent, photographerName }) => {
 export default SmallModal;
 
 const styles = StyleSheet.create({
-  centeredView: {
+  center: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalView: {
+  modal: {
+    position: "relative",
     alignItems: "center",
     elevation: 5,
     backgroundColor: "#DB8876",
     borderRadius: 5,
-    padding: 15,
-    margin: 10,
-  },
-  modal: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     maxWidth: 669,
-    height: "fit-content",
-  },
-  buttonClose: {
-    color: "#fff",
-    width: 42,
-    height: 42,
   },
   button: {
     width: 170,
-    height: 69,
     color: "#fff",
     backgroundColor: "#911c1c",
     borderRadius: 5,
     padding: 10,
     margin: 5,
-    fontWeight: 700,
+    fontWeight: "700",
     fontSize: 20,
     lineHeight: 26,
-    flex: 1,
     textAlign: "center",
   },
 });

@@ -6,10 +6,7 @@ const Header = () => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity
-      style={styles.link}
-      onPress={() => navigation.navigate("Nos photographes")}
-    >
+    <TouchableOpacity onPress={() => navigation.navigate("Nos photographes")}>
       <Image
         source={{
           uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/logo.svg`,
@@ -26,7 +23,6 @@ const styles = StyleSheet.create({
   logo: {
     width: 150,
     height: 37,
-    float: "left",
     padding: 16,
     margin: 10,
   },
