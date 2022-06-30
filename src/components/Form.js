@@ -51,7 +51,7 @@ const Form = ({ photographerName, setModalVisible }) => {
       />
       <Text style={styles.label}>Votre message</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, styles.inputBig]}
         onChangeText={setMessage}
         value={message}
         multiline={true}
@@ -69,29 +69,29 @@ export default Form;
 const styles = StyleSheet.create({
   buttonClose: {
     position: "absolute",
-    top: 10,
+    top: 5,
     right: 0,
     elevation: 10,
   },
   cross: {
-    width: 30,
-    height: 30,
+    width: 40,
+    height: 40,
   },
   title: {
     color: "black",
     fontWeight: "400",
-    fontSize: 36,
-    lineHeight: 47,
+    fontSize: 40,
+    paddingBottom: 15,
     marginRight: 45,
   },
   lastElt: {
-    paddingBottom: 15,
+    marginBottom: 15,
   },
   label: {
     color: "#312E2E",
     fontWeight: "400",
     fontSize: 26,
-    lineHeight: 37,
+    marginBottom: 5,
   },
   input: {
     backgroundColor: "white",
@@ -100,9 +100,12 @@ const styles = StyleSheet.create({
     fontSize: 26,
     lineHeight: 37,
     padding: 5,
+    marginBottom: 10,
+  },
+  inputBig: {
+    height: 120,
   },
   button: {
-    width: 170,
     color: "#fff",
     backgroundColor: "#911C1C",
     borderRadius: 5,

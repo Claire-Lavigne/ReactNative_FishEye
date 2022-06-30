@@ -56,13 +56,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modal: {
-    position: "relative",
-    alignItems: "center",
     elevation: 5,
+    justifyContent: "flex-end",
     backgroundColor: "#DB8876",
-    borderRadius: 5,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingHorizontal: 30,
+    paddingVertical: 30,
+    width: "100%",
+    height: "100%",
     maxWidth: 669,
   },
   buttonWrapper: {
@@ -72,10 +72,9 @@ const styles = StyleSheet.create({
   button: {
     color: "#fff",
     backgroundColor: "#911c1c",
-    paddingVertical: 30,
+    paddingVertical: 25,
     fontWeight: "700",
-    fontSize: 23,
-    lineHeight: 26,
+    fontSize: 26,
     textAlign: "center",
   },
 });
