@@ -37,8 +37,8 @@ const HomeScreen = () => {
             displayTags={true}
           />
         </View>
-        <StatusBar style="auto" />
       </View>
+      <StatusBar style="auto" />
     </ScrollView>
   );
 };

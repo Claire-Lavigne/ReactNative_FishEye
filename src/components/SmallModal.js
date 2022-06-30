@@ -37,7 +37,10 @@ const SmallModal = ({ photographerName }) => {
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
-      <Pressable onPress={() => setModalVisible(true)}>
+      <Pressable
+        onPress={() => setModalVisible(true)}
+        style={styles.buttonWrapper}
+      >
         <Text style={styles.button}>Contactez-moi</Text>
       </Pressable>
     </View>
@@ -62,15 +65,16 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     maxWidth: 669,
   },
+  buttonWrapper: {
+    flex: 1,
+    width: "100%",
+  },
   button: {
-    width: 170,
     color: "#fff",
     backgroundColor: "#911c1c",
-    borderRadius: 5,
-    padding: 10,
-    margin: 5,
+    paddingVertical: 30,
     fontWeight: "700",
-    fontSize: 20,
+    fontSize: 23,
     lineHeight: 26,
     textAlign: "center",
   },

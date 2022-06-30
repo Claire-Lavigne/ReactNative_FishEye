@@ -43,7 +43,12 @@ const Form = ({ photographerName, setModalVisible }) => {
         value={lastname}
       />
       <Text style={styles.label}>Email</Text>
-      <TextInput style={styles.input} onChangeText={setEmail} value={email} />
+      <TextInput
+        style={styles.input}
+        keyboardType="email-address"
+        onChangeText={setEmail}
+        value={email}
+      />
       <Text style={styles.label}>Votre message</Text>
       <TextInput
         style={styles.input}

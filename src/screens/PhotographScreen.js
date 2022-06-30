@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, ScrollView, View } from "react-native";
+import { StyleSheet, ScrollView, Text, View } from "react-native";
 import React, { useState } from "react";
 import Card from "../components/Card";
 import Galery from "../components/Galery";
@@ -21,24 +21,32 @@ const PhotographScreen = ({ route }) => {
   );
 
   return (
-    <ScrollView vertical>
-      <View style={styles.container}>
-        <View style={styles.intro}>
-          <Card dataPhotographers={dataFilteredByID} />
-          <SmallModal photographerName={photographerName} />
+    <View style={styles.containerParent}>
+      <ScrollView vertical>
+        <View style={styles.container}>
+          <View style={styles.intro}>
+            <Card dataPhotographers={dataFilteredByID} />
+          </View>
+          <View style={styles.gallery}>
+            <Galery media={mediaFilteredByID} />
+          </View>
+          <StatusBar style="auto" />
         </View>
-        <View style={styles.gallery}>
-          <Galery media={mediaFilteredByID} />
-        </View>
-        <StatusBar style="auto" />
+      </ScrollView>
+      <View style={styles.bottom}>
+        <SmallModal photographerName={photographerName} />
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
 export default PhotographScreen;
 
 const styles = StyleSheet.create({
+  containerParent: {
+    flex: 1,
+    position: "relative",
+  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -53,5 +61,12 @@ const styles = StyleSheet.create({
   },
   gallery: {
     flex: 2,
+  },
+  bottom: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    alignSelf: "flex-end",
   },
 });
