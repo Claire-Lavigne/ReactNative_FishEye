@@ -13,7 +13,6 @@ import Dropdown from "../components/Dropdown";
 const Galery = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [countLikes, setCountLikes] = useState(0);
-  const media = useSelector((state) => state.data.medias);
 
   let lastTap = null;
 
@@ -39,50 +38,47 @@ const Galery = () => {
   };
 
   return (
-    <>
-      {/* <Dropdown media={media} /> */}
-      {media.map((item, i) => {
-        item.image !== undefined && (
-          <TouchableWithoutFeedback
-            key={`media-${item.id}`}
-            onPress={() => handleDoubleTap()}
+    <TouchableWithoutFeedback
+      style={styles.test}
+      onPress={() => handleDoubleTap()}
+    >
+      <View style={styles.card}>
+        <View style={styles.imageWrapper}>
+          <ImageBackground
+            resizeMode="cover"
+            source={{
+              uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/${item.photographerId}/${item.image}`,
+            }}
+            style={styles.image}
           >
-            <View style={styles.card}>
-              <View style={styles.imageWrapper}>
-                <ImageBackground
-                  resizeMode="cover"
-                  source={{
-                    uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/${item.photographerId}/${item.image}`,
-                  }}
-                  style={styles.image}
-                >
-                  {isLiked && (
-                    <Image
-                      resizeMode="cover"
-                      source={{
-                        uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/heart.png`,
-                      }}
-                      style={styles.heartIcon}
-                    />
-                  )}
-                </ImageBackground>
-              </View>
-              <View style={styles.description}>
-                <Text>{item.alt}</Text>
-                <Text>{countLikes}</Text>
-              </View>
-            </View>
-          </TouchableWithoutFeedback>
-        );
-      })}
-      ;
-    </>
+            {isLiked && (
+              <Image
+                resizeMode="cover"
+                source={{
+                  uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/heart.png`,
+                }}
+                style={styles.heartIcon}
+              />
+            )}
+          </ImageBackground>
+        </View>
+        <View style={styles.description}>
+          <Text>{item.alt}</Text>
+          <Text>{countLikes}</Text>
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
 export default Galery;
 
 const styles = StyleSheet.create({
+  test: {
+    width: 350,
+    height: 300,
+  },
+
   card: {
     width: "100%",
     alignItems: "center",

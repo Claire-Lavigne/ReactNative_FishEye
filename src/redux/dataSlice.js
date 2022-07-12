@@ -9,10 +9,11 @@ const mergeDeduplicate = (arr) => {
 };
 
 const initialState = {
-  photographers: photographers,
-  medias: medias,
+  photographers,
+  medias,
   tags: mergeDeduplicate(allTags),
   currentTag: "",
+  dataByID: {},
 };
 
 export const dataSlice = createSlice({
@@ -22,8 +23,8 @@ export const dataSlice = createSlice({
     setCurrentTag: (state, action) => {
       state.currentTag = action.payload;
     },
-    setPhotographerID: (state, action) => {
-      state.photographerID = action.payload;
+    setCurrentData: (state, action) => {
+      state.dataByID = action.payload;
     },
     setCurrentPhotographer: (state, action) => {
       state.photographers = action.payload;
@@ -39,7 +40,7 @@ export const dataSlice = createSlice({
 
 export const {
   setCurrentTag,
-  setPhotographerID,
+  setCurrentData,
   setCurrentPhotographer,
   setCurrentMedias,
   sortMediasBy,

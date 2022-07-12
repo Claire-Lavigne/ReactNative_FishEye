@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import Tags from "./Tags";
 
 const CardFull = () => {
-  const photographer = useSelector((state) => state.data.photographers);
-  const photographerMedias = useSelector((state) => state.data.medias);
+  const photographer = useSelector((state) => state.data.dataByID.photographer);
+  const photographerMedias = useSelector(
+    (state) => state.data.dataByID.photographerMedias
+  );
   const likes = photographerMedias.map((media) => media.likes);
   const totalLikes = likes.reduce((a, b) => a + b, 0);
   return (

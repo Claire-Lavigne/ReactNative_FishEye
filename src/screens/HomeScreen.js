@@ -12,7 +12,9 @@ const HomeScreen = () => {
   const currentTag = useSelector((state) => state.data.currentTag);
   const filteredPhotographersByTag =
     currentTag.length > 0
-      ? photographers.filter((item) => item.tags.includes(currentTag))
+      ? photographers.filter((photographer) =>
+          photographer.tags.includes(currentTag)
+        )
       : photographers;
   return (
     <ScrollView vertical>
@@ -22,8 +24,8 @@ const HomeScreen = () => {
           <Tags tags={tags} />
         </View>
         <View style={styles.row}>
-          {filteredPhotographersByTag.map((item) => (
-            <CardExtract key={`card-${item.id}`} item={item} />
+          {filteredPhotographersByTag.map((photographer) => (
+            <CardExtract key={photographer.id} photographer={photographer} />
           ))}
         </View>
       </View>

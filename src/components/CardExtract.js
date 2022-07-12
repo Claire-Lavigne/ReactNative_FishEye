@@ -2,48 +2,44 @@ import React from "react";
 import { StyleSheet, Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  setPhotographerID,
-  setCurrentPhotographer,
-  setCurrentMedias,
-} from "../redux/dataSlice";
+import { setCurrentData } from "../redux/dataSlice";
 import Tags from "./Tags";
 
-const CardExtract = ({ item }) => {
+const CardExtract = ({ photographer }) => {
   const medias = useSelector((state) => state.data.medias);
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const navigate = (item) => {
-    navigation.navigate("Photograph");
-    const mediasByID = medias.filter(
-      (media) => media.photographerId === item.id
+  const navigate = (photographer) => {
+    const photographerMedias = medias.filter(
+      (media) => media.photographerId === photographer.id
     );
-
-    dispatch(setPhotographerID(item.id));
-    dispatch(setCurrentMedias(mediasByID));
-    dispatch(setCurrentPhotographer(item));
+    dispatch(setCurrentData({ photographer, photographerMedias }));
+    navigation.navigate("Photograph");
   };
   return (
     <View style={styles.article}>
-      <TouchableOpacity style={styles.link} onPress={() => navigate(item)}>
+      <TouchableOpacity
+        style={styles.link}
+        onPress={() => navigate(photographer)}
+      >
         <Image
           source={{
-            uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/Photographers_ID_Photos/${item.portrait}`,
+            uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/Photographers_ID_Photos/${photographer.portrait}`,
           }}
           style={styles.image}
         />
-        <Text style={styles.subtitle}>{item.name}</Text>
+        <Text style={styles.subtitle}>{photographer.name}</Text>
       </TouchableOpacity>
       <View>
         <Text style={styles.location}>
-          {item.city}, {item.country}
+          {photographer.city}, {photographer.country}
         </Text>
-        <Text style={styles.tagline}>{item.tagline}</Text>
-        <Text style={styles.price}>{item.price}€/jour</Text>
+        <Text style={styles.tagline}>{photographer.tagline}</Text>
+        <Text style={styles.price}>{photographer.price}€/jour</Text>
       </View>
       <View style={styles.row}>
-        <Tags tags={item.tags} />
+        <Tags tags={photographer.tags} />
       </View>
     </View>
   );

@@ -1,11 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, ScrollView, Text, View } from "react-native";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import CardFull from "../components/CardFull";
 import Galery from "../components/Galery";
 import SmallModal from "../components/SmallModal";
 
 const PhotographScreen = () => {
+  const photographerMedias = useSelector(
+    (state) => state.data.dataByID.photographerMedias
+  );
   return (
     <View style={styles.containerParent}>
       <ScrollView vertical>
@@ -14,9 +18,10 @@ const PhotographScreen = () => {
             <CardFull />
           </View>
           <View style={styles.gallery}>
-            <Galery />
+            {photographerMedias.map((item) => {
+              item.image !== undefined && <Galery key={item.id} />;
+            })}
           </View>
-          <StatusBar style="auto" />
         </View>
       </ScrollView>
       <View style={styles.bottom}>
