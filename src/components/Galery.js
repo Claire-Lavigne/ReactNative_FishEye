@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import {
   StyleSheet,
   ImageBackground,
@@ -9,9 +10,10 @@ import {
 } from "react-native";
 import Dropdown from "../components/Dropdown";
 
-const Galery = ({ media }) => {
+const Galery = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [countLikes, setCountLikes] = useState(0);
+  const media = useSelector((state) => state.data.medias);
 
   let lastTap = null;
 

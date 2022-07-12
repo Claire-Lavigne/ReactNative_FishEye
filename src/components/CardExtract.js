@@ -2,18 +2,27 @@ import React from "react";
 import { StyleSheet, Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
-import { setPhotographerID, setCurrentPhotographer } from "../redux/dataSlice";
+import {
+  setPhotographerID,
+  setCurrentPhotographer,
+  setCurrentMedias,
+} from "../redux/dataSlice";
 import Tags from "./Tags";
 
-const Card = ({ displayTags, displayPrice, totalLikes, item }) => {
-  const dispatch = useDispatch();
+const CardExtract = ({ item }) => {
+  const medias = useSelector((state) => state.data.medias);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const navigate = (item) => {
-    // dispatch(setPhotographerID(item.id));
-    // dispatch(setCurrentPhotographer(item));
-    // add id in nav
     navigation.navigate("Photograph");
-    // dispatch after
+    const mediasByID = medias.filter(
+      (media) => media.photographerId === item.id
+    );
+
+    dispatch(setPhotographerID(item.id));
+    dispatch(setCurrentMedias(mediasByID));
+    dispatch(setCurrentPhotographer(item));
   };
   return (
     <View style={styles.article}>
@@ -31,33 +40,16 @@ const Card = ({ displayTags, displayPrice, totalLikes, item }) => {
           {item.city}, {item.country}
         </Text>
         <Text style={styles.tagline}>{item.tagline}</Text>
-        {displayPrice && <Text style={styles.price}>{item.price}€/jour</Text>}
+        <Text style={styles.price}>{item.price}€/jour</Text>
       </View>
-      {displayTags && (
-        <View style={styles.row}>
-          <Tags tags={item.tags} />
-        </View>
-      )}
-      {totalLikes && (
-        <View style={styles.row}>
-          <View style={styles.row}>
-            <Text style={styles.likes}>{totalLikes}</Text>
-            <Image
-              resizeMode="cover"
-              source={{
-                uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/heart.png`,
-              }}
-              style={styles.heartIcon}
-            />
-          </View>
-          <Text style={styles.price}>{item.price}€/jour</Text>
-        </View>
-      )}
+      <View style={styles.row}>
+        <Tags tags={item.tags} />
+      </View>
     </View>
   );
 };
 
-export default Card;
+export default CardExtract;
 
 const styles = StyleSheet.create({
   article: {

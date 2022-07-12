@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   StyleSheet,
   SafeAreaView,
@@ -8,7 +9,10 @@ import {
   TextInput,
 } from "react-native";
 
-const Form = ({ photographerName, setModalVisible }) => {
+const Form = ({ setModalVisible }) => {
+  const photographers = useSelector((state) => state.data.photographers);
+  const photographerName = photographers[0].name;
+
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");

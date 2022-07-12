@@ -3,14 +3,14 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, ScrollView, View } from "react-native";
 import { useSelector } from "react-redux";
 import Header from "../components/Header";
-import Card from "../components/Card";
+import CardExtract from "../components/CardExtract";
 import Tags from "../components/Tags";
 
 const HomeScreen = () => {
-  const photographers = useSelector((state) => state.data.allPhotographers);
+  const photographers = useSelector((state) => state.data.photographers);
   const tags = useSelector((state) => state.data.tags);
   const currentTag = useSelector((state) => state.data.currentTag);
-  const filteredPhotographers =
+  const filteredPhotographersByTag =
     currentTag.length > 0
       ? photographers.filter((item) => item.tags.includes(currentTag))
       : photographers;
@@ -22,13 +22,8 @@ const HomeScreen = () => {
           <Tags tags={tags} />
         </View>
         <View style={styles.row}>
-          {filteredPhotographers.map((item) => (
-            <Card
-              displayPrice={true}
-              displayTags={true}
-              key={`card-${item.id}`}
-              item={item}
-            />
+          {filteredPhotographersByTag.map((item) => (
+            <CardExtract key={`card-${item.id}`} item={item} />
           ))}
         </View>
       </View>

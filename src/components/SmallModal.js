@@ -9,8 +9,9 @@ import {
 } from "react-native";
 import Form from "./Form";
 
-const SmallModal = ({ photographerName }) => {
+const SmallModal = () => {
   const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <View style={styles.center}>
       <Modal
@@ -30,10 +31,7 @@ const SmallModal = ({ photographerName }) => {
             onPress={null}
             activeOpacity={1}
           >
-            <Form
-              photographerName={photographerName}
-              setModalVisible={setModalVisible}
-            />
+            <Form setModalVisible={setModalVisible} />
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>

@@ -1,22 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const data = require("../../data.json");
-const allPhotographers = data[0].photographers;
-const allMedias = data[0].media;
-const allTags = allPhotographers.map((item) => item.tags);
+const photographers = data[0].photographers;
+const medias = data[0].media;
+const allTags = photographers.map((item) => item.tags);
 const mergeDeduplicate = (arr) => {
   return [...new Set([].concat(...arr))];
 };
 
 const initialState = {
-  data: data,
-  allPhotographers: allPhotographers,
-  allMedias: allMedias,
-  photographerID: "",
-  mediasByID: [],
+  photographers: photographers,
+  medias: medias,
   tags: mergeDeduplicate(allTags),
   currentTag: "",
-  sortBy: "likes",
 };
 
 export const dataSlice = createSlice({
@@ -30,10 +26,10 @@ export const dataSlice = createSlice({
       state.photographerID = action.payload;
     },
     setCurrentPhotographer: (state, action) => {
-      state.allPhotographers = action.payload;
+      state.photographers = action.payload;
     },
     setCurrentMedias: (state, action) => {
-      state.mediasByID = action.payload;
+      state.medias = action.payload;
     },
     sortMediasBy: (state, action) => {
       state.sortBy = action.payload;
