@@ -1,31 +1,37 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, ScrollView, Text, View } from "react-native";
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Card from "../components/Card";
 import Galery from "../components/Galery";
 import SmallModal from "../components/SmallModal";
 
-let data = require("../../data.json");
-let dataPhotographers = data[0].photographers;
-let media = data[0].media;
+const PhotographScreen = () => {
+  const medias = useSelector((state) => state.data.allMedias);
+  const photographers = useSelector((state) => state.data.allPhotographers);
+  const photographerID = useSelector((state) => state.data.photographerID);
 
-const PhotographScreen = ({ route }) => {
-  const dataFilteredByID = dataPhotographers.filter(
-    (item) => item.id == route.params.id
+  console.log(photographers);
+
+  const photographerName = photographers[0].name;
+
+  const mediaFilteredByID = medias.filter(
+    (item) => item.photographerId == photographerID
   );
 
-  const photographerName = dataFilteredByID[0].name;
-
-  const mediaFilteredByID = media.filter(
-    (item) => item.photographerId == route.params.id
-  );
+  const arrayLikes = mediaFilteredByID.map((item) => item.likes);
+  const totalLikes = arrayLikes.reduce((a, b) => a + b, 0);
 
   return (
     <View style={styles.containerParent}>
       <ScrollView vertical>
         <View style={styles.container}>
           <View style={styles.intro}>
-            <Card dataPhotographers={dataFilteredByID} />
+            <Card
+              filteredPhotographers={dataFilteredByID}
+              displayTags={true}
+              totalLikes={totalLikes}
+            />
           </View>
           <View style={styles.gallery}>
             <Galery media={mediaFilteredByID} />
@@ -61,6 +67,10 @@ const styles = StyleSheet.create({
   },
   gallery: {
     flex: 2,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    backgroundColor: "white",
   },
   bottom: {
     position: "absolute",

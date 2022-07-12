@@ -1,15 +1,17 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setCurrentTag } from "../redux/dataSlice";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
-const Tags = ({ tags, setCurrentTag }) => {
+const Tags = ({ tags }) => {
+  const dispatch = useDispatch();
+
   return tags.map((tag) => (
     <TouchableOpacity
       key={tag}
       accessibilityLabel="Press to filter the photographers"
       style={styles.tagWrapper}
-      onPress={() => {
-        setCurrentTag(tag);
-      }}
+      onPress={() => dispatch(setCurrentTag(tag))}
     >
       <Text style={styles.tag}>#{tag}</Text>
     </TouchableOpacity>

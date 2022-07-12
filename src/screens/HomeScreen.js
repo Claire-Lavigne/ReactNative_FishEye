@@ -1,41 +1,35 @@
+import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, ScrollView, View } from "react-native";
-import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import Header from "../components/Header";
 import Card from "../components/Card";
 import Tags from "../components/Tags";
 
 const HomeScreen = () => {
-  let data = require("../../data.json");
-  let dataPhotographers = data[0].photographers;
-
-  const [currentTag, setCurrentTag] = useState("");
-
-  const dataTags = dataPhotographers.map((item) => item.tags);
-  const mergeDeduplicate = (arr) => {
-    return [...new Set([].concat(...arr))];
-  };
-  const uniqueTags = mergeDeduplicate(dataTags);
-  const filterDataByTag = dataPhotographers.filter((item) =>
-    item.tags.includes(currentTag)
-  );
-
+  const photographers = useSelector((state) => state.data.allPhotographers);
+  const tags = useSelector((state) => state.data.tags);
+  const currentTag = useSelector((state) => state.data.currentTag);
+  const filteredPhotographers =
+    currentTag.length > 0
+      ? photographers.filter((item) => item.tags.includes(currentTag))
+      : photographers;
   return (
     <ScrollView vertical>
       <View style={styles.container}>
         <Header />
         <View style={styles.row}>
-          <Tags tags={uniqueTags} setCurrentTag={setCurrentTag} />
+          <Tags tags={tags} />
         </View>
         <View style={styles.row}>
-          <Card
-            dataPhotographers={
-              filterDataByTag.length > 0 ? filterDataByTag : dataPhotographers
-            }
-            setCurrentTag={setCurrentTag}
-            displayPrice={true}
-            displayTags={true}
-          />
+          {filteredPhotographers.map((item) => (
+            <Card
+              displayPrice={true}
+              displayTags={true}
+              key={`card-${item.id}`}
+              item={item}
+            />
+          ))}
         </View>
       </View>
       <StatusBar style="auto" />
@@ -53,7 +47,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   row: {
-    flexFlow: "row wrap",
+    flexDirection: "row",
+    flexWrap: "wrap",
     justifyContent: "center",
   },
 });
