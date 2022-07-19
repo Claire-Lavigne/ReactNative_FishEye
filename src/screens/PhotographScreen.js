@@ -9,15 +9,9 @@ const PhotographScreen = () => {
   return (
     <View style={styles.container}>
       <ScrollView vertical>
-        <View style={styles.card}>
-          <CardFull />
-        </View>
-        <View style={styles.dropdown}>
-          <Dropdown />
-        </View>
-        <View style={styles.gallery}>
-          <Gallery />
-        </View>
+        <CardFull />
+        <Dropdown />
+        <Gallery />
       </ScrollView>
       <View style={styles.form}>
         <SmallModal />
@@ -32,21 +26,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: "relative",
-  },
-  card: {
-    flex: 2,
     textAlign: "center",
-  },
-  dropdown: {
-    flex: 1,
-    textAlign: "center",
-  },
-  gallery: {
-    flex: 2,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    backgroundColor: "white",
   },
   form: {
     position: "absolute",

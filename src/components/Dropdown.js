@@ -86,11 +86,11 @@ export default DropdownComponent;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
-    padding: 16,
-    marginVertical: 20,
+    padding: 10,
+    marginHorizontal: "auto",
   },
   dropdown: {
+    backgroundColor: "#F2F2F2",
     width: 200,
     height: 50,
     borderColor: "grey",
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   label: {
     position: "absolute",
-    backgroundColor: "white",
+    backgroundColor: "#F2F2F2",
     left: 22,
     top: 8,
     zIndex: 999,
