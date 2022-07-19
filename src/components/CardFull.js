@@ -4,10 +4,8 @@ import { useSelector } from "react-redux";
 import Tags from "./Tags";
 
 const CardFull = () => {
-  const photographer = useSelector((state) => state.data.dataByID.photographer);
-  const photographerMedias = useSelector(
-    (state) => state.data.dataByID.photographerMedias
-  );
+  const photographer = useSelector((state) => state.data.photographerByID);
+  const photographerMedias = useSelector((state) => state.data.mediaByID);
   const likes = photographerMedias.map((media) => media.likes);
   const totalLikes = likes.reduce((a, b) => a + b, 0);
   return (
@@ -71,30 +69,37 @@ const styles = StyleSheet.create({
   },
   location: {
     color: "#901c1c",
-    fontSize: 13,
+    fontSize: 20,
     marginBottom: 6,
     textAlign: "center",
   },
   tagline: {
     color: "#000",
-    fontSize: 10,
+    fontSize: 18,
     marginBottom: 5,
     textAlign: "center",
   },
-  price: {
-    color: "#525252",
-    fontSize: 9,
-    marginBottom: 4,
-    textAlign: "center",
+  likes: {
+    fontSize: 20,
+    marginRight: 5,
+    color: "#CD232E",
+    fontWeight: "bold",
   },
   heartIcon: {
-    width: 50,
-    height: 50,
-    opacity: 0.8,
+    width: 20,
+    height: 20,
+    opacity: 1,
+  },
+  price: {
+    fontSize: 16,
+    textAlign: "center",
+    marginLeft: 8,
+    fontWeight: "bold",
   },
   row: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
+    alignItems: "center",
   },
 });

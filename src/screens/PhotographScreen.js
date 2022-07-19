@@ -1,30 +1,25 @@
-import { StatusBar } from "expo-status-bar";
+import React from "react";
 import { StyleSheet, ScrollView, Text, View } from "react-native";
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
 import CardFull from "../components/CardFull";
-import Galery from "../components/Galery";
+import Gallery from "../components/Gallery";
 import SmallModal from "../components/SmallModal";
+import Dropdown from "../components/Dropdown";
 
 const PhotographScreen = () => {
-  const photographerMedias = useSelector(
-    (state) => state.data.dataByID.photographerMedias
-  );
   return (
-    <View style={styles.containerParent}>
+    <View style={styles.container}>
       <ScrollView vertical>
-        <View style={styles.container}>
-          <View style={styles.intro}>
-            <CardFull />
-          </View>
-          <View style={styles.gallery}>
-            {photographerMedias.map((item) => {
-              item.image !== undefined && <Galery key={item.id} />;
-            })}
-          </View>
+        <View style={styles.card}>
+          <CardFull />
+        </View>
+        <View style={styles.dropdown}>
+          <Dropdown />
+        </View>
+        <View style={styles.gallery}>
+          <Gallery />
         </View>
       </ScrollView>
-      <View style={styles.bottom}>
+      <View style={styles.form}>
         <SmallModal />
       </View>
     </View>
@@ -34,21 +29,17 @@ const PhotographScreen = () => {
 export default PhotographScreen;
 
 const styles = StyleSheet.create({
-  containerParent: {
+  container: {
     flex: 1,
     position: "relative",
   },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
+  card: {
+    flex: 2,
+    textAlign: "center",
   },
-  intro: {
+  dropdown: {
     flex: 1,
     textAlign: "center",
-    borderRadius: 5,
-    paddingBottom: 30,
   },
   gallery: {
     flex: 2,
@@ -57,7 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "white",
   },
-  bottom: {
+  form: {
     position: "absolute",
     bottom: 0,
     left: 0,

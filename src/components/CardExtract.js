@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
-import { setCurrentData } from "../redux/dataSlice";
+import { setCurrentPhotographer, setCurrentMedias } from "../redux/dataSlice";
 import Tags from "./Tags";
 
 const CardExtract = ({ photographer }) => {
@@ -12,9 +12,11 @@ const CardExtract = ({ photographer }) => {
 
   const navigate = (photographer) => {
     const photographerMedias = medias.filter(
-      (media) => media.photographerId === photographer.id
+      (media) =>
+        media.image !== undefined && media.photographerId === photographer.id
     );
-    dispatch(setCurrentData({ photographer, photographerMedias }));
+    dispatch(setCurrentPhotographer(photographer));
+    dispatch(setCurrentMedias(photographerMedias));
     navigation.navigate("Photograph");
   };
   return (

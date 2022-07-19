@@ -1,22 +1,49 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { setCurrentTag } from "../redux/dataSlice";
 import { Dropdown } from "react-native-element-dropdown";
-import { DownOutlined } from "@ant-design/icons";
+import { useSelector, useDispatch } from "react-redux";
+import { setCurrentMedias } from "../redux/dataSlice";
 
 let dropdownData = [
   { label: "Popularité", value: "likes" },
   { label: "Date", value: "date" },
-  { label: "Titre", value: "alt" },
+  { label: "Titre", value: "title" },
 ];
 
-const DropdownComponent = (media) => {
-  const [value, setValue] = useState("likes");
+const DropdownComponent = () => {
+  const photographerMedias = useSelector((state) => state.data.mediaByID);
+  const dispatch = useDispatch();
+  const [value, setValue] = useState("title");
   const [isFocus, setIsFocus] = useState(false);
 
-  //const sortedMedia = media.sort((a, b) => a.dropdownValue - b.dropdownValue);
-  //console.log(sortedMedia);
+  const sortMedias = (item) => {
+    console.log(item);
+    let sortedMedias = [];
+    switch (item.value) {
+      case "title":
+        sortedMedias = [...photographerMedias].sort((a, b) =>
+          a.alt.localeCompare(b.alt, "en", {
+            ignorePunctuation: true,
+            sensitivity: "base",
+          })
+        );
+        break;
+      case "date":
+        sortedMedias = [...photographerMedias].sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime() // Timestamp
+        );
+        break;
+      case "likes":
+        sortedMedias = [...photographerMedias].sort(
+          (a, b) => b.likes - a.likes
+        );
+        break;
+      default:
+        sortedMedias = [...photographerMedias];
+        break;
+    }
+    dispatch(setCurrentMedias(sortedMedias));
+  };
 
   const renderLabel = () => {
     if (value || isFocus) {
@@ -48,9 +75,8 @@ const DropdownComponent = (media) => {
         onChange={(item) => {
           setValue(item.value);
           setIsFocus(false);
-          dispatch(sortMediasBy(item.value));
+          sortMedias(item);
         }}
-        renderRightIcon={() => <DownOutlined style={styles.icon} />}
       />
     </View>
   );
@@ -71,11 +97,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 8,
     paddingHorizontal: 8,
-  },
-  icon: {
-    marginRight: 5,
-    fontSize: 20,
-    color: "#black",
   },
   label: {
     position: "absolute",

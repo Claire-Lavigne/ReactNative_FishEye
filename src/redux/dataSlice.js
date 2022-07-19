@@ -13,7 +13,8 @@ const initialState = {
   medias,
   tags: mergeDeduplicate(allTags),
   currentTag: "",
-  dataByID: {},
+  photographerByID: {},
+  mediaByID: {},
 };
 
 export const dataSlice = createSlice({
@@ -23,27 +24,16 @@ export const dataSlice = createSlice({
     setCurrentTag: (state, action) => {
       state.currentTag = action.payload;
     },
-    setCurrentData: (state, action) => {
-      state.dataByID = action.payload;
-    },
     setCurrentPhotographer: (state, action) => {
-      state.photographers = action.payload;
+      state.photographerByID = action.payload;
     },
     setCurrentMedias: (state, action) => {
-      state.medias = action.payload;
-    },
-    sortMediasBy: (state, action) => {
-      state.sortBy = action.payload;
+      state.mediaByID = action.payload;
     },
   },
 });
 
-export const {
-  setCurrentTag,
-  setCurrentData,
-  setCurrentPhotographer,
-  setCurrentMedias,
-  sortMediasBy,
-} = dataSlice.actions;
+export const { setCurrentTag, setCurrentPhotographer, setCurrentMedias } =
+  dataSlice.actions;
 
 export default dataSlice.reducer;
