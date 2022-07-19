@@ -1,49 +1,44 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { setCurrentMedias } from "../redux/dataSlice";
 import {
   StyleSheet,
   ImageBackground,
   Image,
   Text,
-  TouchableWithoutFeedback,
+  FlatList,
+  TouchableOpacity,
   View,
 } from "react-native";
 
 const Gallery = () => {
   const photographerMedias = useSelector((state) => state.data.mediaByID);
+
+  const dispatch = useDispatch();
   const [isLiked, setIsLiked] = useState(false);
-
-  /*  const [countLikes, setCountLikes] = useState(0);
-   */
   let lastTap = null;
-  /*
-  const handleLike = () => {
-    if (!isLiked) {
-      setIsLiked(true);
-      setCountLikes(countLikes + 1);
-    } else {
-      setIsLiked(false);
-      setCountLikes(countLikes - 1);
-    }
-  };
-*/
 
-  const handleDoubleTap = () => {
+  const handleDoubleTap = (media, i) => {
     const now = Date.now();
     const DOUBLE_PRESS_DELAY = 300;
 
     if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
-      console.log("like");
-      setIsLiked(true);
+      if (!isLiked) {
+        setIsLiked(true);
+        dispatch(setCurrentMedias(media[i].likes++));
+      } else {
+        setIsLiked(false);
+        dispatch(setCurrentMedias(media[i].likes--));
+      }
     } else {
       lastTap = now;
     }
   };
-  return photographerMedias.map((media) => {
-    <TouchableWithoutFeedback
+  return photographerMedias.map((media, i) => {
+    <TouchableOpacity
       style={styles.card}
       key={media.id}
-      onPress={() => handleDoubleTap()}
+      onPress={() => handleDoubleTap(media, i)}
     >
       <View style={styles.imageWrapper}>
         <ImageBackground
@@ -68,7 +63,7 @@ const Gallery = () => {
         <Text>{media.alt}</Text>
         <Text>{media.likes}</Text>
       </View>
-    </TouchableWithoutFeedback>;
+    </TouchableOpacity>;
   });
 };
 
@@ -76,7 +71,8 @@ export default Gallery;
 
 const styles = StyleSheet.create({
   card: {
-    width: "100%",
+    width: 350,
+    height: 300,
     alignItems: "center",
     paddingVertical: 15,
   },

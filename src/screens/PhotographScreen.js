@@ -1,11 +1,13 @@
 import React from "react";
 import { StyleSheet, ScrollView, Text, View } from "react-native";
+import { useSelector } from "react-redux";
 import CardFull from "../components/CardFull";
 import Gallery from "../components/Gallery";
 import SmallModal from "../components/SmallModal";
 import Dropdown from "../components/Dropdown";
 
 const PhotographScreen = () => {
+  const photographerMedias = useSelector((state) => state.data.mediaByID);
   return (
     <View style={styles.container}>
       <ScrollView vertical>
