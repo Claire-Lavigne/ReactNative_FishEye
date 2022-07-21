@@ -11,11 +11,39 @@ import {
   View,
 } from "react-native";
 
+const Item = (data) => (
+  <TouchableOpacity
+    style={styles.card} //onPress={() => handleDoubleTap(media, i)}
+  >
+    <View style={styles.imageWrapper}>
+      <ImageBackground
+        resizeMode="cover"
+        source={{
+          uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/${data.item.photographerId}/${data.item.image}`,
+        }}
+        style={styles.image}
+      >
+        <Image
+          resizeMode="cover"
+          source={{
+            uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/heart.png`,
+          }}
+          style={styles.heartIcon}
+        />
+      </ImageBackground>
+    </View>
+    <View style={styles.description}>
+      <Text>{data.item.alt}</Text>
+      <Text>{data.item.likes}</Text>
+    </View>
+  </TouchableOpacity>
+);
+
 const Gallery = () => {
   const photographerMedias = useSelector((state) => state.data.mediaByID);
 
   const dispatch = useDispatch();
-  const [isLiked, setIsLiked] = useState(false);
+  // const [isLiked, setIsLiked] = useState(false);
   let lastTap = null;
 
   const handleDoubleTap = (media, i) => {
@@ -34,50 +62,36 @@ const Gallery = () => {
       lastTap = now;
     }
   };
-  return photographerMedias.map((media, i) => {
-    <TouchableOpacity
-      style={styles.card}
-      key={media.id}
-      onPress={() => handleDoubleTap(media, i)}
-    >
-      <View style={styles.imageWrapper}>
-        <ImageBackground
-          resizeMode="cover"
-          source={{
-            uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/${media.photographerId}/${media.image}`,
-          }}
-          style={styles.image}
-        >
-          {isLiked && (
-            <Image
-              resizeMode="cover"
-              source={{
-                uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/heart.png`,
-              }}
-              style={styles.heartIcon}
-            />
-          )}
-        </ImageBackground>
-      </View>
-      <View style={styles.description}>
-        <Text>{media.alt}</Text>
-        <Text>{media.likes}</Text>
-      </View>
-    </TouchableOpacity>;
-  });
+
+  return (
+    <View>
+      <FlatList
+        data={photographerMedias}
+        renderItem={Item}
+        keyExtractor={(item) => item.id}
+        horizontal={false}
+        numColumns={photographerMedias.length}
+        columnWrapperStyle={styles.flatList}
+      />
+    </View>
+  );
 };
 
 export default Gallery;
 
 const styles = StyleSheet.create({
+  flatList: {
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
   card: {
-    width: 350,
-    height: 300,
     alignItems: "center",
     paddingVertical: 15,
   },
   imageWrapper: {
     flex: 1,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
   },
   image: {
     width: 350,
