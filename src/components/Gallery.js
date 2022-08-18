@@ -13,7 +13,7 @@ import {
 
 const Gallery = () => {
   const images = useSelector((state) => state.data.mediaByID);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(true);
   const dispatch = useDispatch();
 
   const handleLikes = (id) => {
