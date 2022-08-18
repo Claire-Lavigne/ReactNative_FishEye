@@ -11,67 +11,67 @@ import {
   View,
 } from "react-native";
 
-const Item = (data) => (
-  <TouchableOpacity
-    style={styles.card} //onPress={() => handleDoubleTap(media, i)}
-  >
-    <View style={styles.imageWrapper}>
-      <ImageBackground
-        resizeMode="cover"
-        source={{
-          uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/${data.item.photographerId}/${data.item.image}`,
-        }}
-        style={styles.image}
-      >
-        <Image
-          resizeMode="cover"
-          source={{
-            uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/heart.png`,
-          }}
-          style={styles.heartIcon}
-        />
-      </ImageBackground>
-    </View>
-    <View style={styles.description}>
-      <Text>{data.item.alt}</Text>
-      <Text>{data.item.likes}</Text>
-    </View>
-  </TouchableOpacity>
-);
-
 const Gallery = () => {
-  const photographerMedias = useSelector((state) => state.data.mediaByID);
-
+  const images = useSelector((state) => state.data.mediaByID);
+  const [isLiked, setIsLiked] = useState(false);
   const dispatch = useDispatch();
-  // const [isLiked, setIsLiked] = useState(false);
-  let lastTap = null;
 
-  const handleDoubleTap = (media, i) => {
-    const now = Date.now();
-    const DOUBLE_PRESS_DELAY = 300;
-
-    if (lastTap && now - lastTap < DOUBLE_PRESS_DELAY) {
-      if (!isLiked) {
-        setIsLiked(true);
-        dispatch(setCurrentMedias(media[i].likes++));
-      } else {
-        setIsLiked(false);
-        dispatch(setCurrentMedias(media[i].likes--));
+  const handleLikes = (id) => {
+    const newState = images.map((obj) => {
+      // update current obj
+      if (obj.id === id) {
+        // add likes
+        setIsLiked(!isLiked);
+        console.log({ ...obj, isLiked: isLiked });
+        return { ...obj, isLiked: isLiked };
       }
-    } else {
-      lastTap = now;
-    }
+      // otherwise return object as is
+      return obj;
+    });
+    console.log(newState);
+    dispatch(setCurrentMedias(newState));
   };
 
   return (
     <View>
       <FlatList
-        data={photographerMedias}
-        renderItem={Item}
         keyExtractor={(item) => item.id}
         horizontal={false}
-        numColumns={photographerMedias.length}
+        numColumns={images.length}
         columnWrapperStyle={styles.flatList}
+        data={images}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <View style={styles.imageWrapper}>
+              <ImageBackground
+                resizeMode="cover"
+                source={{
+                  uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/${item.photographerId}/${item.image}`,
+                }}
+                style={styles.image}
+              ></ImageBackground>
+            </View>
+            <View style={styles.description}>
+              <Text>{item.alt}</Text>
+              <Text>{item.likes}</Text>
+              <TouchableOpacity onPress={() => handleLikes(item.id)}>
+                <Image
+                  resizeMode="cover"
+                  source={
+                    item.isLiked
+                      ? {
+                          uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/heart.png`,
+                        }
+                      : {
+                          uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/heart-outline.png`,
+                        }
+                  }
+                  style={styles.heartIcon}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
       />
     </View>
   );
@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   heartIcon: {
-    width: 50,
-    height: 50,
+    width: 20,
+    height: 20,
     opacity: 0.8,
   },
   description: {
@@ -111,6 +111,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     paddingTop: 10,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
 });

@@ -30,10 +30,17 @@ export const dataSlice = createSlice({
     setCurrentMedias: (state, action) => {
       state.mediaByID = action.payload;
     },
+    setCurrentLikes: (state, action) => {
+      state.currentLikes = action.payload;
+    },
   },
 });
 
-export const { setCurrentTag, setCurrentPhotographer, setCurrentMedias } =
-  dataSlice.actions;
+export const {
+  setCurrentTag,
+  setCurrentPhotographer,
+  setCurrentMedias,
+  setCurrentLikes,
+} = dataSlice.actions;
 
 export default dataSlice.reducer;

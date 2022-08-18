@@ -17,7 +17,6 @@ const DropdownComponent = () => {
   const [isFocus, setIsFocus] = useState(false);
 
   const sortMedias = (item) => {
-    console.log(item);
     let sortedMedias = [];
     switch (item.value) {
       case "title":

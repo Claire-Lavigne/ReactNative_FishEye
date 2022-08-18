@@ -39,6 +39,9 @@ const Form = ({ setModalVisible }) => {
         style={styles.input}
         onChangeText={setFirstname}
         value={firstname}
+        label="Username"
+        left={<TextInput.Icon name="account" />}
+        //   mode="flat"
       />
       <Text style={styles.label}>Nom</Text>
       <TextInput
@@ -51,6 +54,7 @@ const Form = ({ setModalVisible }) => {
         style={styles.input}
         keyboardType="email-address"
         onChangeText={setEmail}
+        // onSubmitEditing={(value) => setName(value.nativeEvent.text)}
         value={email}
       />
       <Text style={styles.label}>Votre message</Text>
