@@ -20,10 +20,12 @@ const Gallery = () => {
     const newState = images.map((obj) => {
       // update current obj
       if (obj.id === id) {
-        // add likes
         setIsLiked(!isLiked);
-        console.log({ ...obj, isLiked: isLiked });
-        return { ...obj, isLiked: isLiked };
+        if (isLiked) {
+          return { ...obj, likes: obj.likes + 1, isLiked: isLiked };
+        } else {
+          return { ...obj, likes: obj.likes - 1, isLiked: isLiked };
+        }
       }
       // otherwise return object as is
       return obj;
