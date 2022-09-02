@@ -5,19 +5,30 @@ import CardFull from "../components/CardFull";
 import Gallery from "../components/Gallery";
 import SmallModal from "../components/SmallModal";
 import Dropdown from "../components/Dropdown";
+import useAxiosGet from "../useFetch";
 
-const PhotographScreen = () => {
-  const photographerMedias = useSelector((state) => state.data.mediaByID);
+const PhotographScreen = ({ route, navigation }) => {
+  // filter photograph by ID from route params
+  const { photograph } = route.params;
+  /*
+  const { data, error, loaded } = useAxiosPost(
+    "/wp/v2/medias?acf_format=standard"
+  );
+  */
+  // Get All Votes
+  //const { data, error, loaded } = useAxiosPost("wp-ulike-pro/v1/vote");
+  //console.log(data);
+  // Get Single Vote
+  // const { data, error, loaded } = useAxiosPost("wp-ulike-pro/v1/vote/1");
+
   return (
     <View style={styles.container}>
       <ScrollView vertical>
-        <CardFull />
-        <Dropdown />
+        <CardFull photograph={photograph} />
+        {/*  <Dropdown /> */}
         <Gallery />
       </ScrollView>
-      <View style={styles.form}>
-        <SmallModal />
-      </View>
+      <View style={styles.form}>{/* <SmallModal />*/}</View>
     </View>
   );
 };

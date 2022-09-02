@@ -3,35 +3,40 @@ import { StyleSheet, Image, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentPhotographer, setCurrentMedias } from "../redux/dataSlice";
-import Tags from "./Tags";
+import { getPhotographers } from "../features/photographersSlice";
+import Tag from "./Tag.js";
 
-const CardExtract = ({ photographer }) => {
-  const medias = useSelector((state) => state.data.medias);
+const CardExtract = ({ id, photographer }) => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const navigate = (photographer) => {
-    const photographerMedias = medias.filter(
-      (media) =>
-        media.image !== undefined && media.photographerId === photographer.id
-    );
-    dispatch(setCurrentPhotographer(photographer));
-    dispatch(setCurrentMedias(photographerMedias));
-    navigation.navigate("Photograph");
+  // const { photographerID } = useSelector((state) => state.photographers);
+
+  const navigate = (id) => {
+    /*
+    const photographerMedias = medias.filter((media) => {
+      console.log(media);
+      media.image !== undefined && media.photographerId === id;
+    });
+    */
+    // dispatch(getPhotographers({ photographerID: id }));
+    // dispatch(getMedias(photographerMedias));
+    navigation.navigate("Photograph", { photograph: photographer });
   };
   return (
     <View style={styles.article}>
-      <TouchableOpacity
-        style={styles.link}
-        onPress={() => navigate(photographer)}
-      >
+      <TouchableOpacity style={styles.link} onPress={() => navigate(id)}>
         <Image
           source={{
-            uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/Photographers_ID_Photos/${photographer.portrait}`,
+            uri: photographer.image
+              ? photographer.image
+              : `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/mysterious-person.svg`,
           }}
           style={styles.image}
         />
-        <Text style={styles.subtitle}>{photographer.name}</Text>
+        <Text
+          style={styles.subtitle}
+        >{`${photographer.firstname} ${photographer.lastname}`}</Text>
       </TouchableOpacity>
       <View>
         <Text style={styles.location}>
@@ -41,7 +46,7 @@ const CardExtract = ({ photographer }) => {
         <Text style={styles.price}>{photographer.price}€/jour</Text>
       </View>
       <View style={styles.row}>
-        <Tags tags={photographer.tags} />
+        <Tag tag={"todo"} />
       </View>
     </View>
   );

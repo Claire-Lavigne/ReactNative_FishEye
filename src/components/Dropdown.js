@@ -11,7 +11,7 @@ let dropdownData = [
 ];
 
 const DropdownComponent = () => {
-  const photographerMedias = useSelector((state) => state.data.mediaByID);
+  const photographerMedias = useSelector((state) => state.data.medias);
   const dispatch = useDispatch();
   const [value, setValue] = useState("title");
   const [isFocus, setIsFocus] = useState(false);

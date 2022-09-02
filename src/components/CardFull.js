@@ -1,36 +1,37 @@
 import React from "react";
 import { StyleSheet, Image, Text, View } from "react-native";
 import { useSelector } from "react-redux";
-import Tags from "./Tags";
+import Tag from "./Tag";
 
-const CardFull = () => {
-  const photographer = useSelector((state) => state.data.photographerByID);
-  const photographerMedias = useSelector((state) => state.data.mediaByID);
-  const likes = photographerMedias.map((media) => media.likes);
-  const totalLikes = likes.reduce((a, b) => a + b, 0);
+const CardFull = ({ photograph }) => {
+  // const photographerMedias = useSelector((state) => state.data.medias);
+  // const likes = photographerMedias.map((media) => media.likes);
+  //const totalLikes = likes.reduce((a, b) => a + b, 0);
   return (
     <View style={styles.article}>
       <View style={styles.link}>
         <Image
           source={{
-            uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/Photographers_ID_Photos/${photographer.portrait}`,
+            uri: photograph.image
+              ? photograph.image
+              : `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/mysterious-person.svg`,
           }}
           style={styles.image}
         />
-        <Text style={styles.subtitle}>{photographer.name}</Text>
+        <Text style={styles.subtitle}>{photograph.name}</Text>
       </View>
       <View>
         <Text style={styles.location}>
-          {photographer.city}, {photographer.country}
+          {photograph.city}, {photograph.country}
         </Text>
-        <Text style={styles.tagline}>{photographer.tagline}</Text>
+        <Text style={styles.tagline}>{photograph.tagline}</Text>
       </View>
       <View style={styles.row}>
-        <Tags tags={photographer.tags} />
+        <Tag tag={photograph.tags} />
       </View>
       <View style={styles.row}>
         <View style={styles.row}>
-          <Text style={styles.likes}>{totalLikes}</Text>
+          <Text style={styles.likes}>{/*totalLikes*/}</Text>
           <Image
             resizeMode="cover"
             source={{
@@ -39,7 +40,7 @@ const CardFull = () => {
             style={styles.heartIcon}
           />
         </View>
-        <Text style={styles.price}>{photographer.price}€/jour</Text>
+        <Text style={styles.price}>{photograph.price}€/jour</Text>
       </View>
     </View>
   );

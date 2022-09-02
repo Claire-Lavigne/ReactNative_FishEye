@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dataReducer from "./dataSlice";
+import photographersReducer from "../features/photographersSlice";
+import mediasReducer from "../features/mediasSlice";
+import tagsReducer from "../features/tagsSlice";
 
+// The store has redux-thunk and Redux DevTools Extension
 const store = configureStore({
   reducer: {
-    data: dataReducer,
+    photographers: photographersReducer,
+    medias: mediasReducer,
+    tags: tagsReducer,
   },
 });
-// The store now has redux-thunk added and the Redux DevTools Extension is turned on
 
 export default store;
