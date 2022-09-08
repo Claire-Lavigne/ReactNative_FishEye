@@ -9,10 +9,7 @@ import {
   TextInput,
 } from "react-native";
 
-const Form = ({ setModalVisible }) => {
-  const photographers = useSelector((state) => state.data.photographers);
-  const photographerName = photographers[0].name;
-
+const Form = ({ setModalVisible, name }) => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -33,7 +30,7 @@ const Form = ({ setModalVisible }) => {
         />
       </Pressable>
       <Text style={styles.title}>Contactez-moi</Text>
-      <Text style={[styles.title, styles.lastElt]}>{photographerName}</Text>
+      <Text style={[styles.title, styles.lastElt]}>{name}</Text>
       <Text style={styles.label}>Prénom</Text>
       <TextInput
         style={styles.input}

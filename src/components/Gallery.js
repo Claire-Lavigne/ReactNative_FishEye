@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentMedias } from "../redux/dataSlice";
+import { Dimensions } from "react-native";
 import {
   StyleSheet,
   ImageBackground,
@@ -10,34 +11,24 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import useAxiosGet from "../useFetch";
 
-const Gallery = () => {
-  let baseURL = "https://quiero-web.com/claire-p6-backend";
-  // 1st param = acf fields + uthor id + media title
-  // 2nd param = get image urls, array or id from acf
-  let mediasURL = `${baseURL}/wp-json/wp/v2/medias?_fields=author,title.rendered,acf&acf_format=standard`;
+const Gallery = ({ medias }) => {
+  const windowWidth = Dimensions.get("window").width;
+  console.log(windowWidth);
 
-  // fetching data
-  const {
-    data: mediasData,
-    loading: mediasLoading,
-    error: mediasError,
-  } = useAxiosGet(mediasURL);
+  let numColumns = 1;
 
-  // ordering data
-  const medias = mediasData.map((data) => {
-    return {
-      authorID: data.author,
-      title: data.title.rendered,
-      mediaURL: data.acf.media,
-      price: data.acf.price,
-      tags: data.acf.tags,
-    };
-  });
+  if (windowWidth < 720) {
+    numColumns = 1;
+  } else if (windowWidth < 1080) {
+    numColumns = 2;
+  } else {
+    numColumns = 3;
+  }
 
-  console.log(medias);
-  // const images = useSelector((state) => state.data.medias);
+  console.log(medias.length);
+  /*
+  const images = useSelector((state) => state.data.medias);
   const [isLiked, setIsLiked] = useState(true);
   const dispatch = useDispatch();
 
@@ -58,63 +49,50 @@ const Gallery = () => {
     console.log(newState);
     dispatch(setCurrentMedias(newState));
   };
-
-  let DATA;
-
-  if (mediasLoading) {
-    DATA = <Text>Loading...</Text>;
-  }
-  if (mediasError) {
-    DATA = <Text>{error}</Text>;
-  }
-
-  if (!mediasLoading && !mediasError) {
-    DATA = (
-      <View>
-        <FlatList
-          keyExtractor={(item) => item.id}
-          horizontal={false}
-          numColumns={medias.length}
-          columnWrapperStyle={styles.flatList}
-          data={medias}
-          renderItem={({ item }) => (
-            <View style={styles.card}>
-              <View style={styles.imageWrapper}>
-                <ImageBackground
-                  resizeMode="cover"
-                  source={{
-                    uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/${item.photographerId}/${item.image}`,
-                  }}
-                  style={styles.image}
-                ></ImageBackground>
-              </View>
-              <View style={styles.description}>
-                <Text>{item.alt}</Text>
-                <Text>{item.likes}</Text>
-                <TouchableOpacity onPress={() => handleLikes(item.id)}>
-                  <Image
-                    resizeMode="cover"
-                    source={
-                      item.isLiked
-                        ? {
-                            uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/heart.png`,
-                          }
-                        : {
-                            uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/heart-outline.png`,
-                          }
-                    }
-                    style={styles.heartIcon}
-                  />
-                </TouchableOpacity>
-              </View>
+  */
+  return (
+    <View>
+      <FlatList
+        keyExtractor={(item) => item.imgID}
+        horizontal={false}
+        numColumns={numColumns}
+        columnWrapperStyle={styles.flatList}
+        data={medias}
+        renderItem={({ item }) => (
+          <View style={styles.card}>
+            <View style={styles.imageWrapper}>
+              <ImageBackground
+                resizeMode="cover"
+                source={{
+                  uri: item.image,
+                }}
+                style={styles.image}
+              ></ImageBackground>
             </View>
-          )}
-        />
-      </View>
-    );
-  }
-
-  return <View>{DATA}</View>;
+            <View style={styles.description}>
+              <Text>{item.title}</Text>
+              <Text>{/*item.likes*/}</Text>
+              <TouchableOpacity onPress={() => handleLikes(item.imgID)}>
+                <Image
+                  resizeMode="cover"
+                  source={
+                    item.isLiked
+                      ? {
+                          uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/heart.png`,
+                        }
+                      : {
+                          uri: `https://claire-lavigne.github.io/ClaireLavigne_6_09122020/assets/heart-outline.png`,
+                        }
+                  }
+                  style={styles.heartIcon}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
+      />
+    </View>
+  );
 };
 
 export default Gallery;

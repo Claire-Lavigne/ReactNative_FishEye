@@ -18,7 +18,9 @@ const CardFull = ({ photograph }) => {
           }}
           style={styles.image}
         />
-        <Text style={styles.subtitle}>{photograph.name}</Text>
+        <Text style={styles.subtitle}>
+          {photograph.firstname} {photograph.lastname}
+        </Text>
       </View>
       <View>
         <Text style={styles.location}>

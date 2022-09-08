@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import Form from "./Form";
 
-const SmallModal = () => {
+const SmallModal = ({name}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -31,7 +31,7 @@ const SmallModal = () => {
             onPress={null}
             activeOpacity={1}
           >
-            <Form setModalVisible={setModalVisible} />
+            <Form setModalVisible={setModalVisible} name={name} />
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
